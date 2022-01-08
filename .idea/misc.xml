@@ -3,10 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/franc/AndroidStudioProjects/vaquita/app/src/main/res/layout/activity_actividad_inicio.xml" value="0.33" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/vaquita/app/src/main/res/layout/activity_actividad_compra.xml" value="0.16304347826086957" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/vaquita/app/src/main/res/layout/activity_actividad_contactos.xml" value="0.33" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/vaquita/app/src/main/res/layout/activity_actividad_inicio.xml" value="0.22" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/vaquita/app/src/main/res/layout/activity_actividad_nueva_cartera.xml" value="0.16304347826086957" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/vaquita/app/src/main/res/layout/activity_actividad_registro.xml" value="0.22" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/vaquita/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/franc/AndroidStudioProjects/vaquita/app/src/main/res/layout/activity_main2.xml" value="0.18614130434782608" />
+        <entry key="..\:/Users/franc/AndroidStudioProjects/vaquita/app/src/main/res/layout/fragment_first.xml" value="0.1068840579710145" />
       </map>
     </option>
   </component>

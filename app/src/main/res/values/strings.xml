@@ -18,4 +18,23 @@
     <string name="preguntaLogout">¿Desea Salir?</string>
     <string name="cancel">Cancelar</string>
     <string name="loremIpsum">Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografías o de borradores de diseño para probar el diseño visual antes de insertar el texto final.</string>
+    <string name="tituloNuevaWallet">Nueva Wallet</string>
+    <string name="hintNombreDeWallet">Nombre de Wallet</string>
+    <string name="hintFecha">Fecha</string>
+    <string name="hintLugar">Lugar</string>
+    <string name="textContinuar">Continuar</string>
+    <string name="hintBuscar">Buscar Amigos</string>
+    <string name="seccionAmigos">Amigos</string>
+    <string name="seccionInvitar">Invitar Amigos</string>
+    <string name="guardar">Guardar</string>
+    <string name="exitoWallet">Wallet Creada con Éxito</string>
+    <string name="title_activity_actividad_tarjeta_de_credito">ActividadTarjetaDeCredito</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

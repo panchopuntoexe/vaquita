@@ -43,13 +43,13 @@
         android:id="@+id/horizontalScrollView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:layout_marginTop="90dp"
         app:layout_constraintBottom_toBottomOf="@id/viewCompras"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.17">
+        app:layout_constraintVertical_bias="0.00999999">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -104,11 +104,11 @@
 
     <ScrollView
         android:id="@+id/viewCompras"
-        android:layout_width="412dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="309dp"
+        app:layout_constraintBottom_toTopOf="@id/barraInferior"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
 
@@ -146,7 +146,7 @@
                     android:translationY="-50dp" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/textView13"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
                     android:text="$ -10.25"
@@ -162,13 +162,13 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageComic6"
+                    android:id="@+id/imageComic7"
                     android:layout_width="60dp"
                     android:layout_height="80dp"
                     android:src="@drawable/comicportada" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Comic Listening Party"
@@ -176,7 +176,7 @@
                     android:translationY="-70dp" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="15dp"
                     android:text="14:34   8/1/2022"
@@ -184,7 +184,7 @@
                     android:translationY="-50dp" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/textView14"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
                     android:text="$ -10.25"
@@ -200,13 +200,13 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageComic6"
+                    android:id="@+id/imageComic8"
                     android:layout_width="60dp"
                     android:layout_height="80dp"
                     android:src="@drawable/comicportada" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/textView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Comic Listening Party"
@@ -214,7 +214,7 @@
                     android:translationY="-70dp" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="15dp"
                     android:text="14:34   8/1/2022"
@@ -222,7 +222,7 @@
                     android:translationY="-50dp" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/textView15"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
                     android:text="$ -10.25"
@@ -238,13 +238,13 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageComic6"
+                    android:id="@+id/imageComic9"
                     android:layout_width="60dp"
                     android:layout_height="80dp"
                     android:src="@drawable/comicportada" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/textView9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Comic Listening Party"
@@ -252,7 +252,7 @@
                     android:translationY="-70dp" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/textView410"
                     android:layout_width="wrap_content"
                     android:layout_height="15dp"
                     android:text="14:34   8/1/2022"
@@ -260,7 +260,7 @@
                     android:translationY="-50dp" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/textView16"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
                     android:text="$ -10.25"
@@ -276,13 +276,13 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageComic6"
+                    android:id="@+id/imageComic10"
                     android:layout_width="60dp"
                     android:layout_height="80dp"
                     android:src="@drawable/comicportada" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Comic Listening Party"
@@ -290,7 +290,7 @@
                     android:translationY="-70dp" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="15dp"
                     android:text="14:34   8/1/2022"
@@ -309,5 +309,65 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/barraInferior"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewCompras">
+
+        <ImageView
+            android:id="@+id/imageHome"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/home"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageEstadistica"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageEstadistica"
+            android:layout_width="40dp"
+            android:layout_height="60dp"
+            android:src="@drawable/estadistica"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageAdd"
+            app:layout_constraintStart_toEndOf="@id/imageHome"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageAdd"
+            android:layout_width="76dp"
+            android:layout_height="71dp"
+            android:src="@drawable/aniadir"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imagePagos"
+            app:layout_constraintStart_toEndOf="@id/imageEstadistica"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imagePagos"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/pago"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageConfigruaciones"
+            app:layout_constraintStart_toEndOf="@+id/imageAdd"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageConfigruaciones"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/configuraciones"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imagePagos"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

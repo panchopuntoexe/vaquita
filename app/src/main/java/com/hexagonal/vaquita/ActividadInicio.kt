@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 
@@ -31,6 +32,20 @@ class ActividadInicio : AppCompatActivity() {
                     })
             builder.create()
             builder.show()
+        }
+        // view add
+        var anidir = findViewById<View>(R.id.imageAdd)
+        anidir.setOnClickListener{
+            val intencion = Intent(this,ActividadNuevaCartera::class.java)
+            startActivity(intencion)
+        }
+
+
+        // view Compras
+        var compras = findViewById<View>(R.id.viewCompras)
+        compras.setOnClickListener{
+            val intencion = Intent(this,ActividadCompra::class.java)
+            startActivity(intencion)
         }
     }
 }

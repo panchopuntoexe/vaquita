@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActividadNuevaCartera">
+
+    <ImageView
+        android:id="@+id/imageVacaLogo4"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="150dp"
+        app:layout_constraintBottom_toTopOf="@id/textTitulo4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/vacalogo" />
+
+    <TextView
+        android:id="@+id/textTitulo4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tituloNuevaWallet"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/textWalletName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageVacaLogo4" />
+
+    <EditText
+        android:id="@+id/textWalletName"
+        android:layout_width="271dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/hintNombreDeWallet"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@id/textFecha"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textTitulo4" />
+
+    <EditText
+        android:id="@+id/textFecha"
+        android:layout_width="271dp"
+        android:layout_height="53dp"
+        android:ems="10"
+        android:hint="@string/hintFecha"
+        android:inputType="date"
+        app:layout_constraintBottom_toTopOf="@id/textLugar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textWalletName" />
+
+    <EditText
+        android:id="@+id/textLugar"
+        android:layout_width="271dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:hint="@string/hintLugar"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@id/botonContinuar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textFecha" />
+
+    <Button
+        android:id="@+id/botonContinuar"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="150dp"
+        android:background="@color/black"
+        android:text="@string/textContinuar"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textLugar" />
+</androidx.constraintlayout.widget.ConstraintLayout>
