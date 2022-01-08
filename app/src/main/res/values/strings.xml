@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">vaquita</string>
+    <string name="tituloApp">Hagamos vaca</string>
+    <string name="hintUsuario">Nombre de Usuario</string>
+    <string name="hintClave">Contraseña</string>
+    <string name="textOlvideClave">Olvidé mi contraseña</string>
+    <string name="textLogin">Entrar</string>
+    <string name="textRegistrarse">Registrarse</string>
+    <string name="hintNombre">Nombre</string>
+    <string name="hintMail">Correo electrónico</string>
+    <string name="hintTelefono">Teléfono</string>
+    <string name="hintClaveRepeticion">Repita su contraseña</string>
+    <string name="hintNombreDeUsuario">Nombre de Usuario</string>
+    <string name="exitoRegistro">Registro Existoso!</string>
+    <string name="ok">Ok</string>
+    <string name="textBienvenida">Bienvenido!</string>
+    <string name="logout">Salir</string>
+    <string name="preguntaLogout">¿Desea Salir?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="loremIpsum">Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografías o de borradores de diseño para probar el diseño visual antes de insertar el texto final.</string>
 </resources>

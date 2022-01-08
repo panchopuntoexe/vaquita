@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActividadRegistro">
+
+    <ImageView
+        android:id="@+id/imageVacaLogo2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintBottom_toTopOf="@id/textTitulo2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/vacalogo" />
+
+    <TextView
+        android:id="@+id/textTitulo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tituloApp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/textNombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageVacaLogo2" />
+
+    <EditText
+        android:id="@+id/textNombre"
+        android:layout_width="271dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="@string/hintNombre"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@id/textEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTitulo2" />
+
+    <EditText
+        android:id="@+id/textEmail"
+        android:layout_width="271dp"
+        android:layout_height="53dp"
+        android:ems="10"
+        android:hint="@string/hintMail"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@id/textNombreDeUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNombre" />
+
+    <EditText
+        android:id="@+id/textNombreDeUsuario"
+        android:layout_width="271dp"
+        android:layout_height="53dp"
+        android:ems="10"
+        android:hint="@string/hintNombreDeUsuario"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@id/telefono"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+
+    <EditText
+        android:id="@+id/telefono"
+        android:layout_width="271dp"
+        android:layout_height="53dp"
+        android:ems="10"
+        android:hint="@string/hintTelefono"
+        android:inputType="phone"
+        app:layout_constraintBottom_toTopOf="@id/textClaveInicial"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNombreDeUsuario"/>
+
+    <EditText
+        android:id="@+id/textClaveInicial"
+        android:layout_width="271dp"
+        android:layout_height="53dp"
+        android:ems="10"
+        android:hint="@string/hintClave"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@id/textClaveRepeticion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/telefono"/>
+
+    <EditText
+        android:id="@+id/textClaveRepeticion"
+        android:layout_width="271dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="40dp"
+        android:ems="10"
+        android:hint="@string/hintClaveRepeticion"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@id/botonRegistro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textClaveInicial" />
+
+    <Button
+        android:id="@+id/botonRegistro"
+        android:layout_width="111dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="50dp"
+        android:background="@color/black"
+        android:text="@string/textRegistrarse"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textClaveRepeticion" />
+</androidx.constraintlayout.widget.ConstraintLayout>
