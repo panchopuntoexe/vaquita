@@ -6,4 +6,235 @@
     android:layout_height="match_parent"
     tools:context=".ActividadCompra">
 
+    <ImageView
+        android:id="@+id/imageVacaLogo3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintBottom_toTopOf="@id/textWalletName2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/vacalogo" />
+
+    <EditText
+        android:id="@+id/textWalletName2"
+        android:layout_width="271dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="20dp"
+        android:editable="false"
+        android:ems="10"
+        android:hint="@string/hintNombreDeWallet"
+        android:inputType="textPersonName"
+        android:text="Comic Listening Party"
+        app:layout_constraintBottom_toTopOf="@id/textFecha2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageVacaLogo3" />
+
+    <EditText
+        android:id="@+id/textFecha2"
+        android:layout_width="271dp"
+        android:layout_height="53dp"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="date"
+        android:text="01/10/2021"
+        app:layout_constraintBottom_toTopOf="@id/textLugar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textWalletName2" />
+
+    <EditText
+        android:id="@+id/textLugar2"
+        android:layout_width="271dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="20dp"
+        android:editable="true"
+        android:ems="10"
+        android:hint="@string/hintLugar"
+        android:inputType="textPersonName"
+        android:text="La Casa del Manaba"
+        app:layout_constraintBottom_toTopOf="@id/textGastos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textFecha2" />
+
+    <TextView
+        android:id="@+id/textGastos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/textGastos"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/viewCompras2"
+        app:layout_constraintEnd_toStartOf="@id/textParticipantes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textLugar2" />
+
+    <TextView
+        android:id="@+id/textParticipantes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textParticipantes"
+        app:layout_constraintBottom_toTopOf="@id/viewCompras2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textGastos"
+        app:layout_constraintTop_toBottomOf="@id/textLugar2" />
+
+    <ScrollView
+        android:id="@+id/viewCompras2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/barraInferiorPago"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textParticipantes">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/gasto11"
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="El Origen"
+                    android:translationX="40dp"
+                    android:translationY="35dp" />
+
+                <TextView
+                    android:id="@+id/textView41"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="$ 4.20"
+                    android:translationX="300dp"
+                    android:translationY="15dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/gasto112"
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView212"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="El Origen"
+                    android:translationX="40dp"
+                    android:translationY="35dp" />
+
+                <TextView
+                    android:id="@+id/textView412"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="$ 4.20"
+                    android:translationX="300dp"
+                    android:translationY="15dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/gasto113"
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView213"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="El Origen"
+                    android:translationX="40dp"
+                    android:translationY="35dp" />
+
+                <TextView
+                    android:id="@+id/textView413"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="$ 4.20"
+                    android:translationX="300dp"
+                    android:translationY="15dp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/gasto114"
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView214"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="El Origen"
+                    android:translationX="40dp"
+                    android:translationY="35dp" />
+
+                <TextView
+                    android:id="@+id/textView414"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="$ 4.20"
+                    android:translationX="300dp"
+                    android:translationY="15dp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/gasto115"
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView215"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="El Origen"
+                    android:translationX="40dp"
+                    android:translationY="35dp" />
+
+                <TextView
+                    android:id="@+id/textView415"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="$ 4.20"
+                    android:translationX="300dp"
+                    android:translationY="15dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/barraInferiorPago"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewCompras2">
+
+        <Button
+            android:id="@+id/botonPagar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pagar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

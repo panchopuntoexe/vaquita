@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 
 class ActividadContactos : AppCompatActivity() {
@@ -13,7 +12,7 @@ class ActividadContactos : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_actividad_contactos)
         // boton guardar Contactos
-        var botonSalvar = findViewById<Button>(R.id.botonSalvar)
+        var botonSalvar = findViewById<Button>(R.id.botonPagar)
         botonSalvar.setOnClickListener{
             val intencion = Intent(this,ActividadInicio::class.java)
             val builder = AlertDialog.Builder(this)
