@@ -40,4 +40,7 @@
     <string name="textParticipantes">Participantes</string>
     <string name="textGastos">Gastos</string>
     <string name="pagar">Pagar</string>
+    <string name="paypal">PayPal</string>
+    <string name="textTarjeta">Tarjeta de Crédito</string>
+    <string name="textSeleccioneMetodo">Seleccione un método de pago</string>
 </resources>
