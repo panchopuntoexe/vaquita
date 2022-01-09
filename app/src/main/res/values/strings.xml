@@ -43,4 +43,6 @@
     <string name="paypal">PayPal</string>
     <string name="textTarjeta">Tarjeta de Crédito</string>
     <string name="textSeleccioneMetodo">Seleccione un método de pago</string>
+    <string name="Visa">Visa</string>
+    <string name="cantidadAPagar">Cantidad a pagar:</string>
 </resources>
