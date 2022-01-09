@@ -5,9 +5,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ScrollView
+import java.lang.Math.abs
 
 class ActividadInicio : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,9 +46,22 @@ class ActividadInicio : AppCompatActivity() {
 
         // view Compras
         var compras = findViewById<View>(R.id.viewCompras)
-        compras.setOnClickListener{
-            val intencion = Intent(this,ActividadCompra::class.java)
-            startActivity(intencion)
+        compras.setOnTouchListener{ v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    return@setOnTouchListener true
+                }
+                MotionEvent.ACTION_UP -> {
+                    val intencion = Intent(this,ActividadCompra::class.java)
+                    startActivity(intencion)
+                }
+            }
+            v.performClick()
+            v.onTouchEvent(event) ?: true
         }
+
+
+
+
     }
 }

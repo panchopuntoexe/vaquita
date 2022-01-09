@@ -6,4 +6,172 @@
     android:layout_height="match_parent"
     tools:context=".ActividadTarjetaDeCredito">
 
+    <Button
+        android:id="@+id/botonVisa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/Visa"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/botonVisa2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonVisa2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/Visa"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/botonVisa3"
+        app:layout_constraintStart_toEndOf="@+id/botonVisa"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonVisa3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="1dp"
+        android:text="@string/Visa"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/botonVisa4"
+        app:layout_constraintStart_toEndOf="@+id/botonVisa2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonVisa4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/Visa"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/botonVisa3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonPagarTarjeta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="105dp"
+        android:text="@string/pagar"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/botonCancelarTarjeta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textPostal" />
+
+    <Button
+        android:id="@+id/botonCancelarTarjeta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="@string/cancel"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botonPagarTarjeta" />
+
+    <TextView
+        android:id="@+id/textCantidadAPagar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="230dp"
+        android:text="@string/cantidadAPagar"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textCantidad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botonVisa" />
+
+    <TextView
+        android:id="@+id/textCantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="230dp"
+        android:layout_marginBottom="46dp"
+        android:text="$ 69 420.99"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/textNombreDeTarjeta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textCantidadAPagar" />
+
+    <EditText
+        android:id="@+id/textNombreDeTarjeta"
+        android:layout_width="322dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="40dp"
+        android:hint="@string/hintNombreDeTarjeta"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/textNumeroDeTarjeta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textCantidad" />
+
+    <EditText
+        android:id="@+id/textNumeroDeTarjeta"
+        android:layout_width="322dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/hintNumeroDeTarjeta"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@id/textFechaDeExp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNombreDeTarjeta" />
+
+    <EditText
+        android:id="@+id/textFechaDeExp"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="18dp"
+        android:hint="@string/hintFechaTarjeta"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/textPostal"
+        app:layout_constraintEnd_toStartOf="@+id/textCCV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNumeroDeTarjeta" />
+
+    <EditText
+        android:id="@+id/textCCV"
+        android:layout_width="127dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/hintCCV"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/textPostal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.601"
+        app:layout_constraintStart_toEndOf="@+id/textFechaDeExp"
+        app:layout_constraintTop_toBottomOf="@+id/textNumeroDeTarjeta"
+        app:layout_constraintVertical_bias="0.452" />
+
+    <EditText
+        android:id="@+id/textPostal"
+        android:layout_width="322dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/hintPostal"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/botonPagarTarjeta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textFechaDeExp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

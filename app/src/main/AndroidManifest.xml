@@ -18,6 +18,7 @@
             android:exported="false"
             android:label="@string/title_activity_actividad_tarjeta_de_credito"
             android:theme="@style/Theme.Vaquita" />
+            android:exported="false"/>
         <activity
             android:name=".ActividadMetodoDePago"
             android:exported="false" />

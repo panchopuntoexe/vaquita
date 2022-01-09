@@ -55,4 +55,18 @@
     <string name="title_settings">Settings</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="textParticipantes">Participantes</string>
+    <string name="textGastos">Gastos</string>
+    <string name="pagar">Pagar</string>
+    <string name="paypal">PayPal</string>
+    <string name="textTarjeta">Tarjeta de Crédito</string>
+    <string name="textSeleccioneMetodo">Seleccione un método de pago</string>
+    <string name="Visa">Visa</string>
+    <string name="cantidadAPagar">Cantidad a pagar:</string>
+    <string name="textNombreDeTarjeta">Nombre de la tarjeta</string>
+    <string name="hintNombreDeTarjeta">Nombre en la Tarjeta</string>
+    <string name="hintNumeroDeTarjeta">Numero de la tarjeta</string>
+    <string name="hintFechaTarjeta">Fecha en la Tarjeta</string>
+    <string name="hintCCV">CCV</string>
+    <string name="hintPostal">Numero Postal</string>
 </resources>
