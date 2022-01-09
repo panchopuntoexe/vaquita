@@ -16,7 +16,7 @@ class ActividadLogin : AppCompatActivity() {
         //boton login
         var buttonEntrar = findViewById<Button>(R.id.botonLogin)
         buttonEntrar.setOnClickListener{
-            val intencion = Intent(this,ActividadInicio::class.java)
+            val intencion = Intent(this,Home::class.java)
             val builder = AlertDialog.Builder(this)
             builder.setMessage(R.string.loremIpsum)
                 .setPositiveButton(R.string.ok,
@@ -35,7 +35,7 @@ class ActividadLogin : AppCompatActivity() {
         var botonRegistro = findViewById<Button>(R.id.botonRegistro)
         botonRegistro.setOnClickListener{
             //Toast.makeText(this, "Registro exitoso", Toast.LENGTH_LONG).show()
-            val intencion = Intent(this,ActividadRegistro::class.java)
+            val intencion = Intent(this,Home::class.java)
             //intencion.putExtra("Extra",extraerNombreApellido(textViewMail.text.toString()))
             startActivity(intencion)
         }
