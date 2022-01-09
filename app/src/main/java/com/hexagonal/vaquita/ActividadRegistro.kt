@@ -23,7 +23,7 @@ class ActividadRegistro : AppCompatActivity() {
                 .setPositiveButton(R.string.ok,
                     DialogInterface.OnClickListener { dialog, id ->
                         //envío a inicio
-                        val intencion = Intent(this,ActividadInicio::class.java)
+                        val intencion = Intent(this,Home::class.java)
                         startActivity(intencion)
                     })/*
                 .setNegativeButton(R.string.cancel,

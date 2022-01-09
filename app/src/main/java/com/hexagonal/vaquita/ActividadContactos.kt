@@ -14,7 +14,7 @@ class ActividadContactos : AppCompatActivity() {
         // boton guardar Contactos
         var botonSalvar = findViewById<Button>(R.id.botonPagar)
         botonSalvar.setOnClickListener{
-            val intencion = Intent(this,ActividadInicio::class.java)
+            val intencion = Intent(this,Home::class.java)
             val builder = AlertDialog.Builder(this)
             builder.setMessage(R.string.exitoWallet)
                 .setPositiveButton(R.string.ok,

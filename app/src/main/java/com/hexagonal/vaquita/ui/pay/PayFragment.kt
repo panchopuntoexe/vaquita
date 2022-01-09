@@ -1,4 +1,4 @@
-package com.hexagonal.vaquita.ui.home
+package com.hexagonal.vaquita.ui.pay
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,13 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hexagonal.vaquita.ActividadCompra
-import com.hexagonal.vaquita.Home
-import com.hexagonal.vaquita.databinding.FragmentHomeBinding
+import com.hexagonal.vaquita.databinding.FragmentPayBinding
 
-class HomeFragment : Fragment() {
+class PayFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
-    private var _binding: FragmentHomeBinding? = null
+    private lateinit var payViewModel: PayViewModel
+    private var _binding: FragmentPayBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,10 +24,10 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        payViewModel =
+            ViewModelProvider(this).get(PayViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentPayBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val cardView1 = binding.cardView1

@@ -19,9 +19,9 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.hexagonal.vaquita.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="com.hexagonal.vaquita.ui.pay.PayFragment"
+        android:label="@string/title_pay"
+        tools:layout="@layout/fragment_pay" />
 
     <fragment
         android:id="@+id/navigation_settings"

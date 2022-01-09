@@ -16,3 +16,4 @@ local.properties
 .idea/misc.xml
 *.gradle
 *.gradle
+*.gradle

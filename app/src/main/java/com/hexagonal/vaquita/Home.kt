@@ -44,6 +44,8 @@ class Home : AppCompatActivity() {
 
 
 
+
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

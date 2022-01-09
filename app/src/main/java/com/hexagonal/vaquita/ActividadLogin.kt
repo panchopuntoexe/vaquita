@@ -35,7 +35,7 @@ class ActividadLogin : AppCompatActivity() {
         var botonRegistro = findViewById<Button>(R.id.botonRegistro)
         botonRegistro.setOnClickListener{
             //Toast.makeText(this, "Registro exitoso", Toast.LENGTH_LONG).show()
-            val intencion = Intent(this,Home::class.java)
+            val intencion = Intent(this,ActividadRegistro::class.java)
             //intencion.putExtra("Extra",extraerNombreApellido(textViewMail.text.toString()))
             startActivity(intencion)
         }

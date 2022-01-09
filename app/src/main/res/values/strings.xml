@@ -51,9 +51,9 @@
     <string name="title_activity_home">Home</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_pay">Pay</string>
     <string name="title_settings">Settings</string>
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="textParticipantes">Participantes</string>
     <string name="textGastos">Gastos</string>
@@ -69,4 +69,8 @@
     <string name="hintFechaTarjeta">Fecha en la Tarjeta</string>
     <string name="hintCCV">CCV</string>
     <string name="hintPostal">Numero Postal</string>
+    <string name="comic">Gran Premier de Comic</string>
+    <string name="date">12:00 am 21 dec 2021</string>
+    <string name="price">$ 15.99</string>
+    <string name="compra">El Origen</string>
 </resources>
