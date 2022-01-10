@@ -8,8 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hexagonal.vaquita.ActividadCompra
-import com.hexagonal.vaquita.Home
+import com.hexagonal.vaquita.ActividadNuevaCartera
 import com.hexagonal.vaquita.databinding.FragmentHomeBinding
+import com.hexagonal.vaquita.ui.settings.SettingsFragment
+import android.R
+
+
+
 
 class HomeFragment : Fragment() {
 
@@ -35,6 +40,15 @@ class HomeFragment : Fragment() {
         cardView1.setOnClickListener {
             val intencion =  Intent(this.activity, ActividadCompra::class.java)
             startActivity(intencion)
+        }
+
+        val perfil = binding.imageProfile
+        perfil.setOnClickListener {
+            val fragmentB = SettingsFragment()
+            requireFragmentManager().beginTransaction()
+                .replace(com.hexagonal.vaquita.R.id.nav_host_fragment_activity_home, fragmentB)
+                .addToBackStack(this::class.java.getSimpleName())
+                .commit()
         }
 
         return root

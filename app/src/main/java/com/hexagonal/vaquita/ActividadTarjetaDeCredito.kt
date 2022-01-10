@@ -13,7 +13,7 @@ class ActividadTarjetaDeCredito : AppCompatActivity() {
         // boton  pago
         var botonTarjeta = findViewById<Button>(R.id.botonPagarTarjeta)
         botonTarjeta.setOnClickListener{
-            val intencion = Intent(this,ActividadInicio::class.java)
+            val intencion = Intent(this,ActividadHome::class.java)
             startActivity(intencion)
         }
     }

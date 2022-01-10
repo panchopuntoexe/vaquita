@@ -1,13 +1,11 @@
 package com.hexagonal.vaquita
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import androidx.fragment.app.DialogFragment
 
 class ActividadRegistro : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +21,7 @@ class ActividadRegistro : AppCompatActivity() {
                 .setPositiveButton(R.string.ok,
                     DialogInterface.OnClickListener { dialog, id ->
                         //envío a inicio
-                        val intencion = Intent(this,Home::class.java)
+                        val intencion = Intent(this,ActividadHome::class.java)
                         startActivity(intencion)
                     })/*
                 .setNegativeButton(R.string.cancel,

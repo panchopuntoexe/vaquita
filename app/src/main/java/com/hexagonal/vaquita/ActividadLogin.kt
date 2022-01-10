@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 
 class ActividadLogin : AppCompatActivity() {
@@ -16,7 +15,7 @@ class ActividadLogin : AppCompatActivity() {
         //boton login
         var buttonEntrar = findViewById<Button>(R.id.botonLogin)
         buttonEntrar.setOnClickListener{
-            val intencion = Intent(this,Home::class.java)
+            val intencion = Intent(this,ActividadHome::class.java)
             val builder = AlertDialog.Builder(this)
             builder.setMessage(R.string.loremIpsum)
                 .setPositiveButton(R.string.ok,

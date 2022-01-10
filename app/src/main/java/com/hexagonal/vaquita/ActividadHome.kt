@@ -11,7 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.hexagonal.vaquita.databinding.ActivityHomeBinding
 
-class Home : AppCompatActivity() {
+class ActividadHome : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
