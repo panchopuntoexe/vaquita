@@ -73,4 +73,9 @@
     <string name="date">12:00 am 21 dec 2021</string>
     <string name="price">$ 15.99</string>
     <string name="compra">El Origen</string>
+    <string name="titulo">Titulo</string>
+    <string name="valor">Valor</string>
+    <string name="descripcion">Descripcion</string>
+    <string name="agregar">Agregar</string>
+
 </resources>
