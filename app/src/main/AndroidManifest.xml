@@ -10,13 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Vaquita">
         <activity
+            android:name=".CodigoPrueba"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ActivityAgregarGasto"
             android:exported="false" />
         <activity
             android:name=".WalletsActivity"
             android:exported="false" />
         <activity
-            android:name=".Home"
+            android:name=".ActividadHome"
             android:exported="false"
             android:label="@string/title_activity_home" />
         <activity
