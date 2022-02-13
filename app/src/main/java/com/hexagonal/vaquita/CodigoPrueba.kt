@@ -24,14 +24,14 @@ import java.util.*
 
 
 class CodigoPrueba : AppCompatActivity() {
-    lateinit var btnSelect: Button
-    lateinit var btnUpload: Button
+    private lateinit var btnSelect: Button
+    private lateinit var btnUpload: Button
 
     // view for image view
-    private var imageView: ImageView? = null
+    private lateinit var imageView: ImageView
 
     // Uri indicates, where the image will be picked from
-    private var filePath: Uri? = null
+    private lateinit var filePath: Uri
 
     // request code
     private val PICK_IMAGE_REQUEST = 22
@@ -65,7 +65,8 @@ class CodigoPrueba : AppCompatActivity() {
         // on pressing btnUpload uploadImage() is called
 
         btnUpload.setOnClickListener {
-            uploadImage()
+            //uploadImage()
+            subirImagen()
         }
     }
 
@@ -104,7 +105,7 @@ class CodigoPrueba : AppCompatActivity() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
 
             // Get the Uri of data
-            filePath = data.data
+            filePath = data.data!!
             try {
 
                 // Setting image on image view using Bitmap
@@ -117,6 +118,22 @@ class CodigoPrueba : AppCompatActivity() {
             } catch (e: IOException) {
                 // Log the exception
                 e.printStackTrace()
+            }
+        }
+    }
+
+    fun subirImagen() {
+        if (filePath != null) {
+            val fileNameArray = filePath.lastPathSegment?.split("/")
+            val fileName = fileNameArray?.get(fileNameArray.size - 1)
+            var storageRef = storage.reference
+            val riversRef = storageRef.child("images/${fileName}")
+            var uploadTask = riversRef.putFile(filePath)
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener {
+                Toast.makeText(this, "Error al subir el archivo", Toast.LENGTH_SHORT).show()
+            }.addOnSuccessListener { taskSnapshot ->
+                Toast.makeText(this, "Archivo subido con exito!", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -180,8 +197,8 @@ class CodigoPrueba : AppCompatActivity() {
             val mountainsRef = storageRef.child(filePath.toString())
 
 // Create a reference to 'images/mountains.jpg'
-            val mountainImagesRef = storageRef.child("images/"+filePath.toString())
-            Toast.makeText(this,filePath.toString(),Toast.LENGTH_SHORT).show()
+            val mountainImagesRef = storageRef.child("images/" + filePath.toString())
+            Toast.makeText(this, filePath.toString(), Toast.LENGTH_SHORT).show()
 
 // While the file names are the same, the references point to different files
             mountainsRef.name == mountainImagesRef.name // true
