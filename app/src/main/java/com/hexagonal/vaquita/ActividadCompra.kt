@@ -36,5 +36,12 @@ class ActividadCompra : AppCompatActivity() {
             val intencion = Intent(this, ActividadMetodoDePago::class.java)
             startActivity(intencion)
         }
+
+        // boton registro
+        var botonGasto = findViewById<Button>(R.id.botonGasto)
+        botonGasto.setOnClickListener{
+            val intencion = Intent(this,ActivityAgregarGasto::class.java)
+            startActivity(intencion)
+        }
     }
 }
