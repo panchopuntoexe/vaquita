@@ -1,24 +1,20 @@
 package com.hexagonal.vaquita
 
-import android.app.ActionBar
-import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.firestore.OnProgressListener
+import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.hexagonal.vaquita.R
 import java.io.IOException
 import java.util.*
 
@@ -46,7 +42,9 @@ class CodigoPrueba : AppCompatActivity() {
         val colorDrawable = ColorDrawable(
             Color.parseColor("#0F9D58")
         )
+        imageView = findViewById<View>(R.id.imgView) as ImageView
 
+        Glide.with(this).load("https://firebasestorage.googleapis.com/v0/b/proyectocazarpatos-e0106.appspot.com/o/images%2F51?alt=media&token=f51dccf2-0eb9-45b1-9e2e-39e2e52c1cf0").into(imageView!!)
 
         // initialise views
         btnSelect = findViewById(R.id.btnChoose)
@@ -130,10 +128,34 @@ class CodigoPrueba : AppCompatActivity() {
             val riversRef = storageRef.child("images/${fileName}")
             var uploadTask = riversRef.putFile(filePath)
             // Register observers to listen for when the download is done or if it fails
-            uploadTask.addOnFailureListener {
-                Toast.makeText(this, "Error al subir el archivo", Toast.LENGTH_SHORT).show()
-            }.addOnSuccessListener { taskSnapshot ->
-                Toast.makeText(this, "Archivo subido con exito!", Toast.LENGTH_SHORT).show()
+//            uploadTask.addOnFailureListener {
+//                Toast.makeText(this, "Error al subir el archivo", Toast.LENGTH_SHORT).show()
+//            }.addOnSuccessListener { taskSnapshot ->
+//                val url= taskSnapshot.storage.downloadUrl.getResult().toString()
+//                Toast.makeText(this, "Archivo subido con exito!", Toast.LENGTH_SHORT).show()
+//                Log.d("URL",url)
+//            }.addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    val downloadUri = task.result
+//                    Log.d("MENSAJE", "")
+//                } else {
+//                    Log.e("ERROR", task.toString())
+//                }
+//            }
+            val urlTask = uploadTask.continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                riversRef.downloadUrl
+            }.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val downloadUri = task.result
+                    Log.d("URL",downloadUri.toString())
+                } else {
+                    Log.e("ERROR", task.toString())
+                }
             }
         }
     }
