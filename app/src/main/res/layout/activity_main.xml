@@ -31,12 +31,12 @@
         app:layout_constraintTop_toBottomOf="@+id/imageVacaLogo" />
 
     <EditText
-        android:id="@+id/textUsuario"
+        android:id="@+id/textEmailLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="@string/hintUsuario"
+        android:hint="@string/hintEmailLogin"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,12 +51,12 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/hintClave"
-        android:inputType="textPassword"
+        android:inputType="numberPassword"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textUsuario" />
+        app:layout_constraintTop_toBottomOf="@+id/textEmailLogin" />
 
     <TextView
         android:id="@+id/textOlvideClave"
