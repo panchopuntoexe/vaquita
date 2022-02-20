@@ -11,7 +11,7 @@
         android:theme="@style/Theme.Vaquita">
         <activity
             android:name=".ActividadLogin"
-            android:exported="true">
+            android:exported="false">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 
