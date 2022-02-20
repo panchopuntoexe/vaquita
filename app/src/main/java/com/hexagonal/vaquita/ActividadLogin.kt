@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -28,15 +29,14 @@ class ActividadLogin : AppCompatActivity() {
 
         //Inicializando Firebase Auth
         auth = Firebase.auth
+        val email = textEmail.text.toString()
+        val clave = textClave.text.toString()
 
         //leerDatos()
 
         //Botón Login
         buttonEntrar = findViewById(R.id.botonLogin)
-        buttonEntrar.setOnClickListener {
-
-            val email = textEmail.text.toString()
-            val clave = textClave.text.toString()
+        //buttonEntrar.setOnClickListener {
             //val intencion = Intent(this, ActividadHome::class.java)
             //val builder = AlertDialog.Builder(this)
 
@@ -56,11 +56,13 @@ class ActividadLogin : AppCompatActivity() {
                     return@setOnClickListener
                 }
             }*/
-            if (!ValidarDatosRequeridos())
-                return@setOnClickListener
+            //if (!ValidarDatosRequeridos())
+                //return@setOnClickListener
 
 
-            AutenticarUsuario(email, clave)
+            //AutenticarUsuario(email, clave)
+
+            Authentication()
 
 //            builder.setMessage(R.string.loremIpsum)
 //                .setPositiveButton(R.string.ok,
@@ -73,7 +75,7 @@ class ActividadLogin : AppCompatActivity() {
 //                    })
 //            builder.create()
 //            builder.show()
-        }
+        //}
 
         // boton registro
         val botonRegistro = findViewById<Button>(R.id.botonRegistro)
@@ -144,7 +146,7 @@ class ActividadLogin : AppCompatActivity() {
         return true
     }
 
-    fun AutenticarUsuario(email: String, password: String) {
+/*    fun AutenticarUsuario(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -159,6 +161,49 @@ class ActividadLogin : AppCompatActivity() {
                     Toast.makeText(baseContext, task.exception!!.message, Toast.LENGTH_SHORT).show()
                 }
             }
+    }*/
+
+    private fun Authentication(){
+        buttonEntrar.setOnClickListener {
+            if(textEmail.text.isNotEmpty()&& textClave.text.isNotEmpty()){
+                Log.d("INFO", textEmail.text.toString())
+                Log.d("INFO", textClave.text.toString())
+                FirebaseAuth.getInstance()
+                    .signInWithEmailAndPassword(textEmail.text.toString(), textClave.text.toString())
+                    .addOnCompleteListener(this){task ->
+                    if(task.isSuccessful){
+                        showHome()
+                    } else{
+                        showAlert()
+                    }
+                }
+            } else {
+                showAlertEmpty()
+            }
+        }
+    }
+
+    private fun showAlert() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage("Se ha producido un error autenticando al Usuario")
+        builder.setPositiveButton("Aceptar", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun showAlertEmpty() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage("Campos de registro vacíos")
+        builder.setPositiveButton("Aceptar", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun showHome(){
+        val homeIntent = Intent(this, ActividadHome::class.java)
+        startActivity(homeIntent)
     }
 
 }
