@@ -37,11 +37,11 @@ class ActividadLogin : AppCompatActivity() {
         //Botón Login
         buttonEntrar = findViewById(R.id.botonLogin)
         //buttonEntrar.setOnClickListener {
-            //val intencion = Intent(this, ActividadHome::class.java)
-            //val builder = AlertDialog.Builder(this)
+        //val intencion = Intent(this, ActividadHome::class.java)
+        //val builder = AlertDialog.Builder(this)
 
-            // Validaciones
-            // Comprobación Email
+        // Validaciones
+        // Comprobación Email
 /*            if (!email.validateEmail()) {
                 textEmailLogin.setError("Correo Electrónico o Contraseña Incorrectos")
                 return@setOnClickListener
@@ -56,13 +56,13 @@ class ActividadLogin : AppCompatActivity() {
                     return@setOnClickListener
                 }
             }*/
-            //if (!ValidarDatosRequeridos())
-                //return@setOnClickListener
+        //if (!ValidarDatosRequeridos())
+        //return@setOnClickListener
 
 
-            //AutenticarUsuario(email, clave)
+        //AutenticarUsuario(email, clave)
 
-            Authentication()
+        Authentication()
 
 //            builder.setMessage(R.string.loremIpsum)
 //                .setPositiveButton(R.string.ok,
@@ -163,23 +163,25 @@ class ActividadLogin : AppCompatActivity() {
             }
     }*/
 
-    private fun Authentication(){
+    private fun Authentication() {
         buttonEntrar.setOnClickListener {
-            if(textEmail.text.isNotEmpty()&& textClave.text.isNotEmpty()){
-                Log.d("INFO", textEmail.text.toString())
-                Log.d("INFO", textClave.text.toString())
+            if (textEmail.text.isNotEmpty() && textClave.text.isNotEmpty()) {
                 FirebaseAuth.getInstance()
-                    .signInWithEmailAndPassword(textEmail.text.toString(), textClave.text.toString())
-                    .addOnCompleteListener(this){task ->
-                    if(task.isSuccessful){
-                        showHome()
-                    } else{
-                        showAlert()
+                    .signInWithEmailAndPassword(
+                        textEmail.text.toString(),
+                        textClave.text.toString()
+                    )
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            showHome()
+                        } else {
+                            showAlert()
+                        }
                     }
-                }
             } else {
                 showAlertEmpty()
             }
+
         }
     }
 
@@ -201,7 +203,7 @@ class ActividadLogin : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showHome(){
+    private fun showHome() {
         val homeIntent = Intent(this, ActividadHome::class.java)
         startActivity(homeIntent)
     }
