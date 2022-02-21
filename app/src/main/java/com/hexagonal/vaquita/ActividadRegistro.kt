@@ -16,10 +16,12 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.hexagonal.vaquita.entidades.Usuario
+import com.hexagonal.vaquita.gestionadorsubida.GestionadorDeSubida
 import com.hexagonal.vaquita.validador.Validador
 import java.io.IOException
 import java.net.URI
@@ -27,6 +29,7 @@ import java.net.URI
 class ActividadRegistro : AppCompatActivity() {
 
     val validador: Validador = Validador()
+    val gestionadorDeSubida: GestionadorDeSubida = GestionadorDeSubida()
     var imageViewSubirFotoURL: Uri? = null
     private lateinit var auth: FirebaseAuth
 
@@ -203,40 +206,7 @@ class ActividadRegistro : AppCompatActivity() {
             }
 
             if (mailValido && nombreValido && nombreDeUsuarioValido && telefonoValido && claveInicialValido && claveRepeticionValido) {
-                //Datos en firestore
                 subirImagen()
-                Log.d("EMAIL",textEmail.toString())
-                auth.createUserWithEmailAndPassword(
-                    textEmail.text.toString(),
-                    textClaveInicial.text.toString()
-                ).addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        val usuario: Usuario = Usuario(
-                            textNombre.text.toString(),
-                            textEmail.text.toString(),
-                            textNombreDeUsuario.text.toString(),
-                            textTelefono.text.toString(),
-                            imageViewSubirFotoURL.toString()
-                        )
-                        //builder del diálogo
-                        val builder = AlertDialog.Builder(this)
-                        builder.setMessage(R.string.exitoRegistro)
-                            .setPositiveButton(R.string.ok,
-                                DialogInterface.OnClickListener { dialog, id ->
-                                    //envío a inicio
-                                    val intencion = Intent(this, ActividadHome::class.java)
-                                    startActivity(intencion)
-                                })/*
-                .setNegativeButton(R.string.cancel,
-                    DialogInterface.OnClickListener { dialog, id ->
-                        // User cancelled the dialog
-                    })*/
-                        builder.create()
-                        builder.show()
-                    }
-                }
-
-
             } else {
                 Toast.makeText(this, "Registro fallido", Toast.LENGTH_LONG).show()
             }
@@ -269,6 +239,40 @@ class ActividadRegistro : AppCompatActivity() {
         )
     }
 
+    fun subirUsuario(){
+        //Datos en firestore
+        Log.d("EMAIL",imageViewSubirFotoURL.toString())
+        auth.createUserWithEmailAndPassword(
+            textEmail.text.toString(),
+            textClaveInicial.text.toString()
+        ).addOnCompleteListener(this) { task ->
+            if (task.isSuccessful) {
+                val usuario: Usuario = Usuario(
+                    textNombre.text.toString(),
+                    textEmail.text.toString(),
+                    textNombreDeUsuario.text.toString(),
+                    textTelefono.text.toString(),
+                    imageViewSubirFotoURL.toString()
+                )
+
+                if(gestionadorDeSubida.subirDatosDeUsuarioNuevo(usuario,Firebase.firestore)) {
+                    Toast.makeText(this, "Registro fallido", Toast.LENGTH_LONG).show()
+                    return@addOnCompleteListener
+                }
+                //builder del diálogo
+                val builder = AlertDialog.Builder(this)
+                builder.setMessage(R.string.exitoRegistro)
+                    .setPositiveButton(R.string.ok,
+                        DialogInterface.OnClickListener { dialog, id ->
+                            //envío a inicio
+                            val intencion = Intent(this, ActividadHome::class.java)
+                            startActivity(intencion)
+                        })
+                builder.create()
+                builder.show()
+            }
+        }
+    }
 
     fun subirImagen() {
         if (filePath != null) {
@@ -296,6 +300,8 @@ class ActividadRegistro : AppCompatActivity() {
                 } else {
                     Log.e("ERROR", task.toString())
                 }
+
+                subirUsuario()
             }
         }
 
@@ -338,6 +344,8 @@ class ActividadRegistro : AppCompatActivity() {
             }
         }
     }
+
+
 
 }
 
