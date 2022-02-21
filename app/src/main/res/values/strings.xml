@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">vaquita</string>
     <string name="tituloApp">Hagamos vaca</string>
-    <string name="hintUsuario">Nombre de Usuario</string>
+    <string name="hintEmailLogin">Correo Electrónico</string>
     <string name="hintClave">Contraseña</string>
     <string name="textOlvideClave">Olvidé mi contraseña</string>
     <string name="textLogin">Entrar</string>
@@ -77,5 +77,7 @@
     <string name="valor">Valor</string>
     <string name="descripcion">Descripcion</string>
     <string name="agregar">Agregar</string>
+    <string name="tituloRegistro">Regístrate</string>
+    <integer name="numeroMinimoDeCaracteresEnClave">8</integer>
 
 </resources>
