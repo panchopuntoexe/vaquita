@@ -205,8 +205,10 @@ class ActividadRegistro : AppCompatActivity() {
                 claveRepeticionValido = true
             }
 
+
             if (mailValido && nombreValido && nombreDeUsuarioValido && telefonoValido && claveInicialValido && claveRepeticionValido) {
                 subirImagen()
+                Toast.makeText(this, "Espere un momento", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Registro fallido", Toast.LENGTH_LONG).show()
             }
@@ -306,7 +308,7 @@ class ActividadRegistro : AppCompatActivity() {
         }
 
         else{
-            Log.d("MENSAJE", "FILE "+filePath)
+            Toast.makeText(this, "Debe subir una foto de perfil", Toast.LENGTH_LONG).show()
         }
     }
 
