@@ -77,5 +77,7 @@
     <string name="valor">Valor</string>
     <string name="descripcion">Descripcion</string>
     <string name="agregar">Agregar</string>
+    <string name="tituloRegistro">Regístrate</string>
+    <integer name="numeroMinimoDeCaracteresEnClave">8</integer>
 
 </resources>
