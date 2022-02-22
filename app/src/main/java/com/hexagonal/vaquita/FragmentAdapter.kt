@@ -3,8 +3,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.hexagonal.vaquita.adapters.GastoAdapter
 
-class FragmentAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+class FragmentAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle, onWalletListener: GastoAdapter.OnWalletListener) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
     override fun getItemCount(): Int {

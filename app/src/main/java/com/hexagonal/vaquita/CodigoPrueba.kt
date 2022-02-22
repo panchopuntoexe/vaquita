@@ -27,7 +27,7 @@ class CodigoPrueba : AppCompatActivity() {
     private lateinit var imageView: ImageView
 
     // Uri indicates, where the image will be picked from
-    private lateinit var filePath: Uri
+    private var filePath: Uri? =null
 
     // request code
     private val PICK_IMAGE_REQUEST = 22
@@ -122,11 +122,11 @@ class CodigoPrueba : AppCompatActivity() {
 
     fun subirImagen() {
         if (filePath != null) {
-            val fileNameArray = filePath.lastPathSegment?.split("/")
+            val fileNameArray = filePath!!.lastPathSegment?.split("/")
             val fileName = fileNameArray?.get(fileNameArray.size - 1)
             var storageRef = storage.reference
             val riversRef = storageRef.child("images/${fileName}")
-            var uploadTask = riversRef.putFile(filePath)
+            var uploadTask = riversRef.putFile(filePath!!)
             // Register observers to listen for when the download is done or if it fails
 //            uploadTask.addOnFailureListener {
 //                Toast.makeText(this, "Error al subir el archivo", Toast.LENGTH_SHORT).show()

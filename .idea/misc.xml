@@ -3,12 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Dave_/OneDrive/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_inicio.xml" value="0.10144927536231885" />
-        <entry key="..\:/Users/Dave_/OneDrive/Documents/GitHub/vaquita/app/src/main/res/layout/activity_home.xml" value="0.1796875" />
-        <entry key="..\:/Users/Dave_/OneDrive/Documents/GitHub/vaquita/app/src/main/res/layout/activity_main.xml" value="0.176" />
-        <entry key="..\:/Users/Dave_/OneDrive/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_settings.xml" value="0.4" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_compra.xml" value="0.36764705882352944" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_wallets.xml" value="0.1" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_participantes.xml" value="0.21458333333333332" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_pay.xml" value="0.21458333333333332" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_settings.xml" value="0.21458333333333332" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/wallet_card.xml" value="0.20520833333333333" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>
