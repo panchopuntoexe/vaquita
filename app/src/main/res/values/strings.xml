@@ -2,9 +2,12 @@
     <string name="app_name">vaquita</string>
     <string name="tituloApp">Hagamos vaca</string>
     <string name="hintEmailLogin">Correo Electrónico</string>
+    <string name="hintEmailRecuperar">Correo Electrónico</string>
     <string name="hintClave">Contraseña</string>
     <string name="textOlvideClave">Olvidé mi contraseña</string>
     <string name="textLogin">Entrar</string>
+    <string name="textRecuperar">Recuperar Contraseña</string>
+    <string name="hintRecuperar">Olvidé mi Contraseña</string>
     <string name="textRegistrarse">Registrarse</string>
     <string name="hintNombre">Nombre</string>
     <string name="hintMail">Correo electrónico</string>
@@ -77,5 +80,6 @@
     <string name="valor">Valor</string>
     <string name="descripcion">Descripcion</string>
     <string name="agregar">Agregar</string>
+    <string name="title_activity_actividad_recuperar">ActividadRecuperar</string>
 
 </resources>
