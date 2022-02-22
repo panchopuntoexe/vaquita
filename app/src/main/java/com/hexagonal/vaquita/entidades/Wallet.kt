@@ -12,9 +12,9 @@ data class Wallet(
     var fecha: String? = null,
     var lugar: String? = null,
     var creador: Usuario? = null,
-    var usuarios: List<Usuario>? = null,
-    var gastos: List<Gasto>? = null,
-    var pagos: List<Pago>? = null
+    var usuarios: ArrayList<Usuario>? = null,
+    var gastos: ArrayList<Gasto>? = null,
+    var pagos: ArrayList<Pago>? = null
 ) : Parcelable
 
 /*: Parcelable {
