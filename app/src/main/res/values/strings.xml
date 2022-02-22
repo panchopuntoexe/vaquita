@@ -81,5 +81,7 @@
     <string name="descripcion">Descripcion</string>
     <string name="agregar">Agregar</string>
     <string name="title_activity_actividad_recuperar">ActividadRecuperar</string>
+    <string name="tituloRegistro">Regístrate</string>
+    <integer name="numeroMinimoDeCaracteresEnClave">8</integer>
 
 </resources>
