@@ -3,6 +3,7 @@ package com.hexagonal.vaquita
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -41,9 +42,6 @@ class ActividadHome : AppCompatActivity() {
             val intencion = Intent(this,ActividadNuevaCartera::class.java)
             startActivity(intencion)
         }
-
-
-
 
 
         setupActionBarWithNavController(navController, appBarConfiguration)
