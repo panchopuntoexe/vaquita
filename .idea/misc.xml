@@ -11,8 +11,12 @@
         <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_pay.xml" value="0.21458333333333332" />
         <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_settings.xml" value="0.21458333333333332" />
         <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/wallet_card.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/juanp/AndroidStudioProjects/vaquita/app/src/main/res/layout/activity_actividad_registro.xml" value="0.1621376811594203" />
+        <entry key="..\:/Users/juanp/AndroidStudioProjects/vaquita/app/src/main/res/layout/activity_home.xml" value="0.151268115942029" />
+        <entry key="..\:/Users/juanp/AndroidStudioProjects/vaquita/app/src/main/res/layout/activity_wallets.xml" value="0.16576086956521738" />
+        <entry key="..\:/Users/juanp/AndroidStudioProjects/vaquita/app/src/main/res/layout/fragment_settings.xml" value="0.33" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>
