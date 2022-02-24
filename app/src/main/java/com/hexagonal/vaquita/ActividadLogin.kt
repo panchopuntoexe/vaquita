@@ -1,16 +1,20 @@
 package com.hexagonal.vaquita
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.hexagonal.vaquita.datos.FileExternalManager
+import com.hexagonal.vaquita.datos.FileHandler
+
 
 
 class ActividadLogin : AppCompatActivity() {
@@ -19,6 +23,9 @@ class ActividadLogin : AppCompatActivity() {
     lateinit var textEmail: EditText
     lateinit var textClave: EditText
     lateinit var buttonEntrar: Button
+    lateinit var checkBoxRecordarme: CheckBox
+    lateinit var manejadorArchivo: FileHandler
+    lateinit var botonRecuperar: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,58 +33,23 @@ class ActividadLogin : AppCompatActivity() {
         //Inicialización de variables
         textEmail = findViewById(R.id.textEmailLogin)
         textClave = findViewById(R.id.textClave)
+        checkBoxRecordarme = findViewById(R.id.checkBoxRecordarme)
+        buttonEntrar = findViewById(R.id.botonLogin)
+        manejadorArchivo = FileExternalManager(this)
+        botonRecuperar = findViewById(R.id.buttonRecuperar)
 
         //Inicializando Firebase Auth
         auth = Firebase.auth
         val email = textEmail.text.toString()
         val clave = textClave.text.toString()
 
-        //leerDatos()
+        // Leyendo Datos de Preferencias
+        LeerDatosDePreferencias()
 
         //Botón Login
-        buttonEntrar = findViewById(R.id.botonLogin)
-        //buttonEntrar.setOnClickListener {
-        //val intencion = Intent(this, ActividadHome::class.java)
-        //val builder = AlertDialog.Builder(this)
-
-        // Validaciones
-        // Comprobación Email
-/*            if (!email.validateEmail()) {
-                textEmailLogin.setError("Correo Electrónico o Contraseña Incorrectos")
-                return@setOnClickListener
-                // Comprobación Longitud Contraseñas
-                if (clave.length < 8) {
-                    Toast.makeText(
-                        this,
-                        "Correo Electrónico o Contraseña Incorrectos",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    true
-                    return@setOnClickListener
-                }
-            }*/
-        //if (!ValidarDatosRequeridos())
-        //return@setOnClickListener
-
-
-        //AutenticarUsuario(email, clave)
-
         Authentication()
 
-//            builder.setMessage(R.string.loremIpsum)
-//                .setPositiveButton(R.string.ok,
-//                    DialogInterface.OnClickListener { dialog, id ->
-//                        startActivity(intencion)
-//                    })
-//                .setNegativeButton(R.string.cancel,
-//                    DialogInterface.OnClickListener { dialog, id ->
-//                        return@OnClickListener
-//                    })
-//            builder.create()
-//            builder.show()
-        //}
-
-        // boton registro
+        // Botón Registro
         val botonRegistro = findViewById<Button>(R.id.botonRegistro)
         botonRegistro.setOnClickListener {
             //Toast.makeText(this, "Registro exitoso", Toast.LENGTH_LONG).show()
@@ -86,11 +58,16 @@ class ActividadLogin : AppCompatActivity() {
             startActivity(intencion)
         }
 
+        //Boton Recuperar
+        botonRecuperar.setOnClickListener{
+            val intencion = Intent(this, ActividadRecuperar::class.java)
+            startActivity(intencion)
+        }
     }
 
     // FUNCIONES
 
-//    fun probarBase() {
+    //    fun probarBase() {
 //        val db = Firebase.firestore
 //        val user = hashMapOf(
 //            "Nombre" to "Ada",
@@ -107,22 +84,7 @@ class ActividadLogin : AppCompatActivity() {
 //            }
 //    }
 //
-//    fun leerDatos() {
-//        val db = Firebase.firestore
-//        val TAG = "Usuarios: "
-//
-//        db.collection("Usuarios").whereArrayContains("Wallets", "Sh2JdyEeLvu1LORENjNm")
-//            .get()
-//            .addOnSuccessListener { result ->
-//                for (document in result) {
-//                    Log.d(TAG, "${document}")
-//                }
-////                Log.d(TAG, "${result}")
-//            }
-//            .addOnFailureListener { exception ->
-//                Log.w(TAG, "Error getting documents.", exception)
-//            }
-//    }
+
 
     // Función Validar Email
     private fun ValidarDatosRequeridos(): Boolean {
@@ -146,26 +108,10 @@ class ActividadLogin : AppCompatActivity() {
         return true
     }
 
-/*    fun AutenticarUsuario(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Log.d("EXTRA_LOGIN", "signInWithEmail:success")
-                    //Si pasa validación de datos requeridos, ir a pantalla home
-                    val intencion = Intent(this, ActividadHome::class.java)
-                    intencion.putExtra("EXTRA_LOGIN", auth.currentUser!!.email)
-                    startActivity(intencion)
-                    //finish()
-                } else {
-                    Log.w("EXTRA_LOGIN", "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, task.exception!!.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-    }*/
-
     private fun Authentication() {
         buttonEntrar.setOnClickListener {
             if (textEmail.text.isNotEmpty() && textClave.text.isNotEmpty()) {
+                GuardarDatosEnPreferencias()
                 FirebaseAuth.getInstance()
                     .signInWithEmailAndPassword(
                         textEmail.text.toString(),
@@ -181,7 +127,6 @@ class ActividadLogin : AppCompatActivity() {
             } else {
                 showAlertEmpty()
             }
-
         }
     }
 
@@ -208,4 +153,24 @@ class ActividadLogin : AppCompatActivity() {
         startActivity(homeIntent)
     }
 
+    private fun GuardarDatosEnPreferencias() {
+        val email = textEmail.text.toString()
+        val clave = textClave.text.toString()
+        val listadoAGrabar: Pair<String, String>
+        if (checkBoxRecordarme.isChecked) {
+            listadoAGrabar = email to clave
+        } else {
+            listadoAGrabar = "" to ""
+        }
+        manejadorArchivo.SaveInformation(listadoAGrabar)
+    }
+
+    private fun LeerDatosDePreferencias() {
+        val listadoLeido = manejadorArchivo.ReadInformation()
+        if (listadoLeido.first != null) {
+            checkBoxRecordarme.isChecked = true
+        }
+        textEmail.setText(listadoLeido.first)
+        textClave.setText(listadoLeido.second)
+    }
 }
