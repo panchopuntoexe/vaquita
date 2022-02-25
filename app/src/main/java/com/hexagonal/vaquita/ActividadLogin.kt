@@ -30,6 +30,7 @@ class ActividadLogin : AppCompatActivity() {
         //Inicializando Firebase Auth
         auth = Firebase.auth
         val email = textEmail.text.toString()
+        textEmail.setText("francisco.garcia@epn.edu.ec")
         val clave = textClave.text.toString()
 
         //leerDatos()

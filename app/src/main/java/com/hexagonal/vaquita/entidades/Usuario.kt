@@ -11,5 +11,6 @@ data class Usuario(
     var correo: String? = null,
     var username: String? = null,
     var telefono: String? = null,
-    var foto: String? = null
+    var foto: String? = null,
+    var wallets:MutableMap<String,Boolean>?=null
 ) : Parcelable

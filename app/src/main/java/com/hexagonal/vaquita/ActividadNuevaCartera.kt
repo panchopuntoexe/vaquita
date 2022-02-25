@@ -6,24 +6,26 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.hexagonal.vaquita.entidades.Gasto
 import com.hexagonal.vaquita.entidades.Pago
 import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Wallet
 import com.hexagonal.vaquita.gestionadorsubida.GestionadorDeSubida
 import com.hexagonal.vaquita.validador.Validador
+import java.io.IOException
 
 class ActividadNuevaCartera : AppCompatActivity() {
     val validador: Validador = Validador()
@@ -44,6 +46,8 @@ class ActividadNuevaCartera : AppCompatActivity() {
     lateinit var textNombre: EditText
     lateinit var textFecha: EditText
     lateinit var textLugar: EditText
+
+    private lateinit var userauth : FirebaseUser
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_actividad_nueva_cartera)
@@ -59,7 +63,7 @@ class ActividadNuevaCartera : AppCompatActivity() {
         textNombre.setText("Listening Party de Comic")
         var nombreValido: Boolean = false
         textNombre.setOnClickListener OnClickListener@{
-            if (!(textNombre.text.toString()
+            if ((textNombre.text.toString()
                     .isNotEmpty() && validador.validarString(textNombre.text.toString()))
             ) {
                 textNombre.setError("Nombre inválido")
@@ -107,7 +111,7 @@ class ActividadNuevaCartera : AppCompatActivity() {
         var botonNuevaWallet = findViewById<Button>(R.id.botonContinuar)
         botonNuevaWallet.setOnClickListener {
 
-            if (!(textNombre.text.toString()
+            if ((textNombre.text.toString()
                     .isNotEmpty() && validador.validarString(textNombre.text.toString()))
             ) {
                 textNombre.setError("Nombre inválido")
@@ -142,30 +146,45 @@ class ActividadNuevaCartera : AppCompatActivity() {
         }
     }
 
-    fun subirUsuario() {
-
-        val usuario: Usuario? =null;//TODO leer este usuario de la base de datos
-        var mapaVacio:List<Usuario> =  emptyList();
+    fun subirWallet() {
+        var mapaVacio: List<Usuario> =  emptyList();
         var mapaVacioGasto:List<Gasto> =  emptyList();
         var mapaVacioPago:List<Pago> =  emptyList();
-        val wallet: Wallet = Wallet(textNombre.text.toString(),textFecha.text.toString(),textLugar.text.toString(),
-        usuario,mapaVacio,mapaVacioGasto,mapaVacioPago)
 
-        if (gestionadorDeSubida.subirDatosDeUsuarioNuevo(usuario, Firebase.firestore)) {
-            Toast.makeText(this, "Registro fallido", Toast.LENGTH_LONG).show()
-            return@addOnCompleteListener
-        }
-        //builder del diálogo
-        val builder = AlertDialog.Builder(this)
-        builder.setMessage(R.string.exitoRegistro)
-            .setPositiveButton(R.string.ok,
-                DialogInterface.OnClickListener { dialog, id ->
-                    //envío a inicio
-                    val intencion = Intent(this, ActividadContactos::class.java)
-                    startActivity(intencion)
-                })
-        builder.create()
-        builder.show()
+        userauth = Firebase.auth.currentUser!!
+        var userEmail=userauth.email.toString()
+
+        val db = Firebase.firestore
+        var userId:String
+        db.collection("Usuarios")
+            .whereEqualTo("correo", userEmail)
+            .get()
+            .addOnSuccessListener { result ->
+                val document = result.first()
+                userId = document.id.toString();
+                val wallet: Wallet = Wallet(textNombre.text.toString(),textFecha.text.toString(),textLugar.text.toString(),
+                    userId,mapaVacio,mapaVacioGasto,mapaVacioPago,imageViewSubirFotoURL.toString())
+
+                if (!gestionadorDeSubida.subirDatosDeWalletNueva(wallet, Firebase.firestore)) {
+                    Toast.makeText(this, "Registro fallido", Toast.LENGTH_LONG).show()
+                }
+                else {
+                    //builder del diálogo
+                    val builder = AlertDialog.Builder(this)
+                    builder.setMessage(R.string.exitoRegistro)
+                        .setPositiveButton(R.string.ok,
+                            DialogInterface.OnClickListener { dialog, id ->
+                                //envío a inicio
+                                val intencion = Intent(this, ActividadContactos::class.java)
+                                startActivity(intencion)
+                            })
+                    builder.create()
+                    builder.show()
+                }
+            }
+
+
+
 
     }
 
@@ -206,7 +225,7 @@ class ActividadNuevaCartera : AppCompatActivity() {
                     imageViewSubirFotoURL = downloadUri
                     Glide.with(this).load(imageViewSubirFotoURL.toString())
                         .into(imageViewSubirFoto!!)
-                    //Log.d("MENSAJE", downloadUri.toString())
+                    subirWallet()
                 } else {
                     Log.e("ERROR", task.toString())
                 }
@@ -215,5 +234,42 @@ class ActividadNuevaCartera : AppCompatActivity() {
             Toast.makeText(this, "Debe subir una foto de perfil", Toast.LENGTH_LONG).show()
         }
     }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(
+            requestCode,
+            resultCode,
+            data
+        )
+
+        // checking request code and result code
+        // if request code is PICK_IMAGE_REQUEST and
+        // resultCode is RESULT_OK
+        // then set image in the image view
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+
+            // Get the Uri of data
+            filePath = data.data!!
+            try {
+
+                // Setting image on image view using Bitmap
+                val bitmap = MediaStore.Images.Media
+                    .getBitmap(
+                        contentResolver,
+                        filePath
+                    )
+                imageViewSubirFoto?.setImageBitmap(bitmap)
+            } catch (e: IOException) {
+                // Log the exception
+                e.printStackTrace()
+            }
+        }
+    }
+
+
 
 }
