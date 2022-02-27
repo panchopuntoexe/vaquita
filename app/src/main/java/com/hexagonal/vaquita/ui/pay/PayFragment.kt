@@ -2,18 +2,32 @@ package com.hexagonal.vaquita.ui.pay
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.hexagonal.vaquita.ActividadCompra
+import com.hexagonal.vaquita.R
+import com.hexagonal.vaquita.adapters.WalletAdapter
 import com.hexagonal.vaquita.databinding.FragmentPayBinding
+import com.hexagonal.vaquita.entidades.Wallet
+import kotlinx.coroutines.launch
 
-class PayFragment : Fragment() {
+class PayFragment : Fragment(), WalletAdapter.OnWalletListener {
 
     private lateinit var payViewModel: PayViewModel
     private var _binding: FragmentPayBinding? = null
+    private lateinit var wallets: List<Wallet>
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -30,11 +44,25 @@ class PayFragment : Fragment() {
         _binding = FragmentPayBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val cardView1 = binding.cardView1
-        cardView1.setOnClickListener {
-            val intencion =  Intent(this.activity, ActividadCompra::class.java)
-            startActivity(intencion)
-        }
+        payViewModel.userActual?.observe(viewLifecycleOwner, Observer {
+            payViewModel.viewModelScope.launch {
+                val parser = JsonParser()
+                val jsonElement = parser.parse(it.wallets.toString())
+                val carteras: JsonObject = jsonElement.asJsonObject
+                payViewModel._userWallets.value = payViewModel.getWallets(carteras.keySet())!!
+            }
+
+        })
+
+        payViewModel.wallets?.observe(viewLifecycleOwner, Observer {
+            wallets = it
+            binding.recyclerViewPay.adapter =
+                WalletAdapter(this.requireActivity(), it, 10.25, this)
+            binding.recyclerViewPay.layoutManager =
+                LinearLayoutManager(this.requireActivity())
+            binding.recyclerViewPay.setHasFixedSize(true)
+        })
+
 
         return root
     }
@@ -42,5 +70,18 @@ class PayFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onWalletClick(position: Int) {
+        val wallet = wallets.get(position)
+        val intencion = Intent(this.requireActivity(), ActividadCompra::class.java)
+
+        try {
+            intencion.putExtra("wallet", wallet)
+            startActivity(intencion)
+            Log.d("todobien", wallet.toString())
+        } catch (e: Exception) {
+            Log.d("ErrorWallet", e.toString())
+        }
     }
 }
