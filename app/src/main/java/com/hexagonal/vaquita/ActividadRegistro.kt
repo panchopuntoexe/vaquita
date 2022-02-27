@@ -254,7 +254,8 @@ class ActividadRegistro : AppCompatActivity() {
                     textEmail.text.toString(),
                     textNombreDeUsuario.text.toString(),
                     textTelefono.text.toString(),
-                    foto=imageViewSubirFotoURL.toString()
+                    imageViewSubirFotoURL.toString(),
+                    emptyMap<String,Boolean>() as MutableMap<String, Boolean>
                 )
 
                 if(gestionadorDeSubida.subirDatosDeUsuarioNuevo(usuario,Firebase.firestore)) {

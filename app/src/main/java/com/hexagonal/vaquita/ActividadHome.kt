@@ -1,26 +1,15 @@
 package com.hexagonal.vaquita
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FieldPath
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.hexagonal.vaquita.databinding.ActivityHomeBinding
-import com.hexagonal.vaquita.entidades.Usuario
-import com.hexagonal.vaquita.entidades.Wallet
 
 class ActividadHome : AppCompatActivity() {
 

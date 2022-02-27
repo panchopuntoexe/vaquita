@@ -56,14 +56,7 @@ class HomeFragment : Fragment(), WalletAdapter.OnWalletListener {
             )
         )
 
-        try {
-
-            // Log.d("Email", userEmail.toString())
-        } catch (e: Exception) {
-            Log.d("Error", e.toString())
-        }
         perfil = binding.imageProfile
-
 
         homeViewModel.userActual?.observe(viewLifecycleOwner, Observer {
             textBienvenida = binding.textBienvenida
@@ -71,7 +64,6 @@ class HomeFragment : Fragment(), WalletAdapter.OnWalletListener {
             Glide.with(this).load(it.foto).into(perfil)
 
             homeViewModel.viewModelScope.launch {
-                val userEmail: String? = Firebase.auth.currentUser?.email
                 val parser = JsonParser()
                 val jsonElement = parser.parse(it.wallets.toString())
                 val carteras: JsonObject = jsonElement.asJsonObject

@@ -12,8 +12,8 @@ data class Usuario(
     var correo: String? = null,
     var username: String? = null,
     var telefono: String? = null,
+    var foto: String? = null,
     var wallets: Map<String,Boolean>? = null,
-    var foto: String? = null
 ) : Parcelable {
     companion object {
         fun QuerySnapshot.toUser(): Usuario? {
