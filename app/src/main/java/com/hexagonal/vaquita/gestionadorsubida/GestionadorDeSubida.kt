@@ -69,7 +69,7 @@ class GestionadorDeSubida {
                     .get()
                     .addOnSuccessListener { document ->
                         userfb = document.toObject(Usuario::class.java)!!
-                        userfb.wallets?.put(documentReference.id,true)
+                        userfb.wallets?.plus(Pair(documentReference.id,true))
                         db.collection("Usuarios").document(wallet.creador!!)
                             .update("wallets", userfb.wallets)
                             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }

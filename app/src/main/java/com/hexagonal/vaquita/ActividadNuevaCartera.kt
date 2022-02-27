@@ -147,9 +147,9 @@ class ActividadNuevaCartera : AppCompatActivity() {
     }
 
     fun subirWallet() {
-        var mapaVacio: List<Usuario> =  emptyList();
-        var mapaVacioGasto:List<Gasto> =  emptyList();
-        var mapaVacioPago:List<Pago> =  emptyList();
+        var mapaVacio: Map<String, Boolean> =  emptyMap();
+        var mapaVacioGasto:Map<String, Boolean> =  emptyMap();
+        var mapaVacioPago:Map<String, Boolean> =  emptyMap();
 
         userauth = Firebase.auth.currentUser!!
         var userEmail=userauth.email.toString()

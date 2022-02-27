@@ -19,6 +19,7 @@ data class Wallet(
     var usuarios: Map<String,Boolean>? = null,
     var gastos: Map<String,Boolean>? = null,
     var pagos: Map<String,Boolean>? = null,
+    var foto: String? = null
 ) : Parcelable
 
 {
