@@ -7,16 +7,6 @@
     android:layout_margin="24dp"
     tools:context=".ActividadNuevaCartera">
 
-    <ImageView
-        android:id="@+id/imageVacaLogo4"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="150dp"
-        app:layout_constraintBottom_toTopOf="@id/textTitulo4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/vacalogo" />
 
     <TextView
         android:id="@+id/textTitulo4"
@@ -25,10 +15,22 @@
         android:text="@string/tituloNuevaWallet"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/textWalletName"
+        app:layout_constraintBottom_toTopOf="@+id/imageSubirImagenWallet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageVacaLogo4" />
+        app:layout_constraintTop_toTopOf="parent"  />
+
+    <ImageView
+        android:id="@+id/imageSubirImagenWallet"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/textWalletName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textTitulo4"
+        app:srcCompat="@drawable/subirfotodeperfil" />
+
+
 
     <EditText
         android:id="@+id/textWalletName"
@@ -41,7 +43,7 @@
         app:layout_constraintBottom_toTopOf="@id/textFecha"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textTitulo4" />
+        app:layout_constraintTop_toBottomOf="@id/imageSubirImagenWallet" />
 
     <EditText
         android:id="@+id/textFecha"
@@ -81,4 +83,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textLugar" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
