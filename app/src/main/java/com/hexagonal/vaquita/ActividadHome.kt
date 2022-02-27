@@ -1,20 +1,31 @@
 package com.hexagonal.vaquita
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.TextView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.hexagonal.vaquita.databinding.ActivityHomeBinding
+import com.hexagonal.vaquita.entidades.Usuario
+import com.hexagonal.vaquita.entidades.Wallet
 
 class ActividadHome : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +36,8 @@ class ActividadHome : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_home)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,
@@ -37,14 +48,21 @@ class ActividadHome : AppCompatActivity() {
         )
 
         // view add
-        var add = findViewById<View>(R.id.floatingActionButton)
+        val add = findViewById<View>(R.id.floatingActionButton)
         add.setOnClickListener{
             val intencion = Intent(this,ActividadNuevaCartera::class.java)
             startActivity(intencion)
         }
 
 
+
+
+
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
+
+
 }

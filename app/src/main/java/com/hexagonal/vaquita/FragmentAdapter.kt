@@ -12,7 +12,7 @@ class FragmentAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
     val onWalletListener: GastoAdapter.OnWalletListener,
-    val usuarios: ArrayList<Usuario>
+    val usuarios: Map<String,Boolean>?
 ) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 

@@ -83,5 +83,6 @@
     <string name="title_activity_actividad_recuperar">ActividadRecuperar</string>
     <string name="tituloRegistro">Regístrate</string>
     <integer name="numeroMinimoDeCaracteresEnClave">8</integer>
+    <string name="bienvenido">Bienvenido</string>
 
 </resources>

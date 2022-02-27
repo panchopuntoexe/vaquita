@@ -254,7 +254,7 @@ class ActividadRegistro : AppCompatActivity() {
                     textEmail.text.toString(),
                     textNombreDeUsuario.text.toString(),
                     textTelefono.text.toString(),
-                    imageViewSubirFotoURL.toString()
+                    foto=imageViewSubirFotoURL.toString()
                 )
 
                 if(gestionadorDeSubida.subirDatosDeUsuarioNuevo(usuario,Firebase.firestore)) {

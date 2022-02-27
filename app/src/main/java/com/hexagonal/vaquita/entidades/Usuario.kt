@@ -1,9 +1,10 @@
 package com.hexagonal.vaquita.entidades
 
 import android.os.Parcelable
+import android.util.Log
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.Serializable
-import org.parceler.Parcel
 
 @Parcelize
 data class Usuario(
@@ -11,5 +12,27 @@ data class Usuario(
     var correo: String? = null,
     var username: String? = null,
     var telefono: String? = null,
+    var wallets: Map<String,Boolean>? = null,
     var foto: String? = null
-) : Parcelable
+) : Parcelable {
+    companion object {
+        fun QuerySnapshot.toUser(): Usuario? {
+            try {
+                return this.first().toObject(Usuario::class.java)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error converting user profile", e)
+                return null
+            }
+        }
+
+        fun DocumentSnapshot.toUser(): Usuario? {
+            try {
+                return this.toObject(Usuario::class.java)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error converting user profile", e)
+                return null
+            }
+        }
+        private const val TAG = "User"
+    }
+}

@@ -11,7 +11,7 @@ import com.hexagonal.vaquita.entidades.Wallet
 
 class WalletAdapter(
     private val context: Activity,
-    private val wallets: ArrayList<Wallet>,
+    private val wallets: List<Wallet>,
     private val deuda: Double,
     val onWalletListener: OnWalletListener
 ) :

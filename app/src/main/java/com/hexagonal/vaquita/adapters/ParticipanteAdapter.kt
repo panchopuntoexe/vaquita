@@ -1,17 +1,22 @@
 package com.hexagonal.vaquita.adapters
 
 import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FieldPath
 import com.hexagonal.vaquita.R
 import com.hexagonal.vaquita.entidades.Usuario
+import com.hexagonal.vaquita.entidades.Wallet
+import com.hexagonal.vaquita.entidades.Wallet.Companion.toWallet
+import kotlinx.coroutines.tasks.await
 
 class ParticipanteAdapter(
     private val context: Activity,
-    private val wallets: ArrayList<Usuario>,
+    private val usuarios: List<Usuario>,
     private val deuda: Double,
     val onWalletListener: GastoAdapter.OnWalletListener?
 ) :
@@ -26,14 +31,14 @@ class ParticipanteAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
-            textViewNombreWallet.text = "${wallets[position].nombre}"
-            textViewFechaWallet.text = "${wallets[position].correo}"
+            textViewNombreWallet.text = "${usuarios[position].nombre}"
+            textViewFechaWallet.text = "${usuarios[position].correo}"
             textViewDeudaWallet.text = "\$-${deuda.toString()}"
         }
     }
 
     override fun getItemCount(): Int {
-        return wallets.size
+        return usuarios.size
     }
 
     class ViewHolder(val view: View, val onWalletListener: GastoAdapter.OnWalletListener?) :

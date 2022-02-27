@@ -2,6 +2,9 @@ package com.hexagonal.vaquita.entidades
 
 
 import android.os.Parcelable
+import android.util.Log
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import org.parceler.Parcel
@@ -11,39 +14,23 @@ data class Wallet(
     var nombre: String? = null,
     var fecha: String? = null,
     var lugar: String? = null,
-    var creador: Usuario? = null,
-    var usuarios: ArrayList<Usuario>? = null,
-    var gastos: ArrayList<Gasto>? = null,
-    var pagos: ArrayList<Pago>? = null
+    var creador: String? = null,
+    //var usuarios: ArrayList<Usuario>? = null,
+    var usuarios: Map<String,Boolean>? = null,
+    var gastos: Map<String,Boolean>? = null,
+    var pagos: Map<String,Boolean>? = null,
 ) : Parcelable
 
-/*: Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        TODO("creador"),
-        TODO("usuarios"),
-        TODO("gastos"),
-        TODO("pagos")
-    ) {
-    }
-
-    override fun describeContents(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun writeToParcel(dest: Parcel?, flags: Int) {
-        TODO("Not yet implemented")
-    }
-
-    companion object CREATOR : Parcelable.Creator<Wallet> {
-        override fun createFromParcel(parcel: Parcel): Wallet {
-            return Wallet(parcel)
+{
+    companion object {
+        fun DocumentSnapshot.toWallet(): Wallet? {
+            try {
+                return this.toObject(Wallet::class.java)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error converting user profile", e)
+                return null
+            }
         }
-
-        override fun newArray(size: Int): Array<Wallet?> {
-            return arrayOfNulls(size)
-        }
+        private const val TAG = "User"
     }
-}*/
+}
