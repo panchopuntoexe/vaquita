@@ -12,7 +12,8 @@ class FragmentAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
     val onWalletListener: GastoAdapter.OnWalletListener,
-    val usuarios: Map<String,Boolean>?
+    val usuarios: Map<String, Boolean>?,
+    val gastos: Map<String, Boolean>?,
 ) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
@@ -23,7 +24,7 @@ class FragmentAdapter(
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> {
-                GastosFragment()
+                GastosFragment(gastos, onWalletListener)
             }
             1 -> {
                 ParticipantesFragment(usuarios, onWalletListener)

@@ -38,29 +38,18 @@ class ParticipantesFragment(
     val participantes: Map<String, Boolean>?,
     val onWalletListener: GastoAdapter.OnWalletListener
 ) : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
     val db = Firebase.firestore
     val TAG = "ErrorUsuario"
-
     val _userWallets = MutableLiveData<List<Usuario>>()
     var usuarios: LiveData<List<Usuario>>? = _userWallets
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            _userWallets.value = getWallets(participantes)!!
-        }
     }
 
-    suspend fun getWallets(participantes: Map<String, Boolean>?): List<Usuario>? {
+    suspend fun getUsers(): List<Usuario>? {
         val listaWallets = ArrayList<String>()
 
         if (participantes != null) {
@@ -68,6 +57,7 @@ class ParticipantesFragment(
                 listaWallets.add(clave)
             }
         }
+        Log.d("Participantes", listaWallets.toString())
         return try {
             db.collection("Usuarios")
                 .whereIn(FieldPath.documentId(), listaWallets)
@@ -87,14 +77,19 @@ class ParticipantesFragment(
         val view: View = inflater.inflate(R.layout.fragment_participantes, container, false)
         val recycleViewParticipantes: RecyclerView =
             view.findViewById(R.id.recycleViewParticipantes)
+        viewLifecycleOwner.lifecycleScope.launch {
+            _userWallets.value = getUsers()!!
 
+        }
         usuarios?.observe(viewLifecycleOwner, Observer {
-            recycleViewParticipantes?.adapter =
+            recycleViewParticipantes.adapter =
                 ParticipanteAdapter(this.requireActivity(), it, 10.25, onWalletListener)
-            recycleViewParticipantes?.layoutManager =
+            recycleViewParticipantes.layoutManager =
                 LinearLayoutManager(this.requireActivity())
-            recycleViewParticipantes?.setHasFixedSize(true)
+            recycleViewParticipantes.setHasFixedSize(true)
         })
+
+
 
 
         // Inflate the layout for this fragment

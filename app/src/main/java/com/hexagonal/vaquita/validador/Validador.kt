@@ -2,6 +2,8 @@ package com.hexagonal.vaquita.validador
 
 import android.telephony.PhoneNumberUtils
 import android.util.Patterns
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.regex.Pattern
 
 class Validador {
@@ -35,4 +37,6 @@ class Validador {
     public fun validarTelefono(telefono:String):Boolean{
         return PhoneNumberUtils.isGlobalPhoneNumber(telefono)
     }
+
+
 }

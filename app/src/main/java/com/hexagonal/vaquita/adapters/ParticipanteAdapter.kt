@@ -22,10 +22,11 @@ class ParticipanteAdapter(
 ) :
     RecyclerView.Adapter<ParticipanteAdapter.ViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.wallet_card, parent, false)
+
+        Log.d("UsuariosWW", usuarios.toString())
         return ViewHolder(view, onWalletListener)
     }
 
@@ -47,11 +48,9 @@ class ParticipanteAdapter(
         val textViewFechaWallet = view.findViewById<TextView>(R.id.textViewFechaWallet)
         val textViewDeudaWallet = view.findViewById<TextView>(R.id.textViewDeudaWallet)
 
-
         init {
             view.setOnClickListener(this)
         }
-
         override fun onClick(v: View?) {
             onWalletListener?.onWalletClick(adapterPosition)
         }

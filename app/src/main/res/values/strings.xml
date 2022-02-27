@@ -62,7 +62,8 @@
     <string name="textGastos">Gastos</string>
     <string name="pagar">Pagar</string>
     <string name="paypal">PayPal</string>
-    <string name="textTarjeta">Tarjeta de Crédito</string>
+    <string name="tarjeta">Tarjeta de Crédito</string>
+    <string name="efectivo">Efectivo</string>
     <string name="textSeleccioneMetodo">Seleccione un método de pago</string>
     <string name="Visa">Visa</string>
     <string name="cantidadAPagar">Cantidad a pagar:</string>
@@ -73,7 +74,7 @@
     <string name="hintCCV">CCV</string>
     <string name="hintPostal">Numero Postal</string>
     <string name="comic">Gran Premier de Comic</string>
-    <string name="date">12:00 am 21 dec 2021</string>
+    <string name="date">21/12/2021</string>
     <string name="price">$ 15.99</string>
     <string name="compra">El Origen</string>
     <string name="titulo">Titulo</string>

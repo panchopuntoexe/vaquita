@@ -58,8 +58,5 @@ class FileExternalManager(val actividad: Activity): FileHandler{
         }catch (e:Exception){
             return "" to ""
         }
-
-
     }
-
 }

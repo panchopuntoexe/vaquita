@@ -33,13 +33,13 @@ class ActividadCompra : AppCompatActivity(), GastoAdapter.OnWalletListener {
         textLugar2.setText(wallet?.lugar)
 
 
-        val adapter =
-            wallet?.usuarios?.let {
-                FragmentAdapter(
-                    supportFragmentManager, lifecycle, this,
-                    it
-                )
-            }
+        val adapter = FragmentAdapter(
+            supportFragmentManager, lifecycle, this,
+            wallet?.users,
+            wallet?.gastos
+        )
+
+
         viewPager2.adapter = adapter
         TabLayoutMediator(tablayout, viewPager2) { tab, position ->
             when (position) {

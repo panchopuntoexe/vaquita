@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagonal.vaquita.R
+import com.hexagonal.vaquita.entidades.Gasto
 import com.hexagonal.vaquita.entidades.Wallet
 
 class GastoAdapter(
     private val context: Activity,
-    private val wallets: ArrayList<Wallet>,
-    private val deuda: Double,
+    private val gastos: List<Gasto>,
     val onWalletListener: OnWalletListener
 ) :
     RecyclerView.Adapter<GastoAdapter.ViewHolder>() {
@@ -20,27 +20,27 @@ class GastoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.wallet_card, parent, false)
+            .inflate(R.layout.gasto_card, parent, false)
         return ViewHolder(view, onWalletListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
-            textViewNombreWallet.text = "${wallets[position].nombre}"
-            textViewFechaWallet.text = "${wallets[position].fecha}"
-            textViewDeudaWallet.text = "\$-${deuda.toString()}"
+            textViewNombreGasto.text = "${gastos[position].nombre}"
+            textViewFechaGasto.text = "${gastos[position].fecha}"
+            textViewValorGasto.text = "${gastos[position].valor}"
         }
     }
 
     override fun getItemCount(): Int {
-        return wallets.size
+        return gastos.size
     }
 
     class ViewHolder(val view: View, val onWalletListener: OnWalletListener) :
         RecyclerView.ViewHolder(view), View.OnClickListener {
-        val textViewNombreWallet = view.findViewById<TextView>(R.id.textViewNombreWallet)
-        val textViewFechaWallet = view.findViewById<TextView>(R.id.textViewFechaWallet)
-        val textViewDeudaWallet = view.findViewById<TextView>(R.id.textViewDeudaWallet)
+        val textViewNombreGasto = view.findViewById<TextView>(R.id.textViewNombreGasto)
+        val textViewFechaGasto = view.findViewById<TextView>(R.id.textViewFechaGasto)
+        val textViewValorGasto = view.findViewById<TextView>(R.id.textViewValorGasto)
 
 
         init {

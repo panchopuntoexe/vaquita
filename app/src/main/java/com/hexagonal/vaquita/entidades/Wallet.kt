@@ -16,7 +16,7 @@ data class Wallet(
     var lugar: String? = null,
     var creador: String? = null,
     //var usuarios: ArrayList<Usuario>? = null,
-    var usuarios: Map<String,Boolean>? = null,
+    var users: Map<String,Boolean>? = null,
     var gastos: Map<String,Boolean>? = null,
     var pagos: Map<String,Boolean>? = null,
 ) : Parcelable

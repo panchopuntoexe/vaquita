@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
+import androidx.cardview.widget.CardView
 
 class ActividadMetodoDePago : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +20,7 @@ class ActividadMetodoDePago : AppCompatActivity() {
         }
 
         // boton  tarjeta
-        var botonTarjeta = findViewById<Button>(R.id.botonTarjeta)
+        var botonTarjeta: CardView = findViewById(R.id.btnTarjetaCredito)
         botonTarjeta.setOnClickListener{
             val intencion = Intent(this,ActividadTarjetaDeCredito::class.java)
             startActivity(intencion)
