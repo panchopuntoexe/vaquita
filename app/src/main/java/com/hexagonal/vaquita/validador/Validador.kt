@@ -26,7 +26,7 @@ class Validador {
     public fun validarString(cadena:String):Boolean{
         for (caracter in cadena)
         {
-            if (caracter !in 'A'..'Z' && caracter !in 'a'..'z') {
+            if (caracter !in 'A'..'Z' && caracter !in 'a'..'z'&& !caracter.equals(' ')) {
                 return false
             }
         }

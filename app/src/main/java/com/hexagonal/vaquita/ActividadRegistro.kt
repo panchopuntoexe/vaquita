@@ -297,9 +297,6 @@ class ActividadRegistro : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val downloadUri = task.result
                     imageViewSubirFotoURL = downloadUri
-                    Glide.with(this).load(imageViewSubirFotoURL.toString())
-                        .into(imageViewSubirFoto!!)
-                    //Log.d("MENSAJE", downloadUri.toString())
                 } else {
                     Log.e("ERROR", task.toString())
                 }
