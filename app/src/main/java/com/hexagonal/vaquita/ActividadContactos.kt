@@ -21,32 +21,39 @@ class ActividadContactos : AppCompatActivity() {
 
     private var usuarios=ArrayList<Usuario>()
     private lateinit var botonContinuar:Button
-    private lateinit var binding: ActivityActividadContactosBinding
+    private lateinit var binding:ActivityActividadContactosBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_actividad_contactos)
         // boton guardar Contactos
+        binding= ActivityActividadContactosBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.setHasFixedSize(true)
         botonContinuar= findViewById<Button>(R.id.botonContinuarWallet)
 
-        botonContinuar.setOnClickListener(){
-//            val intencion = Intent(this,ActividadCompra::class.java)
-            Log.d("Gola","Si vale esta wbda")
-//            Firebase.firestore.collection("Wallets")
-//                .document(intent.extras!!.getString("walletId")!!).get()
-//                .addOnSuccessListener { result ->
-//                    intencion.putExtra("wallet",result.toObject(Wallet::class.java))
-//                    val builder = AlertDialog.Builder(this)
-//                    builder.setMessage(R.string.exitoWallet)
-//                        .setPositiveButton(R.string.ok,
-//                            DialogInterface.OnClickListener { dialog, id ->
-//                                startActivity(intencion)
-//                            })
-//                    builder.create()
-//                    builder.show()
-//                }
-        }
         getUsuarios()
+
+
+        botonContinuar.setOnClickListener(){
+            val intencion = Intent(this,ActividadCompra::class.java)
+            Firebase.firestore.collection("Wallets")
+                .document(intent.extras!!.getString("walletId")!!).get()
+                .addOnSuccessListener { result ->
+                    intencion.putExtra("wallet",result.toObject(Wallet::class.java))
+                    val builder = AlertDialog.Builder(this)
+                    builder.setMessage(R.string.exitoWallet)
+                        .setPositiveButton(R.string.ok,
+                            DialogInterface.OnClickListener { dialog, id ->
+                                startActivity(intencion)
+                            })
+                    builder.create()
+                    builder.show()
+                }
+        }
+
+
     }
 
     fun getUsuarios(){
@@ -55,19 +62,7 @@ class ActividadContactos : AppCompatActivity() {
             for (document in result) {
                 usuarios.add(document.toObject(Usuario::class.java))
             }
-            lateinit var userAdapter: UserAdapter
-
-            lateinit var layoutManager: RecyclerView.LayoutManager
-
-
-            binding = ActivityActividadContactosBinding.inflate(layoutInflater)
-            setContentView(binding.root)
-
-
-            binding.recyclerView.layoutManager = LinearLayoutManager(this)
             binding.recyclerView.adapter = UserAdapter(this, usuarios, intent.extras!!.getString("walletId").toString(),R.layout.contactos_layout)
-            binding.recyclerView.setHasFixedSize(true)
-
         }
     }
 }
