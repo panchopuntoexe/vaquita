@@ -14,7 +14,7 @@ import com.google.firebase.ktx.Firebase
 import com.hexagonal.vaquita.R
 import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Wallet
-import com.squareup.picasso.Picasso
+//import com.squareup.picasso.Picasso
 
 class UserAdapter(context: Context, usuarios: ArrayList<Usuario>,wallet: String, layout: Int) :
     RecyclerView.Adapter<UserAdapter.ViewHolder>() {
@@ -33,9 +33,9 @@ class UserAdapter(context: Context, usuarios: ArrayList<Usuario>,wallet: String,
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             with(holder){
-                Picasso.get().load(usuarios[position].foto).fit()
+                /*Picasso.get().load(usuarios[position].foto).fit()
                     .error(android.R.drawable.stat_notify_error)
-                    .into(holder.image)
+                    .into(holder.image)*/
                 holder.txtNombre.text = usuarios[position].nombre
                 holder.txtCorreo.text = usuarios[position].correo
                 holder.button.setOnClickListener(){

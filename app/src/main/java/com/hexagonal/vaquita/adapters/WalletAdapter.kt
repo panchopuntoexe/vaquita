@@ -4,8 +4,10 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.hexagonal.vaquita.R
 import com.hexagonal.vaquita.entidades.Wallet
 
@@ -29,6 +31,7 @@ class WalletAdapter(
             textViewNombreWallet.text = "${wallets[position].nombre}"
             textViewFechaWallet.text = "${wallets[position].fecha}"
             textViewDeudaWallet.text = "\$-${deuda.toString()}"
+            Glide.with(context).load(wallets[position].foto).into(imagenWallet!!)
         }
     }
 
@@ -41,6 +44,7 @@ class WalletAdapter(
         val textViewNombreWallet = view.findViewById<TextView>(R.id.textViewNombreWallet)
         val textViewFechaWallet = view.findViewById<TextView>(R.id.textViewFechaWallet)
         val textViewDeudaWallet = view.findViewById<TextView>(R.id.textViewDeudaWallet)
+        val imagenWallet = view.findViewById<ImageView>(R.id.imageWallet)
 
 
         init {

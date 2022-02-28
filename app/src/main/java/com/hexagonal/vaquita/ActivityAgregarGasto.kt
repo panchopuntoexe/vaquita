@@ -27,6 +27,8 @@ class ActivityAgregarGasto : AppCompatActivity() {
     lateinit var fechaGasto : EditText;
     lateinit var imagenGasto : ImageView;
     lateinit var botonAgregar : Button;
+    lateinit var botonCancelar : Button;
+    lateinit var wallet : Wallet;
     val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +37,7 @@ class ActivityAgregarGasto : AppCompatActivity() {
 
         // Recepción de wallet
         val intent = getIntent()
-        val wallet = intent.getParcelableExtra<Wallet>("wallet")
+        wallet = intent.getParcelableExtra<Wallet>("wallet") as Wallet
 
         binding = ActivityAgregarGastoBinding.inflate(layoutInflater)
 
@@ -46,15 +48,22 @@ class ActivityAgregarGasto : AppCompatActivity() {
 
         Glide.with(this).load(wallet?.foto).into(imagenGasto)
 
-        // Botón  Agregar
+        // Botón Agregar
         botonAgregar = binding.buttonAgregarGasto
         botonAgregar.setOnClickListener {
-            val intencion = Intent(this, ActividadInicio::class.java)
+            val intencion = Intent(this, ActividadCompra::class.java)
+            startActivity(intencion)
+        }
+
+        // Botón Cancelar
+        botonCancelar = binding.btnCancelar
+        botonCancelar.setOnClickListener {
+            val intencion = Intent(this, ActividadCompra::class.java)
             startActivity(intencion)
         }
     }
 
-    fun subirGasto() {
+    /*fun subirGasto() {
         var nombre: String = nombreGasto.text.toString()
         var fecha: String = fechaGasto.text.toString()
         var gastos: String = valorGasto.text.toString()
@@ -75,8 +84,9 @@ class ActivityAgregarGasto : AppCompatActivity() {
                     val gastoId = documentReference.id;
                     var userfb : Usuario
                     db.collection("Wallets")
-                        .where()
+                        .whereEqualTo("foto", wallet.foto)
                         .add(gastoNuevo)
+
                         .addOnSuccessListener { documentReference ->
                             Log.d(TAG, "Gasto added with ID: ${documentReference.id}")
                             val gastoId = documentReference.id;
@@ -95,7 +105,7 @@ class ActivityAgregarGasto : AppCompatActivity() {
         }
 
 
-    }
+    }*/
 
 
 }

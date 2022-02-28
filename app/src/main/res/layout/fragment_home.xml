@@ -16,7 +16,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,85 +43,35 @@
             android:gravity="end"
             android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/imageProfile"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/perfil"
-                app:civ_border_width="1dp"
-                app:civ_border_color="#FF000000"/>
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="1dp" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCarrusell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layoutDirection="ltr"
+        android:orientation="horizontal"
+        android:textDirection="ltr"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        tools:ignore="SpeakableTextPresentCheck">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageComic1"
-                android:layout_width="190dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/imagengenerica"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textBienvenida"
-                app:layout_constraintTop_toBottomOf="@+id/textTituloInicio" />
-
-            <ImageView
-                android:id="@+id/imageComic3"
-                android:layout_width="190dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/imagengenerica"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textBienvenida"
-                app:layout_constraintTop_toBottomOf="@+id/textTituloInicio" />
-
-            <ImageView
-                android:id="@+id/imageComic2"
-                android:layout_width="190dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/imagengenerica"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textBienvenida"
-                app:layout_constraintTop_toBottomOf="@+id/textTituloInicio" />
-
-            <ImageView
-                android:id="@+id/imageComic"
-                android:layout_width="190dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/imagengenerica"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textBienvenida"
-                app:layout_constraintTop_toBottomOf="@+id/textTituloInicio" />
-        </LinearLayout>
-    </HorizontalScrollView>
+        tools:layout_editor_absoluteX="0dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleViewWallets"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewCarrusell" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

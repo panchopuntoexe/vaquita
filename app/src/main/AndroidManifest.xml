@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Vaquita">
         <activity
+            android:name=".ActividadEfectivo"
+            android:exported="false" />
+        <activity
             android:name=".ActividadRecuperar"
             android:exported="false" />
         <activity
@@ -20,6 +23,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -58,7 +62,7 @@
             android:exported="false" />
         <activity
             android:name=".CodigoPrueba"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>

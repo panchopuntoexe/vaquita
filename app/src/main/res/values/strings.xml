@@ -86,4 +86,9 @@
     <integer name="numeroMinimoDeCaracteresEnClave">8</integer>
     <string name="bienvenido">Bienvenido</string>
     <string name="nuevoGasto">Nuevo Gasto</string>
+    <string name="valorPagoTarjeta">Valor del Pago:</string>
+    <string name="valorPagoPagar">$ 69420.99</string>
+    <string name="tituloPagoEfectivo">Pago en Efectivo</string>
+    <string name="valorPagoEfectivo">Ingresa el valor que deseas pagar:</string>
+    <string name="tituloPagoTarjeta">Pago con Tarjeta de Crédito</string>
 </resources>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout.HORIZONTAL
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,15 +16,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.hexagonal.vaquita.ActividadCompra
 import com.hexagonal.vaquita.R
+import com.hexagonal.vaquita.adapters.CarrusellAdapter
 import com.hexagonal.vaquita.adapters.WalletAdapter
 import com.hexagonal.vaquita.databinding.FragmentHomeBinding
-import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Wallet
 import com.hexagonal.vaquita.ui.settings.SettingsFragment
 import kotlinx.coroutines.launch
@@ -78,6 +77,12 @@ class HomeFragment : Fragment(), WalletAdapter.OnWalletListener {
             binding.recycleViewWallets.layoutManager =
                 LinearLayoutManager(this.requireActivity())
             binding.recycleViewWallets.setHasFixedSize(true)
+
+            binding.recyclerViewCarrusell.adapter =
+                CarrusellAdapter(this.requireActivity(),it, this)
+            binding.recyclerViewCarrusell.layoutManager =
+                LinearLayoutManager(this.requireActivity(),LinearLayoutManager.HORIZONTAL, false)
+            binding.recyclerViewCarrusell.setHasFixedSize(true)
         })
 
         perfil.setOnClickListener {
