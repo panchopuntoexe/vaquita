@@ -54,7 +54,7 @@ class GestionadorDeSubida {
             "lugar" to wallet.lugar,
             "nombre" to wallet.nombre,
             "pagos" to wallet.pagos,
-            "users" to wallet.usuarios,
+            "users" to wallet.users,
             "foto" to wallet.foto
         )
         val TAG = "MENSAJE"

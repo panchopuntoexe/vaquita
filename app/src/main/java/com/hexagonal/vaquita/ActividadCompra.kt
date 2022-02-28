@@ -53,17 +53,18 @@ class ActividadCompra : AppCompatActivity(), GastoAdapter.OnWalletListener {
         }.attach()
 
 
-        // boton  método de pago
+        // Botón  método de pago
         var botonMetodoDePago = findViewById<Button>(R.id.botonPagar)
         botonMetodoDePago.setOnClickListener {
             val intencion = Intent(this, ActividadMetodoDePago::class.java)
             startActivity(intencion)
         }
 
-        // boton registro
+        // Botón Gasto
         var botonGasto = findViewById<Button>(R.id.botonGasto)
         botonGasto.setOnClickListener {
             val intencion = Intent(this, ActivityAgregarGasto::class.java)
+            intencion.putExtra("wallet",wallet)
             startActivity(intencion)
         }
 

@@ -85,5 +85,5 @@
     <string name="tituloRegistro">Regístrate</string>
     <integer name="numeroMinimoDeCaracteresEnClave">8</integer>
     <string name="bienvenido">Bienvenido</string>
-
+    <string name="nuevoGasto">Nuevo Gasto</string>
 </resources>

@@ -60,6 +60,7 @@ class ActividadNuevaCartera : AppCompatActivity() {
         textFecha = findViewById<EditText>(R.id.textFecha)
         textLugar = findViewById<EditText>(R.id.textLugar)
 
+        //TEXTO QUEMADO
         textNombre.setText("Listening Party de Comic")
         var nombreValido: Boolean = false
         textNombre.setOnClickListener OnClickListener@{
@@ -75,6 +76,7 @@ class ActividadNuevaCartera : AppCompatActivity() {
             return@OnClickListener
         }
 
+        //TEXTO QUEMADO
         textFecha.setText("1/10/2021")
         var fechaValida: Boolean = false
         textFecha.setOnClickListener OnClickListener@{
@@ -88,6 +90,7 @@ class ActividadNuevaCartera : AppCompatActivity() {
             return@OnClickListener
         }
 
+        //TEXTO QUEMADO
         textLugar.setText("La casa del manaba")
         var lugarValido: Boolean = false
         textLugar.setOnClickListener OnClickListener@{
