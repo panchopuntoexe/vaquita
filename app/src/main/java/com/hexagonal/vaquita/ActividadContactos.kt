@@ -26,6 +26,7 @@ class ActividadContactos : AppCompatActivity() {
     private lateinit var binding: ActivityActividadContactosBinding
     private lateinit var userauth: FirebaseUser
     private lateinit var mailDeUsuarioLogueado: String
+    private lateinit var walletId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +38,15 @@ class ActividadContactos : AppCompatActivity() {
         binding.recyclerView.setHasFixedSize(true)
         botonContinuar = findViewById<Button>(R.id.botonContinuarWallet)
 
+        walletId = intent.extras!!.getString("walletId")!!
+
         getUsuarios()
 
 
         botonContinuar.setOnClickListener() {
             val intencion = Intent(this, ActividadCompra::class.java)
             Firebase.firestore.collection("Wallets")
-                .document(intent.extras!!.getString("walletId")!!).get()
+                .document(walletId).get()
                 .addOnSuccessListener { result ->
                     intencion.putExtra("wallet", result.toObject(Wallet::class.java))
                     val builder = AlertDialog.Builder(this)
@@ -61,7 +64,18 @@ class ActividadContactos : AppCompatActivity() {
         userauth = Firebase.auth.currentUser!!
         mailDeUsuarioLogueado = userauth.email.toString()
 
+        putCreadorComoParticipante()
+    }
 
+    fun putCreadorComoParticipante() {
+        var db = Firebase.firestore
+        db.collection("Usuarios").whereEqualTo("correo", mailDeUsuarioLogueado)
+            .get().addOnSuccessListener { result ->
+                var userAux = result.first().toObject(Usuario::class.java).wallets as MutableMap<String, Boolean>
+                userAux.put(walletId,true)
+                db.collection("Usuarios").document(result.first().id)
+                                                    .update("wallets", userAux)
+            }
     }
 
     fun getUsuarios() {
