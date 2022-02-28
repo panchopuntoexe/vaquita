@@ -54,48 +54,48 @@ class ActivityAgregarGasto : AppCompatActivity() {
         }
     }
 
-    fun subirGasto() {
-        var nombre: String = nombreGasto.text.toString()
-        var fecha: String = fechaGasto.text.toString()
-        var gastos: String = valorGasto.text.toString()
-
-        if (nombre.isNotEmpty() && fecha.isNotEmpty() && gastos.isNotEmpty()) {
-            var retorno: Boolean = true
-            var mapaVacio:Map<String,Boolean> = emptyMap<String,Boolean>()
-            val gastoNuevo = hashMapOf(
-                "nombre" to nombreGasto,
-                "fecha" to valorGasto,
-                "gastos" to fechaGasto,
-            )
-            val TAG = "MENSAJE"
-            db.collection("Gastos")
-                .add(gastoNuevo)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "Gasto added with ID: ${documentReference.id}")
-                    val gastoId = documentReference.id;
-                    var userfb : Usuario
-                    db.collection("Wallets")
-                        .where()
-                        .add(gastoNuevo)
-                        .addOnSuccessListener { documentReference ->
-                            Log.d(TAG, "Gasto added with ID: ${documentReference.id}")
-                            val gastoId = documentReference.id;
-                            var userfb : Usuario
-                            retorno = true
-                        }
-                    retorno = true
-                }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
-                    retorno = false
-                }
-            return retorno
-        } else {
-            Toast.makeText(this, "No dejar campos vacíos", Toast.LENGTH_LONG).show()
-        }
-
-
-    }
+//    fun subirGasto() {
+//        var nombre: String = nombreGasto.text.toString()
+//        var fecha: String = fechaGasto.text.toString()
+//        var gastos: String = valorGasto.text.toString()
+//
+//        if (nombre.isNotEmpty() && fecha.isNotEmpty() && gastos.isNotEmpty()) {
+//            var retorno: Boolean = true
+//            var mapaVacio:Map<String,Boolean> = emptyMap<String,Boolean>()
+//            val gastoNuevo = hashMapOf(
+//                "nombre" to nombreGasto,
+//                "fecha" to valorGasto,
+//                "gastos" to fechaGasto,
+//            )
+//            val TAG = "MENSAJE"
+//            db.collection("Gastos")
+//                .add(gastoNuevo)
+//                .addOnSuccessListener { documentReference ->
+//                    Log.d(TAG, "Gasto added with ID: ${documentReference.id}")
+//                    val gastoId = documentReference.id;
+//                    var userfb : Usuario
+//                    db.collection("Wallets")
+//                        .where()
+//                        .add(gastoNuevo)
+//                        .addOnSuccessListener { documentReference ->
+//                            Log.d(TAG, "Gasto added with ID: ${documentReference.id}")
+//                            val gastoId = documentReference.id;
+//                            var userfb : Usuario
+//                            retorno = true
+//                        }
+//                    retorno = true
+//                }
+//                .addOnFailureListener { e ->
+//                    Log.w(TAG, "Error adding document", e)
+//                    retorno = false
+//                }
+//            return retorno
+//        } else {
+//            Toast.makeText(this, "No dejar campos vacíos", Toast.LENGTH_LONG).show()
+//        }
+//
+//
+//    }
 
 
 }

@@ -63,10 +63,10 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/botonPagar"
+            android:id="@+id/botonContinuarWallet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/guardar"
+            android:text="@string/textContinuar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
