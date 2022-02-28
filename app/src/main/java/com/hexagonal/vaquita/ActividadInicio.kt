@@ -64,4 +64,5 @@ class ActividadInicio : AppCompatActivity() {
 
 
     }
+    override fun onBackPressed() {}
 }

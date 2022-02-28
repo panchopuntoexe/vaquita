@@ -52,6 +52,8 @@ class ActividadHome : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
+    override fun onBackPressed() {}
+
 
 
 }

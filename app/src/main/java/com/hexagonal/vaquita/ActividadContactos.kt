@@ -81,4 +81,6 @@ class ActividadContactos : AppCompatActivity() {
             )
         }
     }
+
+    override fun onBackPressed() {}
 }
