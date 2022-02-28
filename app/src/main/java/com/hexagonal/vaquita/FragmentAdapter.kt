@@ -3,10 +3,8 @@ package com.hexagonal.vaquita
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.hexagonal.vaquita.adapters.GastoAdapter
-import com.hexagonal.vaquita.entidades.Usuario
 
 class FragmentAdapter(
     fragmentManager: FragmentManager,

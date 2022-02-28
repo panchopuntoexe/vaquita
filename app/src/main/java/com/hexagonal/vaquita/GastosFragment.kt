@@ -57,16 +57,20 @@ class GastosFragment(
                 listaWallets.add(clave)
             }
         }
-        Log.d("Participantes", listaWallets.toString())
-        return try {
-            db.collection("Gastos")
-                .whereIn(FieldPath.documentId(), listaWallets)
-                .get().await()
-                .documents.mapNotNull { it.toGasto() }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error getting user friends", e)
-            emptyList()
+
+        if (listaWallets.size > 0) {
+            Log.d("Participantes", listaWallets.toString())
+            return try {
+                db.collection("Gastos")
+                    .whereIn(FieldPath.documentId(), listaWallets)
+                    .get().await()
+                    .documents.mapNotNull { it.toGasto() }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error getting user friends", e)
+                emptyList()
+            }
         }
+        return emptyList()
     }
 
 
@@ -78,8 +82,11 @@ class GastosFragment(
         val recycleViewGastos: RecyclerView =
             view.findViewById(R.id.recycleViewGastos)
         viewLifecycleOwner.lifecycleScope.launch {
+
             _gastosWallets.value = getGastos()!!
+
         }
+
         gastosWallets?.observe(viewLifecycleOwner, Observer {
             recycleViewGastos.adapter =
                 GastoAdapter(this.requireActivity(), it, onWalletListener)
