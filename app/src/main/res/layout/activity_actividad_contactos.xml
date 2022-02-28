@@ -7,17 +7,15 @@
     android:layout_margin="12dp"
     tools:context=".ActividadContactos">
 
-    <SearchView
-        android:id="@+id/barraBuscar"
+    <Button
+        android:id="@+id/botonContinuarWallet"
         android:layout_width="wrap_content"
-        android:layout_height="66dp"
-        android:queryHint="@string/hintBuscar"
-        app:layout_constraintBottom_toTopOf="@id/textSeccionAmigos"
+        android:layout_height="wrap_content"
+        android:text="@string/textContinuar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </SearchView>
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textSeccionAmigos"
@@ -44,6 +42,18 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_constraintStart_toStartOf="parent" />
 
+    <SearchView
+        android:id="@+id/barraBuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="66dp"
+        android:queryHint="@string/hintBuscar"
+        app:layout_constraintBottom_toTopOf="@id/textSeccionAmigos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </SearchView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="389dp"
@@ -62,15 +72,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/botonPagar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/guardar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,10 @@ import java.util.regex.Pattern
 
 class GestionadorDeSubida {
 
+    companion object{
+        lateinit var walletId:String
+    }
+
     constructor() {
 
     }
@@ -62,6 +66,7 @@ class GestionadorDeSubida {
             .add(walletNueva)
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG, "Wallet added with ID: ${documentReference.id}")
+                walletId=documentReference.id
                 val db = Firebase.firestore
                 var userfb : Usuario
                 db.collection("Usuarios")
@@ -69,9 +74,10 @@ class GestionadorDeSubida {
                     .get()
                     .addOnSuccessListener { document ->
                         userfb = document.toObject(Usuario::class.java)!!
-                        userfb.wallets?.plus(Pair(documentReference.id,true))
+                        var mapaAux:MutableMap<String,Boolean> = userfb.wallets as MutableMap<String, Boolean>
+                        mapaAux.put(documentReference.id,true)
                         db.collection("Usuarios").document(wallet.creador!!)
-                            .update("wallets", userfb.wallets)
+                            .update("wallets", mapaAux)
                             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }
                             .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
 

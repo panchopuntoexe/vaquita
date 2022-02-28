@@ -9,20 +9,22 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hexagonal.vaquita.R
 import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Wallet
-//import com.squareup.picasso.Picasso
 
-class UserAdapter(context: Context, usuarios: ArrayList<Usuario>,wallet: String, layout: Int) :
+class UserAdapter(context: Context, usuarios: ArrayList<Usuario>,walletId: String, layout: Int) :
     RecyclerView.Adapter<UserAdapter.ViewHolder>() {
         private val context: Context
         private val usuarios: ArrayList<Usuario>
+        private val walletId: String
         init {
             this.context = context
             this.usuarios = usuarios
+            this.walletId = walletId
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,21 +35,22 @@ class UserAdapter(context: Context, usuarios: ArrayList<Usuario>,wallet: String,
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             with(holder){
-                /*Picasso.get().load(usuarios[position].foto).fit()
-                    .error(android.R.drawable.stat_notify_error)
-                    .into(holder.image)*/
+                Glide.with(context).load(usuarios[position].foto).into(holder.image)
                 holder.txtNombre.text = usuarios[position].nombre
                 holder.txtCorreo.text = usuarios[position].correo
                 holder.button.setOnClickListener(){
                     button.isEnabled=false
                     var db = Firebase.firestore
-                    db.collection("Wallets").document("GXVNAQX2kJsWTtUb3QFa").
+                    db.collection("Wallets").document(walletId).
                     get().addOnSuccessListener { result->
                         var wallet = result.toObject(Wallet::class.java)
                         db.collection("Usuarios").whereEqualTo("correo",usuarios[position].correo)
                             .get().addOnSuccessListener{result ->
                                 var document = result.first()
-                                Log.d("ID",document.id.toString())
+                                var userAux:MutableMap<String,Boolean> = wallet!!.users as MutableMap<String, Boolean>
+                                userAux.put(document.id,true)
+                                db.collection("Wallets").document(walletId)
+                                    .update("users", userAux)
                         }
                     }
                 }

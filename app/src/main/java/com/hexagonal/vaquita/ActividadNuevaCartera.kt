@@ -179,6 +179,7 @@ class ActividadNuevaCartera : AppCompatActivity() {
                             DialogInterface.OnClickListener { dialog, id ->
                                 //envío a inicio
                                 val intencion = Intent(this, ActividadContactos::class.java)
+                                intencion.putExtra("walletId",GestionadorDeSubida.walletId.toString())
                                 startActivity(intencion)
                             })
                     builder.create()
