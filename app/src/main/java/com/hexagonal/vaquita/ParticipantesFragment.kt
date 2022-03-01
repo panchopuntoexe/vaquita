@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,6 +22,9 @@ import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Usuario.Companion.toUser
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlin.math.pow
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,7 +40,6 @@ private const val ARG_RECYCLEVIEW = "recycleViewParticipantes"
  */
 class ParticipantesFragment(
     val participantes: Map<String, Boolean>?,
-    val onWalletListener: GastoAdapter.OnWalletListener
 ) : Fragment() {
 
     val db = Firebase.firestore
@@ -82,18 +85,28 @@ class ParticipantesFragment(
 
         }
         usuarios?.observe(viewLifecycleOwner, Observer {
-            recycleViewParticipantes.adapter =
-                ParticipanteAdapter(this.requireActivity(), it, 10.25, onWalletListener)
-            recycleViewParticipantes.layoutManager =
-                LinearLayoutManager(this.requireActivity())
-            recycleViewParticipantes.setHasFixedSize(true)
+            try{
+                val numParticipantes = it.size
+                val valorTotalWallet: TextView = this.requireActivity().findViewById(R.id.valorTotalWallet)
+                val gastoTotal = valorTotalWallet.text.toString().toDouble()
+                val deuda = (gastoTotal/numParticipantes).roundTo(2)
+                recycleViewParticipantes.adapter =
+                    ParticipanteAdapter(this.requireActivity(), it, deuda)
+                recycleViewParticipantes.layoutManager =
+                    LinearLayoutManager(this.requireActivity())
+                recycleViewParticipantes.setHasFixedSize(true)
+            } catch(e:Exception) {
+                Log.d("Error", e.toString())
+            }
         })
-
-
-
 
         // Inflate the layout for this fragment
         return view
+    }
+
+    fun Double.roundTo(numFractionDigits: Int): Double {
+        val factor = 10.0.pow(numFractionDigits.toDouble())
+        return (this * factor).roundToInt() / factor
     }
 
     /*companion object {

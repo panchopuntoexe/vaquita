@@ -9,10 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.hexagonal.vaquita.adapters.FragmentAdapter
 import com.hexagonal.vaquita.adapters.GastoAdapter
 import com.hexagonal.vaquita.entidades.Wallet
+import kotlin.math.pow
+import kotlin.math.roundToInt
 
-class ActividadCompra : AppCompatActivity(), GastoAdapter.OnWalletListener {
+class ActividadCompra : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_actividad_compra)
@@ -34,9 +37,8 @@ class ActividadCompra : AppCompatActivity(), GastoAdapter.OnWalletListener {
 
 
         val adapter = FragmentAdapter(
-            supportFragmentManager, lifecycle, this,
-            wallet?.users,
-            wallet?.gastos
+            supportFragmentManager, lifecycle,
+            wallet
         )
 
 
@@ -52,11 +54,16 @@ class ActividadCompra : AppCompatActivity(), GastoAdapter.OnWalletListener {
             }
         }.attach()
 
-
-        // Botón  método de pago
+        // Botón  Pagar
         var botonMetodoDePago = findViewById<Button>(R.id.botonPagar)
         botonMetodoDePago.setOnClickListener {
+            val numParticipantes = wallet?.users?.size
+            val valorTotalWallet: TextView = this.findViewById(R.id.valorTotalWallet)
+            val gastoTotal = valorTotalWallet.text.toString().toDouble()
+            val deuda = (gastoTotal/ numParticipantes!!).roundTo(2)
             val intencion = Intent(this, ActividadMetodoDePago::class.java)
+            intencion.putExtra("deuda",deuda)
+            intencion.putExtra("wallet",wallet)
             startActivity(intencion)
         }
 
@@ -71,7 +78,9 @@ class ActividadCompra : AppCompatActivity(), GastoAdapter.OnWalletListener {
 
     }
 
-    override fun onWalletClick(position: Int) {
-        TODO("Not yet implemented")
+    fun Double.roundTo(numFractionDigits: Int): Double {
+        val factor = 10.0.pow(numFractionDigits.toDouble())
+        return (this * factor).roundToInt() / factor
     }
+
 }

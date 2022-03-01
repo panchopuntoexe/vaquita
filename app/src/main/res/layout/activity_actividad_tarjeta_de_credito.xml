@@ -52,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/cantidadAPagar"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.195"
@@ -59,23 +60,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <TextView
-        android:id="@+id/textValorAPagar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/valorPagoPagar"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.188"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textValorPagoTarjeta" />
-
-    <TextView
         android:id="@+id/textValorPagoTarjeta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/valorPagoTarjeta"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.184"
@@ -88,6 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/valorPagoPagar"
+        android:textColor="#1E1C1C"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.191"
@@ -97,18 +88,18 @@
     <EditText
         android:id="@+id/textFechaDeExp"
         android:layout_width="wrap_content"
-        android:layout_height="41dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
         android:layout_marginTop="16dp"
         android:hint="@string/hintFechaTarjeta"
         android:textSize="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textNumeroDeTarjeta" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
 
     <EditText
         android:id="@+id/textNombreDeTarjeta"
         android:layout_width="300dp"
-        android:layout_height="38dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="@string/hintNombreDeTarjeta"
         android:textSize="16dp"
@@ -117,54 +108,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textValorAPagar" />
 
-    <EditText
-        android:id="@+id/textPostal"
-        android:layout_width="300dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="16dp"
-        android:hint="@string/hintPostal"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textCCV" />
-
-    <EditText
-        android:id="@+id/textNumeroDeTarjeta"
-        android:layout_width="300dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:hint="@string/hintNumeroDeTarjeta"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textNombreDeTarjeta" />
-
-    <EditText
-        android:id="@+id/textCCV"
-        android:layout_width="100dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="12dp"
-        android:hint="@string/hintCCV"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
-        app:layout_constraintStart_toEndOf="@+id/textFechaDeExp"
-        app:layout_constraintTop_toBottomOf="@+id/textNumeroDeTarjeta" />
-
     <Button
         android:id="@+id/botonPagarTarjeta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:text="@string/pagar"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPostal" />
+        app:layout_constraintTop_toBottomOf="@+id/textNumeroPostal" />
 
     <Button
         android:id="@+id/botonCancelarTarjeta"
@@ -186,10 +139,64 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:text="@string/tituloPagoTarjeta"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/textValorAPagar"
+        android:layout_width="297dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textValorPagoTarjeta" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="297dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/hintNumeroDeTarjeta"
+        android:inputType="number"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNombreDeTarjeta" />
+
+    <EditText
+        android:id="@+id/textCcv"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/hintCCV"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toEndOf="@+id/textFechaDeExp"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+
+    <EditText
+        android:id="@+id/textNumeroPostal"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="@string/hintPostal"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textCcv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

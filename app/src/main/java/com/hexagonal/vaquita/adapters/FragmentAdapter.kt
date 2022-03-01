@@ -1,17 +1,17 @@
-package com.hexagonal.vaquita
+package com.hexagonal.vaquita.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.hexagonal.vaquita.adapters.GastoAdapter
+import com.hexagonal.vaquita.GastosFragment
+import com.hexagonal.vaquita.ParticipantesFragment
+import com.hexagonal.vaquita.entidades.Wallet
 
 class FragmentAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
-    val onWalletListener: GastoAdapter.OnWalletListener,
-    val usuarios: Map<String, Boolean>?,
-    val gastos: Map<String, Boolean>?,
+    val wallet : Wallet?
 ) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
@@ -22,10 +22,10 @@ class FragmentAdapter(
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> {
-                GastosFragment(gastos, onWalletListener)
+                GastosFragment(wallet)
             }
             1 -> {
-                ParticipantesFragment(usuarios, onWalletListener)
+                ParticipantesFragment(wallet?.users)
             }
             else -> {
                 Fragment()

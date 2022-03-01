@@ -143,6 +143,13 @@ class ActividadNuevaCartera : AppCompatActivity() {
 
 
         }
+
+        // Botón Cancelar
+        var botonCancelar = findViewById<Button>(R.id.btnCancelarCartera)
+        botonCancelar.setOnClickListener {
+            super.onBackPressed()
+        }
+
     }
 
     fun subirWallet() {

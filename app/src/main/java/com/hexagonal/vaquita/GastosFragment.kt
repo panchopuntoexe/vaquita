@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -21,6 +22,7 @@ import com.hexagonal.vaquita.entidades.Gasto
 import com.hexagonal.vaquita.entidades.Gasto.Companion.toGasto
 import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Usuario.Companion.toUser
+import com.hexagonal.vaquita.entidades.Wallet
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -35,14 +37,15 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class GastosFragment(
-    val gastos: Map<String, Boolean>?,
-    val onWalletListener: GastoAdapter.OnWalletListener
+    val wallet: Wallet?,
 ) : Fragment() {
 
     val db = Firebase.firestore
     val TAG = "ErrorUsuario"
     val _gastosWallets = MutableLiveData<List<Gasto>>()
     var gastosWallets: LiveData<List<Gasto>>? = _gastosWallets
+    val _pagosWallets = MutableLiveData<List<Gasto>>()
+    var pagosWallets: LiveData<List<Gasto>>? = _pagosWallets
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +55,8 @@ class GastosFragment(
     suspend fun getGastos(): List<Gasto>? {
         val listaWallets = ArrayList<String>()
 
-        if (gastos != null) {
-            for (clave in gastos.keys) {
+        if (wallet?.gastos != null) {
+            for (clave in wallet.gastos!!.keys) {
                 listaWallets.add(clave)
             }
         }
@@ -62,6 +65,30 @@ class GastosFragment(
             Log.d("Participantes", listaWallets.toString())
             return try {
                 db.collection("Gastos")
+                    .whereIn(FieldPath.documentId(), listaWallets)
+                    .get().await()
+                    .documents.mapNotNull { it.toGasto() }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error getting user friends", e)
+                emptyList()
+            }
+        }
+        return emptyList()
+    }
+
+    suspend fun getPagos(): List<Gasto>? {
+        val listaWallets = ArrayList<String>()
+
+        if (wallet?.pagos != null) {
+            for (clave in wallet.pagos!!.keys) {
+                listaWallets.add(clave)
+            }
+        }
+
+        if (listaWallets.size > 0) {
+            Log.d("Participantes", listaWallets.toString())
+            return try {
+                db.collection("Pagos")
                     .whereIn(FieldPath.documentId(), listaWallets)
                     .get().await()
                     .documents.mapNotNull { it.toGasto() }
@@ -84,16 +111,32 @@ class GastosFragment(
         viewLifecycleOwner.lifecycleScope.launch {
 
             _gastosWallets.value = getGastos()!!
-
+            _pagosWallets.value = getPagos()!!
         }
 
         gastosWallets?.observe(viewLifecycleOwner, Observer {
-            recycleViewGastos.adapter =
-                GastoAdapter(this.requireActivity(), it, onWalletListener)
-            recycleViewGastos.layoutManager =
-                LinearLayoutManager(this.requireActivity())
-            recycleViewGastos.setHasFixedSize(true)
+            val gastos = it
+            var total = 0.0
+            for (gasto in it) {
+                total += gasto.valor!!
+            }
+            Log.d("Total gasto", total.toString())
+            val valorTotalWallet: TextView = this.requireActivity().findViewById(R.id.valorTotalWallet)
+            valorTotalWallet.setText(total.toString())
+            pagosWallets?.observe(viewLifecycleOwner, Observer {
+                val pagos = it
+                val gastosCompletos = merge(gastos, pagos)
+                recycleViewGastos.adapter =
+                    GastoAdapter(this.requireActivity(), gastosCompletos)
+                recycleViewGastos.layoutManager =
+                    LinearLayoutManager(this.requireActivity())
+                recycleViewGastos.setHasFixedSize(true)
+            })
         })
         return view
+    }
+
+    fun <T> merge(first: List<T>, second: List<T>): List<T> {
+        return first + second
     }
 }
