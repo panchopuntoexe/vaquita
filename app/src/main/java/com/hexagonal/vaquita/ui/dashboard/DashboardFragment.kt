@@ -1,12 +1,19 @@
 package com.hexagonal.vaquita.ui.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.hexagonal.vaquita.databinding.FragmentDashboardBinding
+import com.hexagonal.vaquita.entidades.Pago
+import com.hexagonal.vaquita.entidades.Usuario
+import com.hexagonal.vaquita.entidades.Wallet
 import lecho.lib.hellocharts.model.*
 
 import lecho.lib.hellocharts.model.ColumnChartData
@@ -31,6 +38,7 @@ class DashboardFragment : Fragment() {
     private val hasAxesNames = true
     private val hasLabels = true
     private val hasLabelForSelected = false
+    private val walletsPagos:MutableMap<String,Number> = mutableMapOf()
 
     private lateinit var dashboardViewModel: DashboardViewModel
     private var _binding: FragmentDashboardBinding? = null
@@ -49,6 +57,13 @@ class DashboardFragment : Fragment() {
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+
+
+        getUser()
+
+
+
 
         val chart = binding.chart
         val numSubcolumns = 1
@@ -87,10 +102,54 @@ class DashboardFragment : Fragment() {
             data!!.setAxisYLeft(null)
         }
         chart.setColumnChartData(data)
-
         return root
     }
 
+    fun getUser() {
+        val db = Firebase.firestore
+        var userfb : Usuario
+        db.collection("Usuarios")
+            .whereEqualTo("correo", Firebase.auth.currentUser!!.email)
+            .get()
+            .addOnSuccessListener { result ->
+                val user = result.first()
+                db.collection("Wallets")
+                    .get()
+                    .addOnSuccessListener { result ->
+                        var wallets = result.toObjects(Wallet::class.java)
+                        var walletsUsuario = mutableListOf<Wallet>()
+                        for (wallet in wallets){
+                            if(wallet.users!!.keys.contains(user.id)){
+                                walletsUsuario.add(wallet)
+                            }
+                        }
+                        for (wallet in walletsUsuario){
+                            var acumPago = 0
+                            if (wallet.pagos!!.isEmpty()){
+                                walletsPagos.put(wallet.nombre.toString(),0)
+                            }else{
+                                for(pago in wallet.pagos!!){
+                                    db.collection("Pagos")
+                                        .document(pago.key)
+                                        .get()
+                                        .addOnSuccessListener { result ->
+                                            if((result.toObject(Pago::class.java))!!.user===user.id){
+                                                acumPago= (acumPago+ result.toObject(Pago::class.java)!!.valor!!).toInt()
+                                            }
+                                        }
+                                }
+                                walletsPagos.put(wallet.nombre.toString(),acumPago)
+                            }
+                        }
+                        Log.d("Wallets",walletsUsuario.toString())
+                        Log.d("Wallets",walletsPagos.toString())
+                    }
+            }
+
+
+
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
