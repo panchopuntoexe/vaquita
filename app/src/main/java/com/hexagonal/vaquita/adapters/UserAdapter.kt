@@ -38,7 +38,12 @@ class UserAdapter(context: Context, usuarios: ArrayList<Usuario>, walletId: Stri
         with(holder) {
             Glide.with(context).load(usuarios[position].foto).into(holder.image)
             holder.txtNombre.text = usuarios[position].nombre
-            holder.txtCorreo.text = usuarios[position].correo
+            if(usuarios[position].correo!!.length>22){
+                holder.txtCorreo.text = usuarios[position].correo!!.substring(0,22)+"..."
+            }else{
+                holder.txtCorreo.text = usuarios[position].correo
+            }
+
 
             holder.button.setOnClickListener() {
                 button.isEnabled = false

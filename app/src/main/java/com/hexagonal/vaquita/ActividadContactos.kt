@@ -6,9 +6,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -23,10 +23,12 @@ class ActividadContactos : AppCompatActivity() {
 
     private var usuarios = ArrayList<Usuario>()
     private lateinit var botonContinuar: Button
+    private lateinit var barraBusqueda: SearchView
     private lateinit var binding: ActivityActividadContactosBinding
     private lateinit var userauth: FirebaseUser
     private lateinit var mailDeUsuarioLogueado: String
     private lateinit var walletId: String
+    private lateinit var adapter: UserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +39,13 @@ class ActividadContactos : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.setHasFixedSize(true)
         botonContinuar = findViewById<Button>(R.id.botonContinuarWallet)
+        barraBusqueda = findViewById(R.id.barraBuscar)
+        adapter = UserAdapter(
+            this,
+            usuarios,
+            intent.extras!!.getString("walletId").toString(),
+            R.layout.contactos_layout
+        )
 
         walletId = intent.extras!!.getString("walletId")!!
 
@@ -59,6 +68,22 @@ class ActividadContactos : AppCompatActivity() {
                     builder.show()
                 }
         }
+
+        barraBusqueda.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+            override fun onQueryTextChange(p0: String?): Boolean {
+                adapter = UserAdapter(
+                    this@ActividadContactos,
+                    usuarios.filter{ usuario-> usuario.nombre!!.lowercase().contains(p0.toString().lowercase())} as ArrayList<Usuario>,
+                    intent.extras!!.getString("walletId").toString(),
+                    R.layout.contactos_layout
+                )
+                binding.recyclerView.adapter = adapter
+                return false
+            }
+        })
 
         //datos del usuario logueado
         userauth = Firebase.auth.currentUser!!
@@ -87,12 +112,7 @@ class ActividadContactos : AppCompatActivity() {
                     usuarios.add(document.toObject(Usuario::class.java))
                 }
             }
-            binding.recyclerView.adapter = UserAdapter(
-                this,
-                usuarios,
-                intent.extras!!.getString("walletId").toString(),
-                R.layout.contactos_layout
-            )
+            binding.recyclerView.adapter = adapter
         }
     }
 
