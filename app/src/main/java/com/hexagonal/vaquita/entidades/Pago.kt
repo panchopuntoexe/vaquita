@@ -9,5 +9,7 @@ import org.parceler.Parcel
 data class Pago (
     var nombre: String? = null,
     var valor: Double? = null,
-    var user: Usuario? = null
+    var user: String? = null,
+    var fecha: String? = null,
+    var tipo: String ? = null,
 ) : Parcelable

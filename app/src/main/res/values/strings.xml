@@ -69,10 +69,10 @@
     <string name="cantidadAPagar">Cantidad a pagar:</string>
     <string name="textNombreDeTarjeta">Nombre de la tarjeta</string>
     <string name="hintNombreDeTarjeta">Nombre en la Tarjeta</string>
-    <string name="hintNumeroDeTarjeta">Numero de la tarjeta</string>
+    <string name="hintNumeroDeTarjeta">Número de la tarjeta</string>
     <string name="hintFechaTarjeta">Fecha en la Tarjeta</string>
     <string name="hintCCV">CCV</string>
-    <string name="hintPostal">Numero Postal</string>
+    <string name="hintPostal">Número Postal</string>
     <string name="comic">Gran Premier de Comic</string>
     <string name="date">21/12/2021</string>
     <string name="price">$ 15.99</string>
@@ -91,4 +91,9 @@
     <string name="tituloPagoEfectivo">Pago en Efectivo</string>
     <string name="valorPagoEfectivo">Ingresa el valor que deseas pagar:</string>
     <string name="tituloPagoTarjeta">Pago con Tarjeta de Crédito</string>
+    <string name="valorWallet">Total Gastos:</string>
+    <string name="tituloWallets">Wallets</string>
+    <string name="tituloMyWallets">Wallets Recientes</string>
+    <string name="dolarSign">$</string>
+    <string name="valorPagos">Total Pagos:</string>
 </resources>

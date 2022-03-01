@@ -20,6 +20,7 @@
             android:layout_marginBottom="20dp"
             android:gravity="center_horizontal"
             android:text="@string/textSeleccioneMetodo"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -60,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/efectivo"
                     android:textAlignment="center"
+                    android:textColor="#1E1C1C"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -94,6 +96,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/paypal"
                     android:textAlignment="center"
+                    android:textColor="#1E1C1C"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -131,6 +134,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tarjeta"
                 android:textAlignment="center"
+                android:textColor="#1E1C1C"
                 android:textSize="16sp" />
 
         </LinearLayout>

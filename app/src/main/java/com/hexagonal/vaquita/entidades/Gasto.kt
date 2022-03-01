@@ -12,7 +12,8 @@ import org.parceler.Parcel
 data class Gasto(
     var nombre: String? = null,
     var valor: Double? = null,
-    var fecha: String? = null
+    var fecha: String? = null,
+    var tipo: String ? = null,
 ) : Parcelable {
     companion object {
         fun QuerySnapshot.toGasto(): Gasto? {

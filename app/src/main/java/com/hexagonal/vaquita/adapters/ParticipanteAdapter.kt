@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FieldPath
 import com.hexagonal.vaquita.R
 import com.hexagonal.vaquita.entidades.Usuario
@@ -17,24 +19,23 @@ import kotlinx.coroutines.tasks.await
 class ParticipanteAdapter(
     private val context: Activity,
     private val usuarios: List<Usuario>,
-    private val deuda: Double,
-    val onWalletListener: GastoAdapter.OnWalletListener?
+    private val deuda: Double
 ) :
     RecyclerView.Adapter<ParticipanteAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.wallet_card, parent, false)
+            .inflate(R.layout.participantes_card, parent, false)
 
         Log.d("UsuariosWW", usuarios.toString())
-        return ViewHolder(view, onWalletListener)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
-            textViewNombreWallet.text = "${usuarios[position].nombre}"
-            textViewFechaWallet.text = "${usuarios[position].correo}"
-            textViewDeudaWallet.text = "\$-${deuda.toString()}"
+            Glide.with(context).load(usuarios[position].foto).into(imageParticipante!!)
+            textViewNombreParticipante.text = "${usuarios[position].nombre}"
+            textViewDeudaParticipante.text = "\$${deuda.toString()}"
         }
     }
 
@@ -42,22 +43,12 @@ class ParticipanteAdapter(
         return usuarios.size
     }
 
-    class ViewHolder(val view: View, val onWalletListener: GastoAdapter.OnWalletListener?) :
-        RecyclerView.ViewHolder(view), View.OnClickListener {
-        val textViewNombreWallet = view.findViewById<TextView>(R.id.textViewNombreWallet)
-        val textViewFechaWallet = view.findViewById<TextView>(R.id.textViewFechaWallet)
-        val textViewDeudaWallet = view.findViewById<TextView>(R.id.textViewDeudaWallet)
-
-        init {
-            view.setOnClickListener(this)
-        }
-        override fun onClick(v: View?) {
-            onWalletListener?.onWalletClick(adapterPosition)
-        }
+    class ViewHolder(val view: View) :
+        RecyclerView.ViewHolder(view){
+        val textViewNombreParticipante = view.findViewById<TextView>(R.id.textViewNombreParticipante)
+        val textViewDeudaParticipante = view.findViewById<TextView>(R.id.textViewDeudaParticipante)
+        val imageParticipante = view.findViewById<ImageView>(R.id.imageParticipante)
     }
 
-    interface OnWalletListener {
-        fun onWalletClick(position: Int)
-    }
 }
 

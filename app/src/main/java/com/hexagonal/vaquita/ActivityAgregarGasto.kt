@@ -58,8 +58,7 @@ class ActivityAgregarGasto : AppCompatActivity() {
         // Botón Cancelar
         botonCancelar = binding.btnCancelar
         botonCancelar.setOnClickListener {
-            val intencion = Intent(this, ActividadCompra::class.java)
-            startActivity(intencion)
+            super.onBackPressed()
         }
     }
 
@@ -77,6 +76,7 @@ class ActivityAgregarGasto : AppCompatActivity() {
                 "nombre" to nombre,
                 "fecha" to fecha,
                 "valor" to gastos.toDouble(),
+                "tipo" to "gasto"
             )
             val TAG = "MENSAJE"
             db.collection("Gastos")
@@ -94,8 +94,7 @@ class ActivityAgregarGasto : AppCompatActivity() {
                             db.collection("Wallets").document(docId)
                                 .update("gastos" ,mapaGastos)
                             //Log.d("Gasto agregado", mapaGastos.toString())
-                            val intencion = Intent(this, ActividadCompra::class.java)
-                            intencion.putExtra("wallet",wallet)
+                            val intencion = Intent(this, ActividadHome::class.java)
                             startActivity(intencion)
                         }
                     retorno = true

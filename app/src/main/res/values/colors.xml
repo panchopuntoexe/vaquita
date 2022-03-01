@@ -12,4 +12,6 @@
     <color name="morado">#8A6BA5</color>
     <color name="blanco">#FEE8D7</color>
     <color name="azul_Oscuro">#272A3F</color>
+    <color name="rojo">#FF0000</color>
+    <color name="verde">#008000</color>
 </resources>

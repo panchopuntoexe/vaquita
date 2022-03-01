@@ -55,13 +55,7 @@
             android:name=".ActividadCompra"
             android:exported="false" />
         <activity
-            android:name=".ActividadInicio"
-            android:exported="false" />
-        <activity
             android:name=".ActividadRegistro"
-            android:exported="false" />
-        <activity
-            android:name=".CodigoPrueba"
             android:exported="false" />
     </application>
 
