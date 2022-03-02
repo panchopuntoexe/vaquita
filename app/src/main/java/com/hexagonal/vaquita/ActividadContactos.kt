@@ -94,12 +94,13 @@ class ActividadContactos : AppCompatActivity() {
 
     fun putCreadorComoParticipante() {
         var db = Firebase.firestore
-        db.collection("Usuarios").whereEqualTo("correo", mailDeUsuarioLogueado)
+        db.collection("Wallets").document(walletId)
             .get().addOnSuccessListener { result ->
-                var userAux = result.first().toObject(Usuario::class.java).wallets as MutableMap<String, Boolean>
-                userAux.put(walletId,true)
-                db.collection("Usuarios").document(result.first().id)
-                                                    .update("wallets", userAux)
+                var userAux = result.toObject(Wallet::class.java)?.users as MutableMap<String, Boolean>
+                userAux.put(intent.extras!!.getString("propietario")!!,true)
+                Log.d("MENSAJE USERAUX",userAux.toString())
+                db.collection("Wallets").document(walletId)
+                                                    .update("users", userAux)
             }
     }
 

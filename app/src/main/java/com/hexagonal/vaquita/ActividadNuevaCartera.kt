@@ -193,6 +193,10 @@ class ActividadNuevaCartera : AppCompatActivity() {
                                     "walletId",
                                     GestionadorDeSubida.walletId.toString()
                                 )
+                                intencion.putExtra(
+                                    "propietario",
+                                    GestionadorDeSubida.propietario.toString()
+                                )
                                 startActivity(intencion)
                             })
                     builder.create()
