@@ -47,7 +47,7 @@ class ActivityAgregarGasto : AppCompatActivity() {
         valorGasto = binding.textGastoValor;
         fechaGasto = binding.textGastoDate;
 
-        Glide.with(this).load(wallet.foto).into(imagenGasto)
+        Glide.with(this).load(wallet.foto).override(500,500).into(imagenGasto)
 
         // Botón Agregar
         botonAgregar = binding.buttonAgregarGasto

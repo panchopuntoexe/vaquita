@@ -96,4 +96,5 @@
     <string name="tituloMyWallets">Wallets Recientes</string>
     <string name="dolarSign">$</string>
     <string name="valorPagos">Total Pagos:</string>
+    <string name="pagos">Wallets a Pagar:</string>
 </resources>
