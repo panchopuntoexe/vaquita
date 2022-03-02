@@ -4,6 +4,7 @@ import android.os.Parcelable
 import android.util.Log
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.auth.User
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -13,7 +14,7 @@ data class Usuario(
     var username: String? = null,
     var telefono: String? = null,
     var foto: String? = null,
-    var wallets: Map<String,Boolean>? = null,
+    var wallets: Map<String, Boolean>? = null,
 ) : Parcelable {
     companion object {
         fun QuerySnapshot.toUser(): Usuario? {
@@ -33,6 +34,25 @@ data class Usuario(
                 return null
             }
         }
+
+        fun DocumentSnapshot.toMapUser(): MutableMap<String, String>? {
+            try {
+                return mutableMapOf(Pair(this.id, this.get("correo").toString()))
+            } catch (e: Exception) {
+                Log.e(TAG, "Error converting user profile", e)
+                return null
+            }
+        }
+
+        fun QuerySnapshot.toUserId(): String? {
+            try {
+                return this.first().id
+            } catch (e: Exception) {
+                Log.e(TAG, "Error converting user profile", e)
+                return null
+            }
+        }
+
         private const val TAG = "User"
     }
 }

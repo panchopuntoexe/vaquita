@@ -55,12 +55,10 @@ class ActividadCompra : AppCompatActivity() {
         }.attach()
 
         // Botón  Pagar
-        var botonMetodoDePago = findViewById<Button>(R.id.botonPagar)
+        val botonMetodoDePago = findViewById<Button>(R.id.botonPagar)
         botonMetodoDePago.setOnClickListener {
-            val numParticipantes = wallet?.users?.size
-            val valorTotalWallet: TextView = this.findViewById(R.id.valorTotalWallet)
-            val gastoTotal = valorTotalWallet.text.toString().toDouble()
-            val deuda = (gastoTotal/ numParticipantes!!).roundTo(2)
+            val pagoUser: TextView = this.findViewById(R.id.pagoUser)
+            val deuda = pagoUser.text.toString().toDouble()
             val intencion = Intent(this, ActividadMetodoDePago::class.java)
             intencion.putExtra("deuda",deuda)
             intencion.putExtra("wallet",wallet)
@@ -68,7 +66,7 @@ class ActividadCompra : AppCompatActivity() {
         }
 
         // Botón Gasto
-        var botonGasto = findViewById<Button>(R.id.botonGasto)
+        val botonGasto = findViewById<Button>(R.id.botonGasto)
         botonGasto.setOnClickListener {
             val intencion = Intent(this, ActivityAgregarGasto::class.java)
             intencion.putExtra("wallet",wallet)

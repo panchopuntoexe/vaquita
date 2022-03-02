@@ -16,14 +16,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.hexagonal.vaquita.adapters.GastoAdapter
 import com.hexagonal.vaquita.adapters.ParticipanteAdapter
+import com.hexagonal.vaquita.entidades.Pago
+import com.hexagonal.vaquita.entidades.Pago.Companion.toPago
 import com.hexagonal.vaquita.entidades.Usuario
+import com.hexagonal.vaquita.entidades.Usuario.Companion.toMapUser
 import com.hexagonal.vaquita.entidades.Usuario.Companion.toUser
+import com.hexagonal.vaquita.entidades.Wallet
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlin.math.pow
-import kotlin.math.round
 import kotlin.math.roundToInt
 
 
@@ -39,13 +41,21 @@ private const val ARG_RECYCLEVIEW = "recycleViewParticipantes"
  * create an instance of this fragment.
  */
 class ParticipantesFragment(
-    val participantes: Map<String, Boolean>?,
+    val wallet: Wallet?,
 ) : Fragment() {
 
     val db = Firebase.firestore
     val TAG = "ErrorUsuario"
     val _userWallets = MutableLiveData<List<Usuario>>()
     var usuarios: LiveData<List<Usuario>>? = _userWallets
+
+    val _pagosWallets = MutableLiveData<List<Pago>>()
+    var pagosWallets: LiveData<List<Pago>>? = _pagosWallets
+
+    val _usersCorreo = MutableLiveData<List<MutableMap<String, String>>>()
+    var usersCorreo: LiveData<List<MutableMap<String, String>>>? = _usersCorreo
+
+    val mapaPagos: MutableMap<String?, Double> = mutableMapOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,8 +65,8 @@ class ParticipantesFragment(
     suspend fun getUsers(): List<Usuario>? {
         val listaWallets = ArrayList<String>()
 
-        if (participantes != null) {
-            for (clave in participantes.keys) {
+        if (wallet?.users != null) {
+            for (clave in wallet.users!!.keys) {
                 listaWallets.add(clave)
             }
         }
@@ -72,6 +82,54 @@ class ParticipantesFragment(
         }
     }
 
+    suspend fun getUsersMap(lista: MutableSet<String?>): List<MutableMap<String, String>>? {
+        val listaWallets = ArrayList<String>()
+        for (clave in lista) {
+            if (clave != null) {
+                listaWallets.add(clave)
+            }
+        }
+
+        if (listaWallets.size > 0) {
+            Log.d("Participantes", listaWallets.toString())
+            return try {
+                db.collection("Usuarios")
+                    .whereIn(FieldPath.documentId(), listaWallets)
+                    .get().await()
+                    .documents.mapNotNull { it.toMapUser() }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error getting user friends", e)
+                emptyList()
+            }
+        }
+
+        return emptyList()
+    }
+
+    suspend fun getPagos(): List<Pago>? {
+        val listaWallets = ArrayList<String>()
+
+        if (wallet?.pagos != null) {
+            for (clave in wallet.pagos!!.keys) {
+                listaWallets.add(clave)
+            }
+        }
+
+        if (listaWallets.size > 0) {
+            Log.d("Participantes", listaWallets.toString())
+            return try {
+                db.collection("Pagos")
+                    .whereIn(FieldPath.documentId(), listaWallets)
+                    .get().await()
+                    .documents.mapNotNull { it.toPago() }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error getting user friends", e)
+                emptyList()
+            }
+        }
+        return emptyList()
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,20 +140,63 @@ class ParticipantesFragment(
             view.findViewById(R.id.recycleViewParticipantes)
         viewLifecycleOwner.lifecycleScope.launch {
             _userWallets.value = getUsers()!!
-
+            _pagosWallets.value = getPagos()!!
         }
         usuarios?.observe(viewLifecycleOwner, Observer {
-            try{
+            try {
+                val articipantesWallets = it
                 val numParticipantes = it.size
-                val valorTotalWallet: TextView = this.requireActivity().findViewById(R.id.valorTotalWallet)
+                val valorTotalWallet: TextView =
+                    this.requireActivity().findViewById(R.id.valorTotalWallet)
                 val gastoTotal = valorTotalWallet.text.toString().toDouble()
-                val deuda = (gastoTotal/numParticipantes).roundTo(2)
-                recycleViewParticipantes.adapter =
-                    ParticipanteAdapter(this.requireActivity(), it, deuda)
-                recycleViewParticipantes.layoutManager =
-                    LinearLayoutManager(this.requireActivity())
-                recycleViewParticipantes.setHasFixedSize(true)
-            } catch(e:Exception) {
+                val deuda = (gastoTotal / numParticipantes).roundTo(2)
+
+
+
+                pagosWallets?.observe(viewLifecycleOwner, Observer { it ->
+                    val pagos = it
+                    val mutableByUser: MutableMap<String?, MutableList<Pago>> =
+                        pagos.groupByTo(mutableMapOf()) { it.user }
+
+                    val mapaPagos: MutableMap<String?, Double> = mutableMapOf()
+                    for (m in mutableByUser) {
+                        var totalPago = 0.0
+                        for (pago in m.value) {
+                            totalPago += pago.valor!!
+                        }
+                        mapaPagos.put(m.key, totalPago)
+                    }
+
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        _usersCorreo.value = getUsersMap(mapaPagos.keys)!!
+                    }
+
+                    usersCorreo?.observe(viewLifecycleOwner, Observer { lista ->
+                        val mapaPagosNuevo: MutableMap<String?, Double> = mutableMapOf()
+                        for (mPago in mapaPagos) {
+                            for (mapa in lista) {
+                                if (mPago.key == mapa.keys.first()) {
+                                    mapaPagosNuevo.put(mapa.values.first(), mPago.value)
+                                }
+                            }
+                        }
+
+                        recycleViewParticipantes.adapter =
+                            ParticipanteAdapter(
+                                this.requireActivity(),
+                                articipantesWallets,
+                                deuda,
+                                mapaPagosNuevo
+                            )
+                        recycleViewParticipantes.layoutManager =
+                            LinearLayoutManager(this.requireActivity())
+                        recycleViewParticipantes.setHasFixedSize(true)
+
+                    })
+
+
+                })
+            } catch (e: Exception) {
                 Log.d("Error", e.toString())
             }
         })
@@ -103,6 +204,7 @@ class ParticipantesFragment(
         // Inflate the layout for this fragment
         return view
     }
+
 
     fun Double.roundTo(numFractionDigits: Int): Double {
         val factor = 10.0.pow(numFractionDigits.toDouble())

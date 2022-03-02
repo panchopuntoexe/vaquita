@@ -7,15 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout.HORIZONTAL
 import android.widget.TextView
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.hexagonal.vaquita.ActividadCompra
@@ -23,6 +25,7 @@ import com.hexagonal.vaquita.R
 import com.hexagonal.vaquita.adapters.CarrusellAdapter
 import com.hexagonal.vaquita.adapters.WalletAdapter
 import com.hexagonal.vaquita.databinding.FragmentHomeBinding
+import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Wallet
 import com.hexagonal.vaquita.ui.settings.SettingsFragment
 import kotlinx.coroutines.launch
@@ -36,6 +39,7 @@ class HomeFragment : Fragment(), WalletAdapter.OnWalletListener {
     private lateinit var perfil: ImageView
     private lateinit var textBienvenida: TextView
     private lateinit var wallets: List<Wallet>
+    private lateinit var usuarioActual: Usuario
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,6 +62,7 @@ class HomeFragment : Fragment(), WalletAdapter.OnWalletListener {
         perfil = binding.imageProfile
 
         homeViewModel.userActual?.observe(viewLifecycleOwner, Observer {
+            usuarioActual = it
             textBienvenida = binding.textBienvenida
             textBienvenida.setText("${getString(R.string.bienvenido)} ${it.nombre}")
             Glide.with(this).load(it.foto).into(perfil)
@@ -79,18 +84,35 @@ class HomeFragment : Fragment(), WalletAdapter.OnWalletListener {
             binding.recycleViewWallets.setHasFixedSize(true)
 
             binding.recyclerViewCarrusell.adapter =
-                CarrusellAdapter(this.requireActivity(),it, this)
+                CarrusellAdapter(this.requireActivity(), it, this)
             binding.recyclerViewCarrusell.layoutManager =
-                LinearLayoutManager(this.requireActivity(),LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(this.requireActivity(), LinearLayoutManager.HORIZONTAL, false)
             binding.recyclerViewCarrusell.setHasFixedSize(true)
         })
 
         perfil.setOnClickListener {
-            val fragmentB = SettingsFragment()
+            /*val fragmentB = SettingsFragment()
             requireFragmentManager().beginTransaction()
                 .replace(R.id.nav_host_fragment_activity_home, fragmentB)
                 .addToBackStack(this::class.java.simpleName)
                 .commit()
+            //mPager.setCurrentItem(1);
+
+            val vpPager = this.activity?.findViewById(R.id.vpPager) as ViewPager
+
+            this.parentFragmentManager
+
+            this.parentFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment_activity_home, fragmentB)
+                .addToBackStack(this::class.java.simpleName)
+                .commit()*/
+            val navView: BottomNavigationView = this.requireActivity().findViewById(R.id.nav_view)
+
+            //navView.get(3).callOnClick()
+
+            Log.d("Nav", navView.toString())
+
+
         }
 
         return root

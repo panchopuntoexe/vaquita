@@ -7,6 +7,16 @@
     android:layout_margin="10dp"
     tools:context=".ActividadCompra">
 
+    <TextView
+        android:id="@+id/pagoUser"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:text="TextView"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
@@ -20,7 +30,7 @@
             android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="0dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -196,7 +206,7 @@
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center|center_horizontal"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -204,14 +214,16 @@
             android:id="@+id/botonPagar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pagar" />
+            android:text="@string/pagar"
+            app:cornerRadius="20dp" />
 
         <Button
             android:id="@+id/botonGasto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:text="Añadir un Gasto" />
+            android:text="Añadir un Gasto"
+            app:cornerRadius="20dp" />
 
     </LinearLayout>
 

@@ -9,17 +9,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.firebase.firestore.FieldPath
 import com.hexagonal.vaquita.R
 import com.hexagonal.vaquita.entidades.Usuario
-import com.hexagonal.vaquita.entidades.Wallet
-import com.hexagonal.vaquita.entidades.Wallet.Companion.toWallet
-import kotlinx.coroutines.tasks.await
+import kotlin.math.pow
+import kotlin.math.roundToInt
 
 class ParticipanteAdapter(
     private val context: Activity,
     private val usuarios: List<Usuario>,
-    private val deuda: Double
+    private val deuda: Double,
+    private val pagosUsuarios: MutableMap<String?, Double>
 ) :
     RecyclerView.Adapter<ParticipanteAdapter.ViewHolder>() {
 
@@ -31,11 +30,31 @@ class ParticipanteAdapter(
         return ViewHolder(view)
     }
 
+    fun Double.roundTo(numFractionDigits: Int): Double {
+        val factor = 10.0.pow(numFractionDigits.toDouble())
+        return (this * factor).roundToInt() / factor
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val pagoUser: TextView = context.findViewById(R.id.pagoUser)
         with(holder) {
             Glide.with(context).load(usuarios[position].foto).into(imageParticipante!!)
             textViewNombreParticipante.text = "${usuarios[position].nombre}"
-            textViewDeudaParticipante.text = "\$${deuda.toString()}"
+            if (pagosUsuarios.size > 0) {
+                var pago = 0.0
+                for (p in pagosUsuarios) {
+                    if (usuarios[position].correo == p.key) {
+                        pago = p.value
+                        break
+                    }
+                }
+                val deudaC = (deuda - pago).roundTo(2)
+                textViewDeudaParticipante.text = "\$ ${deudaC.toString()}"
+                pagoUser.text = deudaC.toString()
+            } else {
+                textViewDeudaParticipante.text = "\$ ${deuda.toString()}"
+                pagoUser.text = deuda.toString()
+            }
         }
     }
 
@@ -44,11 +63,12 @@ class ParticipanteAdapter(
     }
 
     class ViewHolder(val view: View) :
-        RecyclerView.ViewHolder(view){
-        val textViewNombreParticipante = view.findViewById<TextView>(R.id.textViewNombreParticipante)
+        RecyclerView.ViewHolder(view) {
+        val textViewNombreParticipante =
+            view.findViewById<TextView>(R.id.textViewNombreParticipante)
         val textViewDeudaParticipante = view.findViewById<TextView>(R.id.textViewDeudaParticipante)
         val imageParticipante = view.findViewById<ImageView>(R.id.imageParticipante)
-    }
 
+    }
 }
 

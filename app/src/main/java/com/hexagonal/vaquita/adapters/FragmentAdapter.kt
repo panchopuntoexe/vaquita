@@ -25,7 +25,7 @@ class FragmentAdapter(
                 GastosFragment(wallet)
             }
             1 -> {
-                ParticipantesFragment(wallet?.users)
+                ParticipantesFragment(wallet)
             }
             else -> {
                 Fragment()

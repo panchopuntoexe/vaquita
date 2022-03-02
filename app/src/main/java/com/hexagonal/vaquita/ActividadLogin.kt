@@ -40,6 +40,8 @@ class ActividadLogin : AppCompatActivity() {
 
         //Inicializando Firebase Auth
         auth = Firebase.auth
+        getUserFirebase()
+
         val email = textEmail.text.toString()
         textEmail.setText("francisco.garcia@epn.edu.ec")
         val clave = textClave.text.toString()
@@ -64,6 +66,18 @@ class ActividadLogin : AppCompatActivity() {
             val intencion = Intent(this, ActividadRecuperar::class.java)
             startActivity(intencion)
         }
+    }
+
+    private fun getUserFirebase() {
+        val email: String? = auth.getCurrentUser()?.email
+        if (email != null) {
+            redirectToMain(email)
+        }
+    }
+
+    private fun redirectToMain(email: String) {
+        showHome()
+        this.finish()
     }
 
     // FUNCIONES

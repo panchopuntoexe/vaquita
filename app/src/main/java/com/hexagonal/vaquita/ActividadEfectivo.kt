@@ -1,24 +1,19 @@
 package com.hexagonal.vaquita
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.bumptech.glide.Glide
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.protobuf.ValueOrBuilder
 import com.hexagonal.vaquita.entidades.Pago
 import com.hexagonal.vaquita.entidades.Usuario
-import com.hexagonal.vaquita.entidades.Usuario.Companion.toUser
 import com.hexagonal.vaquita.entidades.Wallet
 import com.hexagonal.vaquita.gestionadorsubida.GestionadorDeSubida
-import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -45,11 +40,11 @@ class ActividadEfectivo : AppCompatActivity() {
         getUser()
 
         // Botón Pago
-        var botonEfectivo = findViewById<Button>(R.id.botonPagarEfectivo)
+        val botonEfectivo = findViewById<Button>(R.id.botonPagarEfectivo)
         botonEfectivo.setOnClickListener {
             val valorAPagar = textPagoRealizarse.text.toString().toDouble()
-            var subirPago : GestionadorDeSubida = GestionadorDeSubida()
-            var pago : Pago = Pago(
+            val subirPago : GestionadorDeSubida = GestionadorDeSubida()
+            val pago : Pago = Pago(
                 "Pago de: " + nombre,
                 valorAPagar,
                 idUser,
@@ -57,7 +52,7 @@ class ActividadEfectivo : AppCompatActivity() {
                 "pago"
             )
 
-            if (valorAPagar > 0 && valorAPagar != null) {
+            if (valorAPagar > 0) {
                 if (subirPago.subirPago(pago, wallet)){
                     val intencion = Intent(this, ActividadHome::class.java)
                     startActivity(intencion)
@@ -71,7 +66,7 @@ class ActividadEfectivo : AppCompatActivity() {
         }
 
         // Botón Cancelar
-        var botonCancelar = findViewById<Button>(R.id.botonCancelarEfectivo)
+        val botonCancelar = findViewById<Button>(R.id.botonCancelarEfectivo)
         botonCancelar.setOnClickListener {
             super.onBackPressed()
         }

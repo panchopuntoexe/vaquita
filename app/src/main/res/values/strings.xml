@@ -96,4 +96,7 @@
     <string name="tituloMyWallets">Wallets Recientes</string>
     <string name="dolarSign">$</string>
     <string name="valorPagos">Total Pagos:</string>
+    <string name="recordarme">Recordarme</string>
+    <string name="pagospendientes">Pagos Pendientes</string>
+    <string name="cantidad">$ 69 420.99</string>
 </resources>

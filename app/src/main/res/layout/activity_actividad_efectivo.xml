@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="24dp"
     tools:context=".ActividadEfectivo">
 
     <TextView
@@ -37,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="$ 69 420.99"
+        android:text="@string/cantidad"
         android:textColor="#1E1C1C"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,6 +53,7 @@
         android:layout_marginTop="84dp"
         android:text="@string/pagar"
         android:textSize="16sp"
+        app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,15 +63,14 @@
         android:id="@+id/botonCancelarEfectivo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
+        android:layout_marginTop="32dp"
         android:text="@string/cancel"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonPagarTarjeta"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/botonPagarEfectivo" />
 
     <TextView
         android:id="@+id/tituloPagoEfectivo"
@@ -96,10 +97,11 @@
 
     <EditText
         android:id="@+id/textPagoRealizarse"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="@string/valor"
         android:inputType="numberDecimal"
         android:textColor="#1E1C1C"
         android:textSize="24sp"
