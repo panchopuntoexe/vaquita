@@ -58,6 +58,7 @@ class ActividadTarjetaDeCredito : AppCompatActivity() {
         botonTarjeta.setOnClickListener {
             if (textValorAPagar.text.isNotEmpty()) {
                 val valorAPagar = textValorAPagar.text.toString().toDouble()
+                val valorADeuda = textCantidad.text.toString().toDouble()
                 var subirPago: GestionadorDeSubida = GestionadorDeSubida()
                 var pago: Pago = Pago(
                     "Pago de: " + nombre,
@@ -66,7 +67,7 @@ class ActividadTarjetaDeCredito : AppCompatActivity() {
                     SimpleDateFormat("dd/M/yyyy").format(Date()),
                     "pago"
                 )
-                if (valorAPagar > 0 && valorAPagar != null) {
+                if (valorAPagar > 0 && valorAPagar != null && valorADeuda >= valorAPagar) {
                     if (validarTarjeta()) {
                         if (subirPago.subirPago(pago, wallet)) {
                             val intencion = Intent(this, ActividadHome::class.java)
