@@ -47,10 +47,10 @@
             android:gravity="end"
             android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageProfile"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:src="@drawable/perfil"
                 app:civ_border_color="#FF000000"
                 app:civ_border_width="1dp" />

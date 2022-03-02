@@ -30,7 +30,7 @@ class WalletAdapter(
         with(holder) {
             textViewNombreWallet.text = "${wallets[position].nombre}"
             textViewFechaWallet.text = "${wallets[position].fecha}"
-            textViewDeudaWallet.text = "\$-${deuda.toString()}"
+            textViewLugarWallet.text = "${wallets[position].lugar.toString()}"
             Glide.with(context).load(wallets[position].foto).into(imagenWallet!!)
         }
     }
@@ -43,7 +43,7 @@ class WalletAdapter(
         RecyclerView.ViewHolder(view), View.OnClickListener {
         val textViewNombreWallet = view.findViewById<TextView>(R.id.textViewNombreWallet)
         val textViewFechaWallet = view.findViewById<TextView>(R.id.textViewFechaWallet)
-        val textViewDeudaWallet = view.findViewById<TextView>(R.id.textViewDeudaWallet)
+        val textViewLugarWallet = view.findViewById<TextView>(R.id.textViewLugarWallet)
         val imagenWallet = view.findViewById<ImageView>(R.id.imageWallet)
 
 

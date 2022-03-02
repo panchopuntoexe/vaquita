@@ -81,4 +81,10 @@ class ActividadCompra : AppCompatActivity() {
         return (this * factor).roundToInt() / factor
     }
 
+    override fun onBackPressed() {
+        val intencion = Intent(this, ActividadHome::class.java)
+        startActivity(intencion)
+        this.finish();
+    }
+
 }

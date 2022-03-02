@@ -100,4 +100,5 @@
     <string name="pagospendientes">Pagos Pendientes</string>
     <string name="cantidad">$ 69 420.99</string>
     <string name="pagos">Wallets a Pagar:</string>
+    <string name="pagoUserDefault">0.0</string>
 </resources>

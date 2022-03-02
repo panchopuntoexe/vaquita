@@ -11,7 +11,7 @@
         android:id="@+id/pagoUser"
         android:layout_width="1dp"
         android:layout_height="1dp"
-        android:text="TextView"
+        android:text="@string/pagoUserDefault"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
