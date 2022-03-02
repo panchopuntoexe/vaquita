@@ -38,7 +38,7 @@ class DashboardFragment : Fragment() {
     private val hasAxesNames = true
     private val hasLabels = true
     private val hasLabelForSelected = false
-    private val walletsPagos:MutableMap<String,Number> = mutableMapOf()
+    private val walletsPagos:MutableList<Pair<String,Number>> = mutableListOf()
 
     private lateinit var dashboardViewModel: DashboardViewModel
     private var _binding: FragmentDashboardBinding? = null
@@ -87,7 +87,7 @@ class DashboardFragment : Fragment() {
                                 for (wallet in walletsUsuario){
                                     var acumPago = 0
                                     if (wallet.pagos!!.isEmpty()){
-                                        walletsPagos.put(wallet.nombre.toString(),0)
+                                        walletsPagos.add(Pair(wallet.nombre.toString(),0))
                                     }else{
                                         for(pago in wallet.pagos!!){
                                             for(element in pagos){
@@ -100,7 +100,7 @@ class DashboardFragment : Fragment() {
                                                 }
                                             }
                                         }
-                                        walletsPagos.put(wallet.nombre.toString(),acumPago)
+                                        walletsPagos.add(Pair(wallet.nombre.toString(),acumPago))
                                     }
                                 }
                                 Log.d("Wallets",walletsUsuario.toString())
@@ -122,8 +122,8 @@ class DashboardFragment : Fragment() {
             values = ArrayList()
             values.add(
                 SubcolumnValue(
-                    wallet.value.toFloat(),ChartUtils.pickColor()
-                ).setLabel(wallet.key+":"+wallet.value)
+                    wallet.second.toFloat(),ChartUtils.pickColor()
+                ).setLabel(wallet.first+":"+wallet.second)
             )
             val column = Column(values)
             column.setHasLabels(hasLabels)
