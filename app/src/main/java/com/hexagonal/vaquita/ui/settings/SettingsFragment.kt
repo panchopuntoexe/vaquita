@@ -89,14 +89,13 @@ class SettingsFragment : Fragment() {
         password = view.findViewById(R.id.textViewEditPassword)
         profilePic = view.findViewById(R.id.imageView)
 
-        userauth = Firebase.auth.currentUser!!
-        getUser(userauth.email.toString())
+        getUser()
     }
-    fun getUser(userEmail: String?) {
+    fun getUser() {
         val db = Firebase.firestore
         var userfb : Usuario
         db.collection("Usuarios")
-            .whereEqualTo("correo", userEmail)
+            .whereEqualTo("correo", Firebase.auth.currentUser!!.email)
             .get()
             .addOnSuccessListener { result ->
                 val document = result.first()

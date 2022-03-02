@@ -18,6 +18,7 @@ class GestionadorDeSubida {
 
     companion object {
         lateinit var walletId: String
+        lateinit var propietario: String
     }
 
     constructor() {
@@ -53,7 +54,6 @@ class GestionadorDeSubida {
 
     public fun subirDatosDeWalletNueva(wallet: Wallet, db: FirebaseFirestore): Boolean {
         var retorno: Boolean = true
-        var mapaVacio: Map<String, Boolean> = emptyMap<String, Boolean>()
         val walletNueva = hashMapOf(
             "creador" to wallet.creador,
             "fecha" to wallet.fecha,
@@ -70,6 +70,7 @@ class GestionadorDeSubida {
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG, "Wallet added with ID: ${documentReference.id}")
                 walletId = documentReference.id
+                propietario = wallet.creador.toString()
                 val db = Firebase.firestore
                 var userfb: Usuario
                 db.collection("Usuarios")

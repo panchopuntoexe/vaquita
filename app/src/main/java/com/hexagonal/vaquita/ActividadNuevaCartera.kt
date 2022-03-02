@@ -47,7 +47,7 @@ class ActividadNuevaCartera : AppCompatActivity() {
     lateinit var textFecha: EditText
     lateinit var textLugar: EditText
 
-    private lateinit var userauth : FirebaseUser
+    private lateinit var userauth: FirebaseUser
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_actividad_nueva_cartera)
@@ -64,9 +64,7 @@ class ActividadNuevaCartera : AppCompatActivity() {
         textNombre.setText("Listening Party de Comic")
         var nombreValido: Boolean = false
         textNombre.setOnClickListener OnClickListener@{
-            if ((textNombre.text.toString()
-                    .isNotEmpty() && validador.validarString(textNombre.text.toString()))
-            ) {
+            if (textNombre.text.toString().isEmpty()){
                 textNombre.setError("Nombre inválido")
                 nombreValido = false
                 return@OnClickListener
@@ -81,11 +79,11 @@ class ActividadNuevaCartera : AppCompatActivity() {
         var fechaValida: Boolean = false
         textFecha.setOnClickListener OnClickListener@{
             if (textFecha.text.toString().isEmpty()) {
-                textFecha.setError("Fecha inválido")
+                textFecha.setError("Fecha inválida")
                 fechaValida = false
                 return@OnClickListener
             }
-            Toast.makeText(this, "Fecha válido", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Fecha válida", Toast.LENGTH_SHORT).show()
             fechaValida = true
             return@OnClickListener
         }
@@ -114,9 +112,7 @@ class ActividadNuevaCartera : AppCompatActivity() {
         var botonNuevaWallet = findViewById<Button>(R.id.botonContinuar)
         botonNuevaWallet.setOnClickListener {
 
-            if ((textNombre.text.toString()
-                    .isNotEmpty() && validador.validarString(textNombre.text.toString()))
-            ) {
+            if (textNombre.text.toString().isEmpty()){
                 textNombre.setError("Nombre inválido")
                 nombreValido = false
             } else {
@@ -131,7 +127,7 @@ class ActividadNuevaCartera : AppCompatActivity() {
             }
 
             if (textFecha.text.toString().isEmpty()) {
-                textFecha.setError("Lugar inválido")
+                textFecha.setError("Fecha inválida")
                 fechaValida = false
             } else {
                 fechaValida = true
@@ -157,28 +153,35 @@ class ActividadNuevaCartera : AppCompatActivity() {
     }
 
     fun subirWallet() {
-        var mapaVacio: Map<String, Boolean> =  emptyMap();
-        var mapaVacioGasto:Map<String, Boolean> =  emptyMap();
-        var mapaVacioPago:Map<String, Boolean> =  emptyMap();
+        var mapaVacio: Map<String, Boolean> = emptyMap();
+        var mapaVacioGasto: Map<String, Boolean> = emptyMap();
+        var mapaVacioPago: Map<String, Boolean> = emptyMap();
 
         userauth = Firebase.auth.currentUser!!
-        var userEmail=userauth.email.toString()
+        var userEmail = userauth.email.toString()
 
         val db = Firebase.firestore
-        var userId:String
+        var userId: String
         db.collection("Usuarios")
             .whereEqualTo("correo", userEmail)
             .get()
             .addOnSuccessListener { result ->
                 val document = result.first()
                 userId = document.id.toString();
-                val wallet: Wallet = Wallet(textNombre.text.toString(),textFecha.text.toString(),textLugar.text.toString(),
-                    userId,mapaVacio,mapaVacioGasto,mapaVacioPago,imageViewSubirFotoURL.toString())
+                val wallet: Wallet = Wallet(
+                    textNombre.text.toString(),
+                    textFecha.text.toString(),
+                    textLugar.text.toString(),
+                    userId,
+                    mapaVacio,
+                    mapaVacioGasto,
+                    mapaVacioPago,
+                    imageViewSubirFotoURL.toString()
+                )
 
                 if (!gestionadorDeSubida.subirDatosDeWalletNueva(wallet, Firebase.firestore)) {
                     Toast.makeText(this, "Registro fallido", Toast.LENGTH_LONG).show()
-                }
-                else {
+                } else {
                     //builder del diálogo
                     val builder = AlertDialog.Builder(this)
                     builder.setMessage(R.string.exitoRegistro)
@@ -186,15 +189,20 @@ class ActividadNuevaCartera : AppCompatActivity() {
                             DialogInterface.OnClickListener { dialog, id ->
                                 //envío a inicio
                                 val intencion = Intent(this, ActividadContactos::class.java)
-                                intencion.putExtra("walletId",GestionadorDeSubida.walletId.toString())
+                                intencion.putExtra(
+                                    "walletId",
+                                    GestionadorDeSubida.walletId.toString()
+                                )
+                                intencion.putExtra(
+                                    "propietario",
+                                    GestionadorDeSubida.propietario.toString()
+                                )
                                 startActivity(intencion)
                             })
                     builder.create()
                     builder.show()
                 }
             }
-
-
 
 
     }
@@ -234,8 +242,6 @@ class ActividadNuevaCartera : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val downloadUri = task.result
                     imageViewSubirFotoURL = downloadUri
-                    Glide.with(this).load(imageViewSubirFotoURL.toString())
-                        .into(imageViewSubirFoto!!)
                     subirWallet()
                 } else {
                     Log.e("ERROR", task.toString())
@@ -280,7 +286,6 @@ class ActividadNuevaCartera : AppCompatActivity() {
             }
         }
     }
-
 
 
 }
