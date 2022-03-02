@@ -58,54 +58,11 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
-
-        getUser()
-
-
-
-
-        val chart = binding.chart
-        val numSubcolumns = 1
-        val numColumns = 12
-        // Column can have many subcolumns, here by default I use 1 subcolumn in each of 8 columns.
-        val columns: MutableList<Column> = ArrayList()
-        var values: MutableList<SubcolumnValue?>
-        for (i in 0 until numColumns) {
-            values = ArrayList()
-            for (j in 0 until numSubcolumns) {
-                values.add(
-                    SubcolumnValue(
-                        Math.random().toFloat() * 50f + 5,
-                        ChartUtils.pickColor()
-                    )
-                )
-            }
-            val column = Column(values)
-            column.setHasLabels(hasLabels)
-
-            column.setHasLabelsOnlyForSelected(hasLabelForSelected)
-            columns.add(column)
-        }
-        data = ColumnChartData(columns)
-        if (hasAxes) {
-            val axisX = Axis()
-            val axisY = Axis().setHasLines(true)
-            if (hasAxesNames) {
-                axisX.name = "Axis X"
-                axisY.name = "Axis Y"
-            }
-            data!!.setAxisXBottom(axisX)
-            data!!.setAxisYLeft(axisY)
-        } else {
-            data!!.setAxisXBottom(null)
-            data!!.setAxisYLeft(null)
-        }
-        chart.setColumnChartData(data)
+        getPagosporWallet()
         return root
     }
 
-    fun getUser() {
+    fun getPagosporWallet() {
         val db = Firebase.firestore
         var userfb : Usuario
         db.collection("Usuarios")
@@ -123,31 +80,72 @@ class DashboardFragment : Fragment() {
                                 walletsUsuario.add(wallet)
                             }
                         }
-                        for (wallet in walletsUsuario){
-                            var acumPago = 0
-                            if (wallet.pagos!!.isEmpty()){
-                                walletsPagos.put(wallet.nombre.toString(),0)
-                            }else{
-                                for(pago in wallet.pagos!!){
-                                    db.collection("Pagos")
-                                        .document(pago.key)
-                                        .get()
-                                        .addOnSuccessListener { result ->
-                                            if((result.toObject(Pago::class.java))!!.user===user.id){
-                                                acumPago= (acumPago+ result.toObject(Pago::class.java)!!.valor!!).toInt()
+                        db.collection("Pagos")
+                            .get()
+                            .addOnSuccessListener { result ->
+                            var pagos = result
+                                for (wallet in walletsUsuario){
+                                    var acumPago = 0
+                                    if (wallet.pagos!!.isEmpty()){
+                                        walletsPagos.put(wallet.nombre.toString(),0)
+                                    }else{
+                                        for(pago in wallet.pagos!!){
+                                            for(element in pagos){
+                                                if(pago.key==element.id){
+                                                    Log.d("User id ",element.toObject(Pago::class.java).user+" "+user.id)
+                                                    if(element.toObject(Pago::class.java).user==user.id){
+                                                        Log.d("Pagos",element.id+" "+element.toObject(Pago::class.java).valor)
+                                                        acumPago= (acumPago+element.toObject(Pago::class.java).valor!!).toInt()
+                                                    }
+                                                }
                                             }
                                         }
+                                        walletsPagos.put(wallet.nombre.toString(),acumPago)
+                                    }
                                 }
-                                walletsPagos.put(wallet.nombre.toString(),acumPago)
+                                Log.d("Wallets",walletsUsuario.toString())
+                                Log.d("Wallets",walletsPagos.toString())
+                                graficar()
                             }
-                        }
-                        Log.d("Wallets",walletsUsuario.toString())
-                        Log.d("Wallets",walletsPagos.toString())
+
                     }
             }
+    }
 
+    fun graficar(){
+        val chart = binding.chart
+        val numColumns = walletsPagos.size
+        // Column can have many subcolumns, here by default I use 1 subcolumn in each of 8 columns.
+        val columns: MutableList<Column> = ArrayList()
+        var values: MutableList<SubcolumnValue?>
+        for (wallet in walletsPagos) {
+            values = ArrayList()
+            values.add(
+                SubcolumnValue(
+                    wallet.value.toFloat(),ChartUtils.pickColor()
+                ).setLabel(wallet.key+":"+wallet.value)
+            )
+            val column = Column(values)
+            column.setHasLabels(hasLabels)
 
-
+            column.setHasLabelsOnlyForSelected(hasLabelForSelected)
+            columns.add(column)
+        }
+        data = ColumnChartData(columns)
+        if (hasAxes) {
+            val axisX = Axis(emptyList())
+            val axisY = Axis().setHasLines(true)
+            if (hasAxesNames) {
+                axisX.name = "Wallets"
+                axisY.name = "Pagos"
+            }
+            data!!.setAxisXBottom(axisX)
+            data!!.setAxisYLeft(axisY)
+        } else {
+            data!!.setAxisXBottom(null)
+            data!!.setAxisYLeft(null)
+        }
+        chart.setColumnChartData(data)
 
     }
     override fun onDestroyView() {
