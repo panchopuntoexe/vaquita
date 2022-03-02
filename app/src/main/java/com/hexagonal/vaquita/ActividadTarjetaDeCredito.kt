@@ -48,19 +48,19 @@ class ActividadTarjetaDeCredito : AppCompatActivity() {
         textCcv = findViewById(R.id.textCcv)
         textNumeroPostal = findViewById(R.id.textNumeroPostal)
 
-        textCantidad.setText("$ " + deuda.toString())
+        textCantidad.setText(deuda.toString())
 
 
         getUser()
 
         // Botón Pago
-        var botonTarjeta = findViewById<Button>(R.id.botonPagarTarjeta)
+        val botonTarjeta = findViewById<Button>(R.id.botonPagarTarjeta)
         botonTarjeta.setOnClickListener {
             if (textValorAPagar.text.isNotEmpty()) {
                 val valorAPagar = textValorAPagar.text.toString().toDouble()
                 val valorADeuda = textCantidad.text.toString().toDouble()
-                var subirPago: GestionadorDeSubida = GestionadorDeSubida()
-                var pago: Pago = Pago(
+                val subirPago: GestionadorDeSubida = GestionadorDeSubida()
+                val pago: Pago = Pago(
                     "Pago de: " + nombre,
                     valorAPagar,
                     idUser,
@@ -69,14 +69,7 @@ class ActividadTarjetaDeCredito : AppCompatActivity() {
                 )
                 if (valorAPagar > 0 && valorAPagar != null && valorADeuda >= valorAPagar) {
                     if (validarTarjeta()) {
-                        if (subirPago.subirPago(pago, wallet)) {
-                            val intencion = Intent(this, ActividadHome::class.java)
-                            startActivity(intencion)
-
-                        } else {
-                            Toast.makeText(this, "Error al realizar el Pago", Toast.LENGTH_SHORT)
-                                .show()
-                        }
+                        subirPago.subirPago(this, pago, wallet)
                     } else {
                         Toast.makeText(this, "Datos de la tarjeta inválidos", Toast.LENGTH_SHORT)
                             .show()
@@ -89,27 +82,27 @@ class ActividadTarjetaDeCredito : AppCompatActivity() {
             }
 
             // Botón Cancelar
-            var botonCancelar = findViewById<Button>(R.id.botonCancelarTarjeta)
+            val botonCancelar = findViewById<Button>(R.id.botonCancelarTarjeta)
             botonCancelar.setOnClickListener {
                 super.onBackPressed()
             }
         }
     }
 
-        fun getUser() {
-            val userEmail: String? = Firebase.auth.currentUser?.email
-            val db = Firebase.firestore
-            var userfb: Usuario
-            db.collection("Usuarios")
-                .whereEqualTo("correo", userEmail)
-                .get()
-                .addOnSuccessListener { result ->
-                    val document = result.first()
-                    userfb = document.toObject(Usuario::class.java)
-                    nombre = userfb.nombre.toString()
-                    idUser = document.id
-                }
-        }
+    fun getUser() {
+        val userEmail: String? = Firebase.auth.currentUser?.email
+        val db = Firebase.firestore
+        var userfb: Usuario
+        db.collection("Usuarios")
+            .whereEqualTo("correo", userEmail)
+            .get()
+            .addOnSuccessListener { result ->
+                val document = result.first()
+                userfb = document.toObject(Usuario::class.java)
+                nombre = userfb.nombre.toString()
+                idUser = document.id
+            }
+    }
 
     // Validador Tarjeta de Crédito
     public fun validarTarjeta(): Boolean {
@@ -122,26 +115,18 @@ class ActividadTarjetaDeCredito : AppCompatActivity() {
                             retorno = true
                         }
                     } else {
-                        Log.d("error", textCcv.text.length.toString())
-                        Log.d("Error", "CVV")
                         retorno = false
                     }
                 } else {
-                    Log.d("error",textFechaDeExp.text.length.toString())
-                    Log.d("Error", "FECHA")
                     retorno = false
                 }
             } else {
-                Log.d("error",textNumeroTarjeta.text.length.toString())
-                Log.d("Error", "NUMERO")
                 retorno = false
             }
         } else {
-            Log.d("error",textNombreDeTarjeta.text.length.toString())
-            Log.d("Error", "NOMBRE")
             retorno = false
         }
         return retorno
     }
 
-    }
+}

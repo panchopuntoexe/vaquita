@@ -1,5 +1,6 @@
 package com.hexagonal.vaquita.gestionadorsubida
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.util.Patterns
@@ -9,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hexagonal.vaquita.ActividadCompra
+import com.hexagonal.vaquita.ActividadHome
 import com.hexagonal.vaquita.entidades.Pago
 import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Wallet
@@ -101,7 +103,7 @@ class GestionadorDeSubida {
         return retorno
     }
 
-    public fun subirPago(pago: Pago, wallet: Wallet): Boolean {
+    public fun subirPago(context: Context, pago: Pago, wallet: Wallet) {
         val db = Firebase.firestore
         val nombre: String = pago.nombre.toString()
         val fecha: String = pago.fecha.toString()
@@ -134,17 +136,15 @@ class GestionadorDeSubida {
                             mapaPagos.put(pagoId, true)
                             db.collection("Wallets").document(docId)
                                 .update("pagos", mapaPagos)
-                            retorno = true
+                            val intencion = Intent(context, ActividadHome::class.java)
+                            context.startActivity(intencion)
                         }
-                    retorno = true
                 }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
-                    retorno = false
+                .addOnFailureListener {
+                    Toast.makeText(context, "Error al realizar el Pago", Toast.LENGTH_SHORT)
+                        .show()
                 }
-            return retorno
         } else {
-            return false
         }
     }
 

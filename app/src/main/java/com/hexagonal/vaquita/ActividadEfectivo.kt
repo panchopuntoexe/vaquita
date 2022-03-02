@@ -53,13 +53,7 @@ class ActividadEfectivo : AppCompatActivity() {
             )
 
             if (valorAPagar > 0) {
-                if (subirPago.subirPago(pago, wallet)){
-                    val intencion = Intent(this, ActividadHome::class.java)
-                    startActivity(intencion)
-                }
-                else{
-                    Toast.makeText(this, "Error al realizar el Pago", Toast.LENGTH_SHORT).show()
-                }
+                subirPago.subirPago(this, pago, wallet)
             } else {
                 Toast.makeText(this, "Valor ingresado inválido", Toast.LENGTH_SHORT).show()
             }
