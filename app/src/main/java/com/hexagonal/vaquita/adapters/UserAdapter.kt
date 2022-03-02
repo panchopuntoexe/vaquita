@@ -26,6 +26,7 @@ class UserAdapter(context: Context, usuarios: ArrayList<Usuario>, walletId: Stri
         this.context = context
         this.usuarios = usuarios
         this.walletId = walletId
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,6 +43,13 @@ class UserAdapter(context: Context, usuarios: ArrayList<Usuario>, walletId: Stri
                 holder.txtCorreo.text = usuarios[position].correo!!.substring(0,22)+"..."
             }else{
                 holder.txtCorreo.text = usuarios[position].correo
+            }
+            Firebase.firestore.collection("Usuarios").whereEqualTo("correo",usuarios[position].correo)
+                .get().addOnSuccessListener {result ->
+                if(result.first().toObject(Usuario::class.java).wallets!!.keys.contains(walletId)){
+                    button.isEnabled=false
+                }
+
             }
 
 
