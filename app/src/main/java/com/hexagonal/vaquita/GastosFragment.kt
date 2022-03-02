@@ -134,7 +134,12 @@ class GastosFragment(
         }
 
         gastosWallets?.observe(viewLifecycleOwner, Observer {
-            val gastos: ArrayList<Gasto> = it as ArrayList<Gasto>
+
+            var gastos: ArrayList<Gasto> = ArrayList<Gasto>()
+            if (it.size > 0) {
+                gastos = it as ArrayList<Gasto>
+            }
+
             var total = 0.0
             for (gasto in it) {
                 total += gasto.valor!!
@@ -176,7 +181,6 @@ class GastosFragment(
         })
         return view
     }
-
 
 
     fun <T> merge(first: List<T>, second: List<T>): List<T> {
