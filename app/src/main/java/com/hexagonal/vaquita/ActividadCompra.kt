@@ -2,7 +2,6 @@ package com.hexagonal.vaquita
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -10,10 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.hexagonal.vaquita.adapters.FragmentAdapter
-import com.hexagonal.vaquita.adapters.GastoAdapter
 import com.hexagonal.vaquita.entidades.Wallet
-import kotlin.math.pow
-import kotlin.math.roundToInt
 
 class ActividadCompra : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,20 +23,17 @@ class ActividadCompra : AppCompatActivity() {
         val textFecha2: TextView = findViewById(R.id.textFecha2)
         val textLugar2: TextView = findViewById(R.id.textLugar2)
 
-        val intent = getIntent()
+        val intent = intent
         val wallet = intent.getParcelableExtra<Wallet>("wallet")
-        Log.d("UsuarioW", wallet.toString())
 
-        textWalletName2.setText(wallet?.nombre)
-        textFecha2.setText(wallet?.fecha)
-        textLugar2.setText(wallet?.lugar)
-
+        textWalletName2.text = wallet?.nombre
+        textFecha2.text = wallet?.fecha
+        textLugar2.text = wallet?.lugar
 
         val adapter = FragmentAdapter(
             supportFragmentManager, lifecycle,
             wallet
         )
-
 
         viewPager2.adapter = adapter
         TabLayoutMediator(tablayout, viewPager2) { tab, position ->
@@ -76,15 +69,10 @@ class ActividadCompra : AppCompatActivity() {
 
     }
 
-    fun Double.roundTo(numFractionDigits: Int): Double {
-        val factor = 10.0.pow(numFractionDigits.toDouble())
-        return (this * factor).roundToInt() / factor
-    }
-
     override fun onBackPressed() {
         val intencion = Intent(this, ActividadHome::class.java)
         startActivity(intencion)
-        this.finish();
+        this.finish()
     }
 
 }

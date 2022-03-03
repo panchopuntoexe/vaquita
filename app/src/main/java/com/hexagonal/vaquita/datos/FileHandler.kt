@@ -1,6 +1,6 @@
 package com.hexagonal.vaquita.datos
 
 interface FileHandler {
-    fun SaveInformation(datosAGrabar:Pair<String,String>)
-    fun ReadInformation():Pair<String,String>
+    fun saveInformation(datosAGrabar:Pair<String,String>)
+    fun readInformation():Pair<String,String>
 }

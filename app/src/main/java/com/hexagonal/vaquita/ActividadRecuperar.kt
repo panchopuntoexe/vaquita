@@ -25,19 +25,19 @@ class ActividadRecuperar : AppCompatActivity() {
         email = findViewById(R.id.textEmailRecuperar)
         recuperar = findViewById(R.id.botonRecuperar)
 
-        auth = FirebaseAuth.getInstance();
-        progress = ProgressDialog(this);
+        auth = FirebaseAuth.getInstance()
+        progress = ProgressDialog(this)
 
-        getRecuperar();
+        getRecuperar()
     }
 
     private fun getRecuperar() {
-        recuperar.setOnClickListener() {
+        recuperar.setOnClickListener {
             if (email.text.isNotEmpty()) {
-                progress.setMessage("Espere un momento...");
-                progress.setCanceledOnTouchOutside(false);
-                progress.show();
-                getEnviarCorreo();
+                progress.setMessage("Espere un momento...")
+                progress.setCanceledOnTouchOutside(false)
+                progress.show()
+                getEnviarCorreo()
             } else {
                 showAlert()
             }
@@ -45,9 +45,9 @@ class ActividadRecuperar : AppCompatActivity() {
     }
 
     private fun getEnviarCorreo() {
-        auth.setLanguageCode("es");
-        auth.sendPasswordResetEmail(email.text.toString().trim()).addOnCompleteListener() { task ->
-            if (task.isSuccessful()) {
+        auth.setLanguageCode("es")
+        auth.sendPasswordResetEmail(email.text.toString().trim()).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 showMessage()
             }else{
                 showAlert()
@@ -57,9 +57,9 @@ class ActividadRecuperar : AppCompatActivity() {
 
     private fun showAlert() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Error")
+        builder.setTitle(getString(R.string.error))
         builder.setMessage("El correo no se pudo enviar")
-        builder.setPositiveButton("Aceptar", null)
+        builder.setPositiveButton(getString(R.string.aceptar), null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
@@ -71,7 +71,7 @@ class ActividadRecuperar : AppCompatActivity() {
             Toast.LENGTH_LONG
         ).show()
         val loginIntent = Intent(this, ActividadLogin::class.java)
-        startActivity(loginIntent);
-        finish();
+        startActivity(loginIntent)
+        finish()
     }
 }

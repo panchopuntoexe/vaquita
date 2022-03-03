@@ -19,7 +19,7 @@
     <string name="textBienvenida">Bienvenido!</string>
     <string name="logout">Salir</string>
     <string name="preguntaLogout">¿Desea Salir?</string>
-    <string name="cancel">Cancelar</string>
+    <string name="cancelar">Cancelar</string>
     <string name="loremIpsum">Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografías o de borradores de diseño para probar el diseño visual antes de insertar el texto final.</string>
     <string name="tituloNuevaWallet">Nueva Wallet</string>
     <string name="hintNombreDeWallet">Nombre de Wallet</string>
@@ -101,4 +101,24 @@
     <string name="cantidad">$ 69 420.99</string>
     <string name="pagos">Wallets a Pagar:</string>
     <string name="pagoUserDefault">0.0</string>
+    <string name="nombrevalido">Nombre válido</string>
+    <string name="nombreInvalido">Nombre inválido</string>
+    <string name="fechaInvalida">Fecha inválida</string>
+    <string name="fechaValida">Fecha válida</string>
+    <string name="lugarInvalida">Lugar inválido</string>
+    <string name="lugarValida">Lugar válido</string>
+    <string name="espere">Espere un momento</string>
+    <string name="registrofallido">Registro fallido</string>
+    <string name="mailinvalido">Mail inválido</string>
+    <string name="mailvalido">Mail válido</string>
+    <string name="error">Error</string>
+
+
+
+    <!--Colecciones-->
+    <string name="wallets">Wallets</string>
+    <string name="usuarios">Usuarios</string>
+    <string name="pagoss">Pagos</string>
+    <string name="gastos">Gastos</string>
+    <string name="aceptar">Aceptar</string>
 </resources>

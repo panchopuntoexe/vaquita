@@ -1,11 +1,8 @@
 package com.hexagonal.vaquita
 
 import android.app.AlertDialog
-import android.content.ContentValues.TAG
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -13,7 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import com.bumptech.glide.Glide
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -24,13 +21,12 @@ import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.gestionadorsubida.GestionadorDeSubida
 import com.hexagonal.vaquita.validador.Validador
 import java.io.IOException
-import java.net.URI
 
 class ActividadRegistro : AppCompatActivity() {
 
-    val validador: Validador = Validador()
-    val gestionadorDeSubida: GestionadorDeSubida = GestionadorDeSubida()
-    var imageViewSubirFotoURL: Uri? = null
+    private val validador: Validador = Validador()
+    private val gestionadorDeSubida: GestionadorDeSubida = GestionadorDeSubida()
+    private var imageViewSubirFotoURL: Uri? = null
     private lateinit var auth: FirebaseAuth
 
     // Uri indicates, where the image will be picked from
@@ -40,16 +36,16 @@ class ActividadRegistro : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST = 22
 
     // instance for firebase storage and StorageReference
-    lateinit var storage: FirebaseStorage
-    lateinit var storageReference: StorageReference
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageReference: StorageReference
 
-    lateinit var imageViewSubirFoto: ImageView
-    lateinit var textNombre: EditText
-    lateinit var textNombreDeUsuario: EditText
-    lateinit var textEmail: EditText
-    lateinit var textTelefono: EditText
-    lateinit var textClaveInicial: EditText
-    lateinit var textClaveRepeticion: EditText
+    private lateinit var imageViewSubirFoto: ImageView
+    private lateinit var textNombre: EditText
+    private lateinit var textNombreDeUsuario: EditText
+    private lateinit var textEmail: EditText
+    private lateinit var textTelefono: EditText
+    private lateinit var textClaveInicial: EditText
+    private lateinit var textClaveRepeticion: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,38 +53,36 @@ class ActividadRegistro : AppCompatActivity() {
 
         // get the Firebase  storage reference
         storage = FirebaseStorage.getInstance()
-        storageReference = storage!!.getReference()
+        storageReference = storage.reference
         //Inicializando Firebase Auth
         auth = Firebase.auth
 
-        imageViewSubirFoto = findViewById<ImageView>(R.id.imageSubirImagen)
-        textNombre = findViewById<EditText>(R.id.textNombre)
-        textNombreDeUsuario = findViewById<EditText>(R.id.textNombreDeUsuario)
-        textEmail = findViewById<EditText>(R.id.textEmail)
-        textTelefono = findViewById<EditText>(R.id.telefono)
-        textClaveInicial = findViewById<EditText>(R.id.textClaveInicial)
-        textClaveRepeticion = findViewById<EditText>(R.id.textClaveRepeticion)
+        imageViewSubirFoto = findViewById(R.id.imageSubirImagen)
+        textNombre = findViewById(R.id.textNombre)
+        textNombreDeUsuario = findViewById(R.id.textNombreDeUsuario)
+        textEmail = findViewById(R.id.textEmail)
+        textTelefono = findViewById(R.id.telefono)
+        textClaveInicial = findViewById(R.id.textClaveInicial)
+        textClaveRepeticion = findViewById(R.id.textClaveRepeticion)
 
-        textEmail.setText("francisco.garcia@epn.edu.ec")
-        var mailValido: Boolean = false
+        var mailValido: Boolean
         textEmail.setOnClickListener OnClickListener@{
             if (!validador.esValidoCorreo(textEmail.text.toString())) {
-                textEmail.setError("Mail inválido")
+                textEmail.error = getString(R.string.mailinvalido)
                 mailValido = false
                 return@OnClickListener
             }
-            Toast.makeText(this, "Mail válido", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.mailvalido), Toast.LENGTH_SHORT).show()
             mailValido = true
             return@OnClickListener
         }
 
-        textNombre.setText("Francisco")
-        var nombreValido: Boolean = false
+        var nombreValido: Boolean
         textNombre.setOnClickListener OnClickListener@{
             if (!(textNombre.text.toString()
                     .isNotEmpty() && validador.validarString(textNombre.text.toString()))
             ) {
-                textNombre.setError("Nombre inválido")
+                textNombre.error = "Nombre inválido"
                 nombreValido = false
                 return@OnClickListener
             }
@@ -97,11 +91,10 @@ class ActividadRegistro : AppCompatActivity() {
             return@OnClickListener
         }
 
-        textNombreDeUsuario.setText("comic.ec")
-        var nombreDeUsuarioValido: Boolean = false
+        var nombreDeUsuarioValido: Boolean
         textNombreDeUsuario.setOnClickListener OnClickListener@{
             if (textNombreDeUsuario.text.toString().isEmpty()) {
-                textNombreDeUsuario.setError("Nombre de Usuario inválido")
+                textNombreDeUsuario.error = "Nombre de Usuario inválido"
                 nombreDeUsuarioValido = false
                 return@OnClickListener
             }
@@ -110,11 +103,11 @@ class ActividadRegistro : AppCompatActivity() {
             return@OnClickListener
         }
 
-        textTelefono.setText("0990595018")
-        var telefonoValido: Boolean = false
+
+        var telefonoValido: Boolean
         textTelefono.setOnClickListener OnClickListener@{
             if (!validador.validarTelefono(textTelefono.text.toString())) {
-                textTelefono.setError("Teléfono inválido")
+                textTelefono.error = "Teléfono inválido"
                 telefonoValido = false
                 return@OnClickListener
             }
@@ -123,11 +116,11 @@ class ActividadRegistro : AppCompatActivity() {
             return@OnClickListener
         }
 
-        textClaveInicial.setText("123456789")
-        var claveInicialValido: Boolean = false
+
+        var claveInicialValido: Boolean
         textClaveInicial.setOnClickListener OnClickListener@{
             if (!validador.esLongitudMayorOIgual(textClaveInicial.text.toString(), 8)) {
-                textClaveInicial.setError("Clave inválida")
+                textClaveInicial.error = "Clave inválida"
                 claveInicialValido = false
                 return@OnClickListener
             }
@@ -136,11 +129,11 @@ class ActividadRegistro : AppCompatActivity() {
             return@OnClickListener
         }
 
-        textClaveRepeticion.setText("123456789")
-        var claveRepeticionValido: Boolean = false
+
+        var claveRepeticionValido: Boolean
         textClaveRepeticion.setOnClickListener OnClickListener@{
             if (textClaveInicial.text.toString() != textClaveRepeticion.text.toString()) {
-                textClaveRepeticion.setError("Repetición de clave inválida")
+                textClaveRepeticion.error = "Repetición de clave inválida"
                 claveRepeticionValido = false
                 return@OnClickListener
             }
@@ -157,12 +150,12 @@ class ActividadRegistro : AppCompatActivity() {
 
 
         // boton registro
-        var botonRegistro = findViewById<Button>(R.id.botonRegistro)
+        val botonRegistro = findViewById<Button>(R.id.botonRegistro)
         botonRegistro.setOnClickListener {
             //verifico
 
             if (!validador.esValidoCorreo(textEmail.text.toString())) {
-                textEmail.setError("Mail inválido")
+                textEmail.error = "Mail inválido"
                 mailValido = false
             } else {
                 mailValido = true
@@ -171,35 +164,35 @@ class ActividadRegistro : AppCompatActivity() {
             if (!(textNombre.text.toString()
                     .isNotEmpty() && validador.validarString(textNombre.text.toString()))
             ) {
-                textNombre.setError("Nombre inválido")
+                textNombre.error = "Nombre inválido"
                 nombreValido = false
             } else {
                 nombreValido = true
             }
 
             if (textNombreDeUsuario.text.toString().isEmpty()) {
-                textNombreDeUsuario.setError("Nombre de Usuario inválido")
+                textNombreDeUsuario.error = "Nombre de Usuario inválido"
                 nombreDeUsuarioValido = false
             } else {
                 nombreDeUsuarioValido = true
             }
 
             if (!validador.validarTelefono(textTelefono.text.toString())) {
-                textTelefono.setError("Teléfono inválido")
+                textTelefono.error = "Teléfono inválido"
                 telefonoValido = false
             } else {
                 telefonoValido = true
             }
 
             if (!validador.esLongitudMayorOIgual(textClaveInicial.text.toString(), 8)) {
-                textClaveInicial.setError("Clave inválida")
+                textClaveInicial.error = "Clave inválida"
                 claveInicialValido = false
             } else {
                 claveInicialValido = true
             }
 
             if (!textClaveInicial.text.toString().equals(textClaveRepeticion.text.toString())) {
-                textClaveRepeticion.setError("Repetición de clave inválida")
+                textClaveRepeticion.error = "Repetición de clave inválida"
                 claveRepeticionValido = false
             } else {
                 claveRepeticionValido = true
@@ -208,22 +201,13 @@ class ActividadRegistro : AppCompatActivity() {
 
             if (mailValido && nombreValido && nombreDeUsuarioValido && telefonoValido && claveInicialValido && claveRepeticionValido) {
                 subirImagen()
-                Toast.makeText(this, "Espere un momento", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.espere), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Registro fallido", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.registrofallido), Toast.LENGTH_LONG).show()
             }
 
 
         }
-    }
-
-    private fun showAlert() {
-        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-        builder.setTitle("Error")
-        builder.setMessage("Se ha producido un error autenticando al Usuario")
-        builder.setPositiveButton("Aceptar", null)
-        val dialog: androidx.appcompat.app.AlertDialog = builder.create()
-        dialog.show()
     }
 
     // Select Image method
@@ -241,52 +225,52 @@ class ActividadRegistro : AppCompatActivity() {
         )
     }
 
-    fun subirUsuario(){
+    private fun subirUsuario() {
         //Datos en firestore
-        Log.d("EMAIL",imageViewSubirFotoURL.toString())
         auth.createUserWithEmailAndPassword(
             textEmail.text.toString(),
             textClaveInicial.text.toString()
         ).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
-                val usuario: Usuario = Usuario(
+                val usuario = Usuario(
                     textNombre.text.toString(),
                     textEmail.text.toString(),
                     textNombreDeUsuario.text.toString(),
                     textTelefono.text.toString(),
                     imageViewSubirFotoURL.toString(),
-                    emptyMap<String,Boolean>()
+                    emptyMap()
                 )
 
-                if(gestionadorDeSubida.subirDatosDeUsuarioNuevo(usuario,Firebase.firestore)) {
-                    Toast.makeText(this, "Registro fallido", Toast.LENGTH_LONG).show()
+                if (gestionadorDeSubida.subirDatosDeUsuarioNuevo(usuario, Firebase.firestore)) {
+                    Toast.makeText(this, getString(R.string.registrofallido), Toast.LENGTH_LONG).show()
                     return@addOnCompleteListener
                 }
                 //builder del diálogo
                 val builder = AlertDialog.Builder(this)
                 builder.setMessage(R.string.exitoRegistro)
-                    .setPositiveButton(R.string.ok,
-                        DialogInterface.OnClickListener { dialog, id ->
-                            //envío a inicio
-                            val intencion = Intent(this, ActividadHome::class.java)
-                            startActivity(intencion)
-                        })
+                    .setPositiveButton(
+                        R.string.ok
+                    ) { _, _ ->
+                        //envío a inicio
+                        val intencion = Intent(this, ActividadHome::class.java)
+                        startActivity(intencion)
+                    }
                 builder.create()
                 builder.show()
             }
         }
     }
 
-    fun subirImagen() {
+    private fun subirImagen() {
         if (filePath != null) {
             val fileNameArray = filePath!!.lastPathSegment?.split("/")
             val fileName = fileNameArray?.get(fileNameArray.size - 1)
-            var storageRef = storage.reference
+            val storageRef = storage.reference
             val riversRef = storageRef.child("images/${fileName}")
-            var uploadTask = riversRef.putFile(filePath!!)
+            val uploadTask = riversRef.putFile(filePath!!)
 
 
-            val urlTask = uploadTask.continueWithTask { task ->
+            uploadTask.continueWithTask { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
                         throw it
@@ -297,15 +281,11 @@ class ActividadRegistro : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val downloadUri = task.result
                     imageViewSubirFotoURL = downloadUri
-                } else {
-                    Log.e("ERROR", task.toString())
                 }
 
                 subirUsuario()
             }
-        }
-
-        else{
+        } else {
             Toast.makeText(this, "Debe subir una foto de perfil", Toast.LENGTH_LONG).show()
         }
     }
@@ -337,14 +317,13 @@ class ActividadRegistro : AppCompatActivity() {
                         contentResolver,
                         filePath
                     )
-                imageViewSubirFoto?.setImageBitmap(bitmap)
+                imageViewSubirFoto.setImageBitmap(bitmap)
             } catch (e: IOException) {
                 // Log the exception
                 e.printStackTrace()
             }
         }
     }
-
 
 
 }

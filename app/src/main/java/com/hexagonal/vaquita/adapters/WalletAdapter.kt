@@ -14,8 +14,7 @@ import com.hexagonal.vaquita.entidades.Wallet
 class WalletAdapter(
     private val context: Activity,
     private val wallets: List<Wallet>,
-    private val deuda: Double,
-    val onWalletListener: OnWalletListener
+    private val onWalletListener: OnWalletListener
 ) :
     RecyclerView.Adapter<WalletAdapter.ViewHolder>() {
 
@@ -30,8 +29,8 @@ class WalletAdapter(
         with(holder) {
             textViewNombreWallet.text = "${wallets[position].nombre}"
             textViewFechaWallet.text = "${wallets[position].fecha}"
-            textViewLugarWallet.text = "${wallets[position].lugar.toString()}"
-            Glide.with(context).load(wallets[position].foto).into(imagenWallet!!)
+            textViewLugarWallet.text = wallets[position].lugar.toString()
+            Glide.with(context).load(wallets[position].foto).into(imagenWallet)
         }
     }
 
@@ -39,12 +38,12 @@ class WalletAdapter(
         return wallets.size
     }
 
-    class ViewHolder(val view: View, val onWalletListener: OnWalletListener) :
+    class ViewHolder(val view: View, private val onWalletListener: OnWalletListener) :
         RecyclerView.ViewHolder(view), View.OnClickListener {
-        val textViewNombreWallet = view.findViewById<TextView>(R.id.textViewNombreWallet)
-        val textViewFechaWallet = view.findViewById<TextView>(R.id.textViewFechaWallet)
-        val textViewLugarWallet = view.findViewById<TextView>(R.id.textViewLugarWallet)
-        val imagenWallet = view.findViewById<ImageView>(R.id.imageWallet)
+        val textViewNombreWallet: TextView = view.findViewById(R.id.textViewNombreWallet)
+        val textViewFechaWallet: TextView = view.findViewById(R.id.textViewFechaWallet)
+        val textViewLugarWallet: TextView = view.findViewById(R.id.textViewLugarWallet)
+        val imagenWallet: ImageView = view.findViewById(R.id.imageWallet)
 
 
         init {

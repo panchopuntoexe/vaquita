@@ -1,38 +1,32 @@
 package com.hexagonal.vaquita.validador
 
 import android.telephony.PhoneNumberUtils
-import android.util.Log
 import android.util.Patterns
-import android.widget.Toast
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.regex.Pattern
 
 class Validador {
 
-    constructor()
 
-
-    public fun esValidoCorreo(email: String): Boolean {
+    fun esValidoCorreo(email: String): Boolean {
         val pattern: Pattern = Patterns.EMAIL_ADDRESS
         return pattern.matcher(email).matches()
     }
 
-    public fun esLongitudMayorOIgual(cadenaAValidar: String, longitud: Int): Boolean {
+    fun esLongitudMayorOIgual(cadenaAValidar: String, longitud: Int): Boolean {
         if (cadenaAValidar.length >= longitud) {
             return true
         }
         return false
     }
 
-    public fun esLongitudIgual(cadenaAValidar: String, longitud: Int): Boolean {
+    fun esLongitudIgual(cadenaAValidar: String, longitud: Int): Boolean {
         if (cadenaAValidar.length == longitud) {
             return true
         }
         return false
     }
 
-    public fun esLongitudMenor(cadenaAValidar: String, longitud: Int): Boolean {
+    fun esLongitudMenor(cadenaAValidar: String, longitud: Int): Boolean {
         if (cadenaAValidar.length <= longitud) {
             return true
         }
@@ -40,7 +34,7 @@ class Validador {
     }
 
 
-    public fun validarString(cadena:String):Boolean{
+    fun validarString(cadena:String):Boolean{
         for (caracter in cadena)
         {
             if (caracter !in 'A'..'Z' && caracter !in 'a'..'z'&& !caracter.equals(' ')) {
@@ -51,7 +45,7 @@ class Validador {
     }
 
     //valida números, el +, si hay caracteres retorna false
-    public fun validarTelefono(telefono: String): Boolean {
+    fun validarTelefono(telefono: String): Boolean {
         return PhoneNumberUtils.isGlobalPhoneNumber(telefono)
     }
 

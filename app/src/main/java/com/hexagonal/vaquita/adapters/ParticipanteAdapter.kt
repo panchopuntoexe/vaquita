@@ -1,7 +1,7 @@
 package com.hexagonal.vaquita.adapters
 
+import android.annotation.SuppressLint
 import android.app.Activity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,22 +25,21 @@ class ParticipanteAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.participantes_card, parent, false)
-
-        Log.d("UsuariosWW", usuarios.toString())
         return ViewHolder(view)
     }
 
-    fun Double.roundTo(numFractionDigits: Int): Double {
+    private fun Double.roundTo(numFractionDigits: Int): Double {
         val factor = 10.0.pow(numFractionDigits.toDouble())
         return (this * factor).roundToInt() / factor
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pagoUser: TextView = context.findViewById(R.id.pagoUser)
         with(holder) {
-            Glide.with(context).load(usuarios[position].foto).into(imageParticipante!!)
+            Glide.with(context).load(usuarios[position].foto).into(imageParticipante)
             textViewNombreParticipante.text = "${usuarios[position].nombre}"
-            if (pagosUsuarios.size > 0) {
+            if (pagosUsuarios.isNotEmpty()) {
                 var pago = 0.0
                 for (p in pagosUsuarios) {
                     if (usuarios[position].correo == p.key) {
@@ -49,10 +48,10 @@ class ParticipanteAdapter(
                     }
                 }
                 val deudaC = (deuda - pago).roundTo(2)
-                textViewDeudaParticipante.text = "\$ ${deudaC.toString()}"
+                textViewDeudaParticipante.text = "\$ $deudaC"
                 pagoUser.text = deudaC.toString()
             } else {
-                textViewDeudaParticipante.text = "\$ ${deuda.toString()}"
+                textViewDeudaParticipante.text = "\$ $deuda"
                 pagoUser.text = deuda.toString()
             }
         }
@@ -64,10 +63,10 @@ class ParticipanteAdapter(
 
     class ViewHolder(val view: View) :
         RecyclerView.ViewHolder(view) {
-        val textViewNombreParticipante =
-            view.findViewById<TextView>(R.id.textViewNombreParticipante)
-        val textViewDeudaParticipante = view.findViewById<TextView>(R.id.textViewDeudaParticipante)
-        val imageParticipante = view.findViewById<ImageView>(R.id.imageParticipante)
+        val textViewNombreParticipante: TextView =
+            view.findViewById(R.id.textViewNombreParticipante)
+        val textViewDeudaParticipante: TextView = view.findViewById(R.id.textViewDeudaParticipante)
+        val imageParticipante: ImageView = view.findViewById(R.id.imageParticipante)
 
     }
 }

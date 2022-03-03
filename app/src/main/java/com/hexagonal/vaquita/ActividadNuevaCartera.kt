@@ -1,36 +1,28 @@
 package com.hexagonal.vaquita
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import com.bumptech.glide.Glide
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.hexagonal.vaquita.entidades.Gasto
-import com.hexagonal.vaquita.entidades.Pago
-import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Wallet
 import com.hexagonal.vaquita.gestionadorsubida.GestionadorDeSubida
-import com.hexagonal.vaquita.validador.Validador
 import java.io.IOException
 
 class ActividadNuevaCartera : AppCompatActivity() {
-    val validador: Validador = Validador()
-    val gestionadorDeSubida: GestionadorDeSubida = GestionadorDeSubida()
-    var imageViewSubirFotoURL: Uri? = null
+    private val gestionadorDeSubida: GestionadorDeSubida = GestionadorDeSubida()
+    private var imageViewSubirFotoURL: Uri? = null
 
     // Uri indicates, where the image will be picked from
     private var filePath: Uri? = null
@@ -39,13 +31,13 @@ class ActividadNuevaCartera : AppCompatActivity() {
     private val PICK_IMAGE_REQUEST = 22
 
     // instance for firebase storage and StorageReference
-    lateinit var storage: FirebaseStorage
-    lateinit var storageReference: StorageReference
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageReference: StorageReference
 
-    lateinit var imageViewSubirFoto: ImageView
-    lateinit var textNombre: EditText
-    lateinit var textFecha: EditText
-    lateinit var textLugar: EditText
+    private lateinit var imageViewSubirFoto: ImageView
+    private lateinit var textNombre: EditText
+    private lateinit var textFecha: EditText
+    private lateinit var textLugar: EditText
 
     private lateinit var userauth: FirebaseUser
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,51 +45,45 @@ class ActividadNuevaCartera : AppCompatActivity() {
         setContentView(R.layout.activity_actividad_nueva_cartera)
         // get the Firebase  storage reference
         storage = FirebaseStorage.getInstance()
-        storageReference = storage!!.getReference()
+        storageReference = storage.reference
 
-        imageViewSubirFoto = findViewById<ImageView>(R.id.imageSubirImagenWallet)
-        textNombre = findViewById<EditText>(R.id.textWalletName)
-        textFecha = findViewById<EditText>(R.id.textFecha)
-        textLugar = findViewById<EditText>(R.id.textLugar)
+        imageViewSubirFoto = findViewById(R.id.imageSubirImagenWallet)
+        textNombre = findViewById(R.id.textWalletName)
+        textFecha = findViewById(R.id.textFecha)
+        textLugar = findViewById(R.id.textLugar)
 
-        //TEXTO QUEMADO
-        textNombre.setText("Listening Party de Comic")
-        var nombreValido: Boolean = false
+        var nombreValido: Boolean
         textNombre.setOnClickListener OnClickListener@{
             if (textNombre.text.toString().isEmpty()){
-                textNombre.setError("Nombre inválido")
+                textNombre.error = getString(R.string.nombreInvalido)
                 nombreValido = false
                 return@OnClickListener
             }
-            Toast.makeText(this, "Nombre válido", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.nombreInvalido), Toast.LENGTH_SHORT).show()
             nombreValido = true
             return@OnClickListener
         }
 
-        //TEXTO QUEMADO
-        textFecha.setText("1/10/2021")
-        var fechaValida: Boolean = false
+        var fechaValida: Boolean
         textFecha.setOnClickListener OnClickListener@{
             if (textFecha.text.toString().isEmpty()) {
-                textFecha.setError("Fecha inválida")
+                textFecha.error = getString(R.string.fechaInvalida)
                 fechaValida = false
                 return@OnClickListener
             }
-            Toast.makeText(this, "Fecha válida", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.fechaValida), Toast.LENGTH_SHORT).show()
             fechaValida = true
             return@OnClickListener
         }
 
-        //TEXTO QUEMADO
-        textLugar.setText("La casa del manaba")
-        var lugarValido: Boolean = false
+        var lugarValido: Boolean
         textLugar.setOnClickListener OnClickListener@{
             if (textLugar.text.toString().isEmpty()) {
-                textLugar.setError("Lugar inválido")
+                textLugar.error = getString(R.string.lugarInvalida)
                 lugarValido = false
                 return@OnClickListener
             }
-            Toast.makeText(this, "Lugar válido", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.lugarValida), Toast.LENGTH_SHORT).show()
             lugarValido = true
             return@OnClickListener
         }
@@ -109,25 +95,25 @@ class ActividadNuevaCartera : AppCompatActivity() {
         }
 
         // boton nueva wallet
-        var botonNuevaWallet = findViewById<Button>(R.id.botonContinuar)
+        val botonNuevaWallet = findViewById<Button>(R.id.botonContinuar)
         botonNuevaWallet.setOnClickListener {
 
-            if (textNombre.text.toString().isEmpty()){
-                textNombre.setError("Nombre inválido")
-                nombreValido = false
+            nombreValido = if (textNombre.text.toString().isEmpty()){
+                textNombre.error = getString(R.string.nombreInvalido)
+                false
             } else {
-                nombreValido = true
+                true
             }
 
-            if (textLugar.text.toString().isEmpty()) {
-                textLugar.setError("Lugar inválido")
-                lugarValido = false
+            lugarValido = if (textLugar.text.toString().isEmpty()) {
+                textLugar.error = getString(R.string.lugarInvalida)
+                false
             } else {
-                lugarValido = true
+                true
             }
 
             if (textFecha.text.toString().isEmpty()) {
-                textFecha.setError("Fecha inválida")
+                textFecha.error = getString(R.string.fechaInvalida)
                 fechaValida = false
             } else {
                 fechaValida = true
@@ -136,39 +122,39 @@ class ActividadNuevaCartera : AppCompatActivity() {
             if (nombreValido && lugarValido && fechaValida) {
 
                 subirImagen()
-                Toast.makeText(this, "Espere un momento", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.espere), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Registro fallido", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.registrofallido), Toast.LENGTH_LONG).show()
             }
 
 
         }
 
         // Botón Cancelar
-        var botonCancelar = findViewById<Button>(R.id.btnCancelarCartera)
+        val botonCancelar = findViewById<Button>(R.id.btnCancelarCartera)
         botonCancelar.setOnClickListener {
             super.onBackPressed()
         }
 
     }
 
-    fun subirWallet() {
-        var mapaVacio: Map<String, Boolean> = emptyMap();
-        var mapaVacioGasto: Map<String, Boolean> = emptyMap();
-        var mapaVacioPago: Map<String, Boolean> = emptyMap();
+    private fun subirWallet() {
+        val mapaVacio: Map<String, Boolean> = emptyMap()
+        val mapaVacioGasto: Map<String, Boolean> = emptyMap()
+        val mapaVacioPago: Map<String, Boolean> = emptyMap()
 
         userauth = Firebase.auth.currentUser!!
-        var userEmail = userauth.email.toString()
+        val userEmail = userauth.email.toString()
 
         val db = Firebase.firestore
         var userId: String
-        db.collection("Usuarios")
+        db.collection(getString(R.string.usuarios))
             .whereEqualTo("correo", userEmail)
             .get()
             .addOnSuccessListener { result ->
                 val document = result.first()
-                userId = document.id.toString();
-                val wallet: Wallet = Wallet(
+                userId = document.id
+                val wallet = Wallet(
                     textNombre.text.toString(),
                     textFecha.text.toString(),
                     textLugar.text.toString(),
@@ -180,25 +166,25 @@ class ActividadNuevaCartera : AppCompatActivity() {
                 )
 
                 if (!gestionadorDeSubida.subirDatosDeWalletNueva(wallet, Firebase.firestore)) {
-                    Toast.makeText(this, "Registro fallido", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.registrofallido), Toast.LENGTH_LONG).show()
                 } else {
                     //builder del diálogo
                     val builder = AlertDialog.Builder(this)
                     builder.setMessage(R.string.exitoRegistro)
-                        .setPositiveButton(R.string.ok,
-                            DialogInterface.OnClickListener { dialog, id ->
-                                //envío a inicio
-                                val intencion = Intent(this, ActividadContactos::class.java)
-                                intencion.putExtra(
-                                    "walletId",
-                                    GestionadorDeSubida.walletId.toString()
-                                )
-                                intencion.putExtra(
-                                    "propietario",
-                                    GestionadorDeSubida.propietario.toString()
-                                )
-                                startActivity(intencion)
-                            })
+                        .setPositiveButton(R.string.ok
+                        ) { _, _ ->
+                            //envío a inicio
+                            val intencion = Intent(this, ActividadContactos::class.java)
+                            intencion.putExtra(
+                                "walletId",
+                                GestionadorDeSubida.walletId
+                            )
+                            intencion.putExtra(
+                                "propietario",
+                                GestionadorDeSubida.propietario
+                            )
+                            startActivity(intencion)
+                        }
                     builder.create()
                     builder.show()
                 }
@@ -222,16 +208,16 @@ class ActividadNuevaCartera : AppCompatActivity() {
         )
     }
 
-    fun subirImagen() {
+    private fun subirImagen() {
         if (filePath != null) {
             val fileNameArray = filePath!!.lastPathSegment?.split("/")
             val fileName = fileNameArray?.get(fileNameArray.size - 1)
-            var storageRef = storage.reference
+            val storageRef = storage.reference
             val riversRef = storageRef.child("images/${fileName}")
-            var uploadTask = riversRef.putFile(filePath!!)
+            val uploadTask = riversRef.putFile(filePath!!)
 
 
-            val urlTask = uploadTask.continueWithTask { task ->
+            uploadTask.continueWithTask { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
                         throw it
@@ -243,8 +229,6 @@ class ActividadNuevaCartera : AppCompatActivity() {
                     val downloadUri = task.result
                     imageViewSubirFotoURL = downloadUri
                     subirWallet()
-                } else {
-                    Log.e("ERROR", task.toString())
                 }
             }
         } else {
@@ -279,7 +263,7 @@ class ActividadNuevaCartera : AppCompatActivity() {
                         contentResolver,
                         filePath
                     )
-                imageViewSubirFoto?.setImageBitmap(bitmap)
+                imageViewSubirFoto.setImageBitmap(bitmap)
             } catch (e: IOException) {
                 // Log the exception
                 e.printStackTrace()

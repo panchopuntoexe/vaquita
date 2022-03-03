@@ -1,6 +1,5 @@
 package com.hexagonal.vaquita.ui.pay
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,8 +8,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
+import com.hexagonal.vaquita.datos.USUARIOS
+import com.hexagonal.vaquita.datos.WALLETS
 import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Usuario.Companion.toUser
 import com.hexagonal.vaquita.entidades.Wallet
@@ -20,7 +19,6 @@ import kotlinx.coroutines.tasks.await
 
 class PayViewModel : ViewModel() {
 
-    val TAG = "Wallets"
     val db = Firebase.firestore
     private val _userProfile = MutableLiveData<Usuario>()
     val _userWallets = MutableLiveData<List<Wallet>>()
@@ -34,13 +32,12 @@ class PayViewModel : ViewModel() {
         }
     }
 
-    suspend fun getProfileData(userEmail: String?): Usuario? {
+    private suspend fun getProfileData(userEmail: String?): Usuario? {
         return try {
-            db.collection("Usuarios")
+            db.collection(USUARIOS)
                 .whereEqualTo("correo", userEmail)
                 .get().await().toUser()
         } catch (e: Exception) {
-            Log.e(TAG, "Error getting user details", e)
             null
         }
     }
@@ -52,12 +49,11 @@ class PayViewModel : ViewModel() {
             listaWallets.add(clave)
         }
         return try {
-            db.collection("Wallets")
+            db.collection(WALLETS)
                 .whereIn(FieldPath.documentId(), listaWallets)
                 .get().await()
                 .documents.mapNotNull { it.toWallet() }
         } catch (e: Exception) {
-            Log.e(TAG, "Error getting user friends", e)
             emptyList()
         }
     }

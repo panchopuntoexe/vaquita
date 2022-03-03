@@ -1,10 +1,8 @@
 package com.hexagonal.vaquita.entidades
 
 import android.os.Parcelable
-import android.util.Log
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.auth.User
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -18,38 +16,34 @@ data class Usuario(
 ) : Parcelable {
     companion object {
         fun QuerySnapshot.toUser(): Usuario? {
-            try {
-                return this.first().toObject(Usuario::class.java)
+            return try {
+                this.first().toObject(Usuario::class.java)
             } catch (e: Exception) {
-                Log.e(TAG, "Error converting user profile", e)
-                return null
+                null
             }
         }
 
         fun DocumentSnapshot.toUser(): Usuario? {
-            try {
-                return this.toObject(Usuario::class.java)
+            return try {
+                this.toObject(Usuario::class.java)
             } catch (e: Exception) {
-                Log.e(TAG, "Error converting user profile", e)
-                return null
+                null
             }
         }
 
         fun DocumentSnapshot.toMapUser(): MutableMap<String, String>? {
-            try {
-                return mutableMapOf(Pair(this.id, this.get("correo").toString()))
+            return try {
+                mutableMapOf(Pair(this.id, this.get("correo").toString()))
             } catch (e: Exception) {
-                Log.e(TAG, "Error converting user profile", e)
-                return null
+                null
             }
         }
 
         fun QuerySnapshot.toUserId(): String? {
-            try {
-                return this.first().id
+            return try {
+                this.first().id
             } catch (e: Exception) {
-                Log.e(TAG, "Error converting user profile", e)
-                return null
+                null
             }
         }
 

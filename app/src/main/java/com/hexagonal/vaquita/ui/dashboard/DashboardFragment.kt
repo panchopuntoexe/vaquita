@@ -1,7 +1,6 @@
 package com.hexagonal.vaquita.ui.dashboard
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,27 +10,19 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hexagonal.vaquita.databinding.FragmentDashboardBinding
+import com.hexagonal.vaquita.datos.PAGOS
+import com.hexagonal.vaquita.datos.USUARIOS
+import com.hexagonal.vaquita.datos.WALLETS
 import com.hexagonal.vaquita.entidades.Pago
-import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Wallet
-import lecho.lib.hellocharts.model.*
-
+import lecho.lib.hellocharts.model.Axis
+import lecho.lib.hellocharts.model.Column
 import lecho.lib.hellocharts.model.ColumnChartData
-
-import lecho.lib.hellocharts.util.ChartUtils
-
 import lecho.lib.hellocharts.model.SubcolumnValue
-import lecho.lib.hellocharts.view.ColumnChartView
-import lecho.lib.hellocharts.view.LineChartView
+import lecho.lib.hellocharts.util.ChartUtils
 
 
 class DashboardFragment : Fragment() {
-
-    private val DEFAULT_DATA = 0
-    private val SUBCOLUMNS_DATA = 1
-    private val STACKED_DATA = 2
-    private val NEGATIVE_SUBCOLUMNS_DATA = 3
-    private val NEGATIVE_STACKED_DATA = 4
 
     private var data: ColumnChartData? = null
     private val hasAxes = true
@@ -51,9 +42,9 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+            ViewModelProvider(this)[DashboardViewModel::class.java]
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -62,28 +53,27 @@ class DashboardFragment : Fragment() {
         return root
     }
 
-    fun getPagosporWallet() {
+    private fun getPagosporWallet() {
         val db = Firebase.firestore
-        var userfb : Usuario
-        db.collection("Usuarios")
+        db.collection(USUARIOS)
             .whereEqualTo("correo", Firebase.auth.currentUser!!.email)
             .get()
             .addOnSuccessListener { result ->
                 val user = result.first()
-                db.collection("Wallets")
+                db.collection(WALLETS)
                     .get()
                     .addOnSuccessListener { result ->
-                        var wallets = result.toObjects(Wallet::class.java)
-                        var walletsUsuario = mutableListOf<Wallet>()
+                        val wallets = result.toObjects(Wallet::class.java)
+                        val walletsUsuario = mutableListOf<Wallet>()
                         for (wallet in wallets){
                             if(wallet.users!!.keys.contains(user.id)){
                                 walletsUsuario.add(wallet)
                             }
                         }
-                        db.collection("Pagos")
+                        db.collection(PAGOS)
                             .get()
                             .addOnSuccessListener { result ->
-                            var pagos = result
+                            val pagos = result
                                 for (wallet in walletsUsuario){
                                     var acumPago = 0
                                     if (wallet.pagos!!.isEmpty()){
@@ -92,9 +82,7 @@ class DashboardFragment : Fragment() {
                                         for(pago in wallet.pagos!!){
                                             for(element in pagos){
                                                 if(pago.key==element.id){
-                                                    Log.d("User id ",element.toObject(Pago::class.java).user+" "+user.id)
                                                     if(element.toObject(Pago::class.java).user==user.id){
-                                                        Log.d("Pagos",element.id+" "+element.toObject(Pago::class.java).valor)
                                                         acumPago= (acumPago+element.toObject(Pago::class.java).valor!!).toInt()
                                                     }
                                                 }
@@ -103,8 +91,6 @@ class DashboardFragment : Fragment() {
                                         walletsPagos.add(Pair(wallet.nombre.toString(),acumPago))
                                     }
                                 }
-                                Log.d("Wallets",walletsUsuario.toString())
-                                Log.d("Wallets",walletsPagos.toString())
                                 graficar()
                             }
 
@@ -112,9 +98,9 @@ class DashboardFragment : Fragment() {
             }
     }
 
-    fun graficar(){
+    private fun graficar(){
         val chart = binding.chart
-        val numColumns = walletsPagos.size
+        walletsPagos.size
         // Column can have many subcolumns, here by default I use 1 subcolumn in each of 8 columns.
         val columns: MutableList<Column> = ArrayList()
         var values: MutableList<SubcolumnValue?>
@@ -136,16 +122,16 @@ class DashboardFragment : Fragment() {
             val axisX = Axis(emptyList())
             val axisY = Axis().setHasLines(true)
             if (hasAxesNames) {
-                axisX.name = "Wallets"
-                axisY.name = "Pagos"
+                axisX.name = WALLETS
+                axisY.name = PAGOS
             }
-            data!!.setAxisXBottom(axisX)
-            data!!.setAxisYLeft(axisY)
+            data!!.axisXBottom = axisX
+            data!!.axisYLeft = axisY
         } else {
-            data!!.setAxisXBottom(null)
-            data!!.setAxisYLeft(null)
+            data!!.axisXBottom = null
+            data!!.axisYLeft = null
         }
-        chart.setColumnChartData(data)
+        chart.columnChartData = data
 
     }
     override fun onDestroyView() {

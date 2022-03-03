@@ -1,6 +1,6 @@
 package com.hexagonal.vaquita
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -19,23 +19,24 @@ import java.util.*
 
 class ActividadEfectivo : AppCompatActivity() {
 
-    lateinit var textCantidadEfectivo: TextView;
-    lateinit var textPagoRealizarse: EditText;
+    private lateinit var textCantidadEfectivo: TextView
+    private lateinit var textPagoRealizarse: EditText
     lateinit var nombre  : String
-    lateinit var idUser : String
+    private lateinit var idUser : String
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_actividad_efectivo)
 
-        val intent = getIntent()
+        val intent = intent
         val deuda = intent.getDoubleExtra("deuda", 0.0)
         val wallet = intent.getParcelableExtra<Wallet>("wallet") as Wallet
 
         textCantidadEfectivo = findViewById(R.id.textCantidadEfectivo)
         textPagoRealizarse = findViewById(R.id.textPagoRealizarse)
 
-        textCantidadEfectivo.setText(deuda.toString())
+        textCantidadEfectivo.text = deuda.toString()
 
         getUser()
 
@@ -43,9 +44,9 @@ class ActividadEfectivo : AppCompatActivity() {
         val botonEfectivo = findViewById<Button>(R.id.botonPagarEfectivo)
         botonEfectivo.setOnClickListener {
             val valorAPagar = textPagoRealizarse.text.toString().toDouble()
-            val subirPago : GestionadorDeSubida = GestionadorDeSubida()
-            val pago : Pago = Pago(
-                "Pago de: " + nombre,
+            val subirPago = GestionadorDeSubida()
+            val pago = Pago(
+                "Pago de: $nombre",
                 valorAPagar,
                 idUser,
                 SimpleDateFormat("dd/M/yyyy").format(Date()),
@@ -66,7 +67,7 @@ class ActividadEfectivo : AppCompatActivity() {
         }
     }
 
-    fun getUser() {
+    private fun getUser() {
         val userEmail: String? = Firebase.auth.currentUser?.email
         val db = Firebase.firestore
         var userfb : Usuario

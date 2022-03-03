@@ -1,7 +1,7 @@
 package com.hexagonal.vaquita.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,21 +13,16 @@ import com.bumptech.glide.Glide
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hexagonal.vaquita.R
+import com.hexagonal.vaquita.datos.USUARIOS
+import com.hexagonal.vaquita.datos.WALLETS
 import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Wallet
 
-class UserAdapter(context: Context, usuarios: ArrayList<Usuario>, walletId: String, layout: Int) :
+class UserAdapter(context: Context, usuarios: ArrayList<Usuario>, walletId: String) :
     RecyclerView.Adapter<UserAdapter.ViewHolder>() {
-    private val context: Context
-    private val usuarios: ArrayList<Usuario>
-    private val walletId: String
-
-    init {
-        this.context = context
-        this.usuarios = usuarios
-        this.walletId = walletId
-
-    }
+    private val context: Context = context
+    private val usuarios: ArrayList<Usuario> = usuarios
+    private val walletId: String = walletId
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v: View = LayoutInflater.from(parent.context)
@@ -35,6 +30,7 @@ class UserAdapter(context: Context, usuarios: ArrayList<Usuario>, walletId: Stri
         return ViewHolder(v)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             Glide.with(context).load(usuarios[position].foto).into(holder.image)
@@ -44,7 +40,7 @@ class UserAdapter(context: Context, usuarios: ArrayList<Usuario>, walletId: Stri
             }else{
                 holder.txtCorreo.text = usuarios[position].correo
             }
-            Firebase.firestore.collection("Usuarios").whereEqualTo("correo",usuarios[position].correo)
+            Firebase.firestore.collection(USUARIOS).whereEqualTo("correo",usuarios[position].correo)
                 .get().addOnSuccessListener {result ->
                 if(result.first().toObject(Usuario::class.java).wallets!!.keys.contains(walletId)){
                     button.isEnabled=false
@@ -53,23 +49,23 @@ class UserAdapter(context: Context, usuarios: ArrayList<Usuario>, walletId: Stri
             }
 
 
-            holder.button.setOnClickListener() {
+            holder.button.setOnClickListener {
                 button.isEnabled = false
-                var db = Firebase.firestore
-                db.collection("Wallets").document(walletId).get().addOnSuccessListener { result ->
-                    var wallet = result.toObject(Wallet::class.java)
-                    db.collection("Usuarios").whereEqualTo("correo", usuarios[position].correo)
+                val db = Firebase.firestore
+                db.collection(WALLETS).document(walletId).get().addOnSuccessListener { result ->
+                    val wallet = result.toObject(Wallet::class.java)
+                    db.collection(USUARIOS).whereEqualTo("correo", usuarios[position].correo)
                         .get().addOnSuccessListener { result ->
-                            var document = result.first()
+                            val document = result.first()
                             var userAux: MutableMap<String, Boolean> = wallet!!.users as MutableMap<String, Boolean>
-                            userAux.put(document.id, true)
-                            db.collection("Wallets").document(walletId).update("users", userAux)
+                            userAux[document.id] = true
+                            db.collection(WALLETS).document(walletId).update("users", userAux)
 
                             //poner id de wallet en usuario
                             userAux = document.toObject(Usuario::class.java).wallets as MutableMap<String, Boolean>
-                            userAux.put(walletId,true)
-                            db.collection("Usuarios").document(document.id)
-                                                    .update("wallets", userAux)
+                            userAux[walletId] = true
+                            db.collection(USUARIOS).document(document.id)
+                                                    .update(WALLETS, userAux)
                         }
                 }
             }
@@ -82,17 +78,10 @@ class UserAdapter(context: Context, usuarios: ArrayList<Usuario>, walletId: Stri
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var image: ImageView
-        var txtNombre: TextView
-        var txtCorreo: TextView
-        var button: Button
+        var image: ImageView = itemView.findViewById(R.id.fotoUsuario) as ImageView
+        var txtNombre: TextView = itemView.findViewById(R.id.textViewNombreUsuario)
+        var txtCorreo: TextView = itemView.findViewById(R.id.textViewCorreo)
+        var button: Button = itemView.findViewById(R.id.buttonAñadirUsuario)
 
-        init {
-            image = itemView.findViewById(R.id.fotoUsuario) as ImageView
-            txtNombre = itemView.findViewById(R.id.textViewNombreUsuario)
-            txtCorreo = itemView.findViewById(R.id.textViewCorreo)
-            button = itemView.findViewById(R.id.buttonAñadirUsuario)
-
-        }
     }
 }

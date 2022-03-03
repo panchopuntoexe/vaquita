@@ -2,20 +2,19 @@ package com.hexagonal.vaquita.datos
 
 import android.app.Activity
 import android.os.Environment
-import com.hexagonal.vaquita.SHAREDINFO_FILENAME
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
-class FileExternalManager(val actividad: Activity): FileHandler{
+class FileExternalManager(private val actividad: Activity): FileHandler{
 
     // Comprobando que el almacenamiento externo sea escribible
-    fun isExternalStorageWritable(): Boolean {
+    private fun isExternalStorageWritable(): Boolean {
         return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
     }
 
     // Guardando la Información
-    override fun SaveInformation(datosAGrabar: Pair<String, String>) {
+    override fun saveInformation(datosAGrabar: Pair<String, String>) {
         if (isExternalStorageWritable()) {
             FileOutputStream(
                 File(
@@ -31,13 +30,13 @@ class FileExternalManager(val actividad: Activity): FileHandler{
     }
 
     // Comprobación si el almacenamiento externo es leíble
-    fun isExternalStorageReadable(): Boolean {
+    private fun isExternalStorageReadable(): Boolean {
         return Environment.getExternalStorageState() in
                 setOf(Environment.MEDIA_MOUNTED, Environment.MEDIA_MOUNTED_READ_ONLY)
     }
 
     // Lectura de la Información
-    override fun ReadInformation(): Pair<String, String> {
+    override fun readInformation(): Pair<String, String> {
         var email=""
         var clave=""
         try {

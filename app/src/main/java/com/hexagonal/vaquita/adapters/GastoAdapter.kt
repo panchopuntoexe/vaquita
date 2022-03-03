@@ -1,6 +1,6 @@
 package com.hexagonal.vaquita.adapters
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.hexagonal.vaquita.R
 import com.hexagonal.vaquita.entidades.Gasto
-import com.hexagonal.vaquita.entidades.Wallet
 
 class GastoAdapter(
-    private val context: Activity,
     private val gastos: List<Gasto>,
 ) :
     RecyclerView.Adapter<GastoAdapter.ViewHolder>() {
@@ -24,6 +22,7 @@ class GastoAdapter(
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             textViewNombreGasto.text = "${gastos[position].nombre}"
@@ -45,9 +44,9 @@ class GastoAdapter(
 
     class ViewHolder(val view: View) :
         RecyclerView.ViewHolder(view) {
-        val textViewNombreGasto = view.findViewById<TextView>(R.id.textViewNombreGasto)
-        val textViewFechaGasto = view.findViewById<TextView>(R.id.textViewFechaGasto)
-        val textViewValorGasto = view.findViewById<TextView>(R.id.textViewValorGasto)
+        val textViewNombreGasto: TextView = view.findViewById(R.id.textViewNombreGasto)
+        val textViewFechaGasto: TextView = view.findViewById(R.id.textViewFechaGasto)
+        val textViewValorGasto: TextView = view.findViewById(R.id.textViewValorGasto)
     }
 
 }

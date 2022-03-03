@@ -2,19 +2,17 @@ package com.hexagonal.vaquita.gestionadorsubida
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import android.util.Patterns
 import android.widget.Toast
-import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.hexagonal.vaquita.ActividadCompra
 import com.hexagonal.vaquita.ActividadHome
+import com.hexagonal.vaquita.datos.PAGOS
+import com.hexagonal.vaquita.datos.USUARIOS
+import com.hexagonal.vaquita.datos.WALLETS
 import com.hexagonal.vaquita.entidades.Pago
 import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Wallet
-import java.util.regex.Pattern
 
 class GestionadorDeSubida {
 
@@ -23,13 +21,9 @@ class GestionadorDeSubida {
         lateinit var propietario: String
     }
 
-    constructor() {
-
-    }
-
-    public fun subirDatosDeUsuarioNuevo(usuario: Usuario, db: FirebaseFirestore): Boolean {
-        var retorno: Boolean = false
-        var mapaVacio: Map<String, Boolean> = emptyMap<String, Boolean>()
+    fun subirDatosDeUsuarioNuevo(usuario: Usuario, db: FirebaseFirestore): Boolean {
+        var retorno = false
+        val mapaVacio: Map<String, Boolean> = emptyMap()
         val user = hashMapOf(
             "correo" to usuario.correo,
             "foto" to usuario.foto,
@@ -38,15 +32,12 @@ class GestionadorDeSubida {
             "username" to usuario.username,
             "wallets" to mapaVacio
         )
-        val TAG = "MENSAJE"
-        db.collection("Usuarios")
+        db.collection(USUARIOS)
             .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            .addOnSuccessListener {
                 retorno = true
             }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
+            .addOnFailureListener {
                 retorno = false
             }
 
@@ -54,8 +45,8 @@ class GestionadorDeSubida {
     }
 
 
-    public fun subirDatosDeWalletNueva(wallet: Wallet, db: FirebaseFirestore): Boolean {
-        var retorno: Boolean = true
+    fun subirDatosDeWalletNueva(wallet: Wallet, db: FirebaseFirestore): Boolean {
+        var retorno = true
         val walletNueva = hashMapOf(
             "creador" to wallet.creador,
             "fecha" to wallet.fecha,
@@ -66,53 +57,44 @@ class GestionadorDeSubida {
             "users" to wallet.users,
             "foto" to wallet.foto
         )
-        val TAG = "MENSAJE"
-        db.collection("Wallets")
+
+        db.collection(WALLETS)
             .add(walletNueva)
             .addOnSuccessListener { documentReference ->
-                Log.d(TAG, "Wallet added with ID: ${documentReference.id}")
                 walletId = documentReference.id
                 propietario = wallet.creador.toString()
-                val db = Firebase.firestore
                 var userfb: Usuario
-                db.collection("Usuarios")
+                db.collection(USUARIOS)
                     .document(wallet.creador!!)
                     .get()
                     .addOnSuccessListener { document ->
                         userfb = document.toObject(Usuario::class.java)!!
-                        var mapaAux: MutableMap<String, Boolean> =
+                        val mapaAux: MutableMap<String, Boolean> =
                             userfb.wallets as MutableMap<String, Boolean>
-                        mapaAux.put(documentReference.id, true)
-                        db.collection("Usuarios").document(wallet.creador!!)
-                            .update("wallets", mapaAux)
+                        mapaAux[documentReference.id] = true
+                        db.collection(USUARIOS).document(wallet.creador!!)
+                            .update(WALLETS, mapaAux)
                             .addOnSuccessListener {
-                                Log.d(
-                                    TAG,
-                                    "DocumentSnapshot successfully updated!"
-                                )
                             }
-                            .addOnFailureListener { e -> Log.w(TAG, "Error updating document", e) }
+                            .addOnFailureListener { }
                     }
                 retorno = true
             }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
+            .addOnFailureListener {
                 retorno = false
             }
 
         return retorno
     }
 
-    public fun subirPago(context: Context, pago: Pago, wallet: Wallet) {
+    fun subirPago(context: Context, pago: Pago, wallet: Wallet) {
         val db = Firebase.firestore
         val nombre: String = pago.nombre.toString()
         val fecha: String = pago.fecha.toString()
         val valor: Double? = pago.valor
         val user: String = pago.user.toString()
-        Log.d("data", nombre + fecha + valor)
 
         if (nombre.isNotEmpty() && fecha.isNotEmpty() && valor != null && user.isNotEmpty()) {
-            var retorno: Boolean = true
             val pagoNuevo = hashMapOf(
                 "nombre" to nombre,
                 "fecha" to fecha,
@@ -120,21 +102,19 @@ class GestionadorDeSubida {
                 "tipo" to "pago",
                 "user" to user
             )
-            val TAG = "MENSAJE"
-            db.collection("Pagos")
+            db.collection(PAGOS)
                 .add(pagoNuevo)
                 .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "Pago added with ID: ${documentReference.id}")
-                    val pagoId = documentReference.id;
-                    db.collection("Wallets")
+                    val pagoId = documentReference.id
+                    db.collection(WALLETS)
                         .whereEqualTo("foto", wallet.foto)
                         .get()
                         .addOnSuccessListener { documentReference1 ->
                             val docId = documentReference1.first().id
                             val mapaPagos = documentReference1.first()
                                 .get("pagos") as MutableMap<String, Boolean>
-                            mapaPagos.put(pagoId, true)
-                            db.collection("Wallets").document(docId)
+                            mapaPagos[pagoId] = true
+                            db.collection(WALLETS).document(docId)
                                 .update("pagos", mapaPagos)
                             val intencion = Intent(context, ActividadHome::class.java)
                             context.startActivity(intencion)
@@ -144,7 +124,6 @@ class GestionadorDeSubida {
                     Toast.makeText(context, "Error al realizar el Pago", Toast.LENGTH_SHORT)
                         .show()
                 }
-        } else {
         }
     }
 

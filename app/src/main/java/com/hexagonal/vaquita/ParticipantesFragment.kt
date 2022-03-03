@@ -1,7 +1,6 @@
 package com.hexagonal.vaquita
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,8 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hexagonal.vaquita.adapters.ParticipanteAdapter
+import com.hexagonal.vaquita.datos.PAGOS
+import com.hexagonal.vaquita.datos.USUARIOS
 import com.hexagonal.vaquita.entidades.Pago
 import com.hexagonal.vaquita.entidades.Pago.Companion.toPago
 import com.hexagonal.vaquita.entidades.Usuario
@@ -28,41 +29,20 @@ import kotlinx.coroutines.tasks.await
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-private const val ARG_RECYCLEVIEW = "recycleViewParticipantes"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ParticipantesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ParticipantesFragment(
     val wallet: Wallet?,
 ) : Fragment() {
 
     val db = Firebase.firestore
-    val TAG = "ErrorUsuario"
-    val _userWallets = MutableLiveData<List<Usuario>>()
+    private val _userWallets = MutableLiveData<List<Usuario>>()
     var usuarios: LiveData<List<Usuario>>? = _userWallets
-
-    val _pagosWallets = MutableLiveData<List<Pago>>()
-    var pagosWallets: LiveData<List<Pago>>? = _pagosWallets
-
-    val _usersCorreo = MutableLiveData<List<MutableMap<String, String>>>()
-    var usersCorreo: LiveData<List<MutableMap<String, String>>>? = _usersCorreo
-
-    val mapaPagos: MutableMap<String?, Double> = mutableMapOf()
+    private val _pagosWallets = MutableLiveData<List<Pago>>()
+    private var pagosWallets: LiveData<List<Pago>>? = _pagosWallets
+    private val _usersCorreo = MutableLiveData<List<MutableMap<String, String>>>()
+    private var usersCorreo: LiveData<List<MutableMap<String, String>>>? = _usersCorreo
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    suspend fun getUsers(): List<Usuario>? {
+    private suspend fun getUsers(): List<Usuario>? {
         val listaWallets = ArrayList<String>()
 
         if (wallet?.users != null) {
@@ -70,19 +50,18 @@ class ParticipantesFragment(
                 listaWallets.add(clave)
             }
         }
-        Log.d("Participantes", listaWallets.toString())
+
         return try {
-            db.collection("Usuarios")
+            db.collection(USUARIOS)
                 .whereIn(FieldPath.documentId(), listaWallets)
                 .get().await()
                 .documents.mapNotNull { it.toUser() }
         } catch (e: Exception) {
-            Log.e(TAG, "Error getting user friends", e)
             emptyList()
         }
     }
 
-    suspend fun getUsersMap(lista: MutableSet<String?>): List<MutableMap<String, String>>? {
+    private suspend fun getUsersMap(lista: MutableSet<String?>): List<MutableMap<String, String>>? {
         val listaWallets = ArrayList<String>()
         for (clave in lista) {
             if (clave != null) {
@@ -91,14 +70,12 @@ class ParticipantesFragment(
         }
 
         if (listaWallets.size > 0) {
-            Log.d("Participantes", listaWallets.toString())
             return try {
-                db.collection("Usuarios")
+                db.collection(USUARIOS)
                     .whereIn(FieldPath.documentId(), listaWallets)
                     .get().await()
                     .documents.mapNotNull { it.toMapUser() }
             } catch (e: Exception) {
-                Log.e(TAG, "Error getting user friends", e)
                 emptyList()
             }
         }
@@ -106,7 +83,7 @@ class ParticipantesFragment(
         return emptyList()
     }
 
-    suspend fun getPagos(): List<Pago>? {
+    private suspend fun getPagos(): List<Pago>? {
         val listaWallets = ArrayList<String>()
 
         if (wallet?.pagos != null) {
@@ -116,14 +93,12 @@ class ParticipantesFragment(
         }
 
         if (listaWallets.size > 0) {
-            Log.d("Participantes", listaWallets.toString())
             return try {
-                db.collection("Pagos")
+                db.collection(PAGOS)
                     .whereIn(FieldPath.documentId(), listaWallets)
                     .get().await()
                     .documents.mapNotNull { it.toPago() }
             } catch (e: Exception) {
-                Log.e(TAG, "Error getting user friends", e)
                 emptyList()
             }
         }
@@ -134,7 +109,7 @@ class ParticipantesFragment(
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view: View = inflater.inflate(R.layout.fragment_participantes, container, false)
         val recycleViewParticipantes: RecyclerView =
             view.findViewById(R.id.recycleViewParticipantes)
@@ -142,10 +117,9 @@ class ParticipantesFragment(
             _userWallets.value = getUsers()!!
             _pagosWallets.value = getPagos()!!
         }
-        usuarios?.observe(viewLifecycleOwner, Observer {
+        usuarios?.observe(viewLifecycleOwner, Observer { listaUsuarios ->
             try {
-                val articipantesWallets = it
-                val numParticipantes = it.size
+                val numParticipantes = listaUsuarios.size
                 val valorTotalWallet: TextView =
                     this.requireActivity().findViewById(R.id.valorTotalWallet)
                 val gastoTotal = valorTotalWallet.text.toString().toDouble()
@@ -154,9 +128,8 @@ class ParticipantesFragment(
 
 
                 pagosWallets?.observe(viewLifecycleOwner, Observer { it ->
-                    val pagos = it
                     val mutableByUser: MutableMap<String?, MutableList<Pago>> =
-                        pagos.groupByTo(mutableMapOf()) { it.user }
+                        it.groupByTo(mutableMapOf()) { it.user }
 
                     val mapaPagos: MutableMap<String?, Double> = mutableMapOf()
                     for (m in mutableByUser) {
@@ -164,7 +137,7 @@ class ParticipantesFragment(
                         for (pago in m.value) {
                             totalPago += pago.valor!!
                         }
-                        mapaPagos.put(m.key, totalPago)
+                        mapaPagos[m.key] = totalPago
                     }
 
                     viewLifecycleOwner.lifecycleScope.launch {
@@ -176,7 +149,7 @@ class ParticipantesFragment(
                         for (mPago in mapaPagos) {
                             for (mapa in lista) {
                                 if (mPago.key == mapa.keys.first()) {
-                                    mapaPagosNuevo.put(mapa.values.first(), mPago.value)
+                                    mapaPagosNuevo[mapa.values.first()] = mPago.value
                                 }
                             }
                         }
@@ -184,7 +157,7 @@ class ParticipantesFragment(
                         recycleViewParticipantes.adapter =
                             ParticipanteAdapter(
                                 this.requireActivity(),
-                                articipantesWallets,
+                                listaUsuarios,
                                 deuda,
                                 mapaPagosNuevo
                             )
@@ -197,7 +170,6 @@ class ParticipantesFragment(
 
                 })
             } catch (e: Exception) {
-                Log.d("Error", e.toString())
             }
         })
 
@@ -206,7 +178,7 @@ class ParticipantesFragment(
     }
 
 
-    fun Double.roundTo(numFractionDigits: Int): Double {
+    private fun Double.roundTo(numFractionDigits: Int): Double {
         val factor = 10.0.pow(numFractionDigits.toDouble())
         return (this * factor).roundToInt() / factor
     }

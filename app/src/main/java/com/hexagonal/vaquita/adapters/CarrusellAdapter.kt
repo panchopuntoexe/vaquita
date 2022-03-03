@@ -14,7 +14,7 @@ import com.hexagonal.vaquita.ui.home.HomeFragment
 class CarrusellAdapter(
     private val context: Activity,
     private val wallets: List<Wallet>,
-    val onWalletListener: HomeFragment
+    private val onWalletListener: HomeFragment
     ) :
     RecyclerView.Adapter<CarrusellAdapter.ViewHolder>() {
 
@@ -27,7 +27,7 @@ class CarrusellAdapter(
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             with(holder) {
-                Glide.with(context).load(wallets[position].foto).into(imagenWallet!!)
+                Glide.with(context).load(wallets[position].foto).into(imagenWallet)
             }
         }
 
@@ -35,10 +35,9 @@ class CarrusellAdapter(
             return wallets.size
         }
 
-        class ViewHolder(val view: View, val onWalletListener: HomeFragment) :
+        class ViewHolder(val view: View, private val onWalletListener: HomeFragment) :
             RecyclerView.ViewHolder(view), View.OnClickListener {
-            val imagenWallet = view.findViewById<ImageView>(R.id.imagenCarrusell)
-
+            val imagenWallet: ImageView = view.findViewById(R.id.imagenCarrusell)
 
             init {
                 view.setOnClickListener(this)
@@ -48,10 +47,4 @@ class CarrusellAdapter(
                 onWalletListener.onWalletClick(adapterPosition)
             }
         }
-
-        interface OnWalletListener {
-            fun onWalletClick(position: Int)
-        }
-
-
 }

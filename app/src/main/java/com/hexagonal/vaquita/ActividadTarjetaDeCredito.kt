@@ -1,16 +1,16 @@
 package com.hexagonal.vaquita
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.hexagonal.vaquita.datos.USUARIOS
 import com.hexagonal.vaquita.entidades.Pago
 import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Wallet
@@ -21,22 +21,23 @@ import java.util.*
 
 class ActividadTarjetaDeCredito : AppCompatActivity() {
 
-    val validador: Validador = Validador()
-    lateinit var textCantidad: TextView;
-    lateinit var textValorAPagar: EditText;
-    lateinit var textNombreDeTarjeta: EditText;
-    lateinit var textNumeroTarjeta: EditText;
-    lateinit var textFechaDeExp: EditText;
-    lateinit var textCcv: EditText;
-    lateinit var textNumeroPostal: EditText;
+    private val validador: Validador = Validador()
+    private lateinit var textCantidad: TextView
+    private lateinit var textValorAPagar: EditText
+    private lateinit var textNombreDeTarjeta: EditText
+    private lateinit var textNumeroTarjeta: EditText
+    private lateinit var textFechaDeExp: EditText
+    private lateinit var textCcv: EditText
+    private lateinit var textNumeroPostal: EditText
     lateinit var nombre: String
-    lateinit var idUser: String
+    private lateinit var idUser: String
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_actividad_tarjeta_de_credito)
 
-        val intent = getIntent()
+        val intent = intent
         val deuda = intent.getDoubleExtra("deuda", 0.0)
         val wallet = intent.getParcelableExtra<Wallet>("wallet") as Wallet
 
@@ -48,7 +49,7 @@ class ActividadTarjetaDeCredito : AppCompatActivity() {
         textCcv = findViewById(R.id.textCcv)
         textNumeroPostal = findViewById(R.id.textNumeroPostal)
 
-        textCantidad.setText(deuda.toString())
+        textCantidad.text = deuda.toString()
 
 
         getUser()
@@ -59,9 +60,9 @@ class ActividadTarjetaDeCredito : AppCompatActivity() {
             if (textValorAPagar.text.isNotEmpty()) {
                 val valorAPagar = textValorAPagar.text.toString().toDouble()
                 val valorADeuda = textCantidad.text.toString().toDouble()
-                val subirPago: GestionadorDeSubida = GestionadorDeSubida()
-                val pago: Pago = Pago(
-                    "Pago de: " + nombre,
+                val subirPago = GestionadorDeSubida()
+                val pago = Pago(
+                    "Pago de: $nombre",
                     valorAPagar,
                     idUser,
                     SimpleDateFormat("dd/M/yyyy").format(Date()),
@@ -89,11 +90,11 @@ class ActividadTarjetaDeCredito : AppCompatActivity() {
         }
     }
 
-    fun getUser() {
+    private fun getUser() {
         val userEmail: String? = Firebase.auth.currentUser?.email
         val db = Firebase.firestore
         var userfb: Usuario
-        db.collection("Usuarios")
+        db.collection(USUARIOS)
             .whereEqualTo("correo", userEmail)
             .get()
             .addOnSuccessListener { result ->
@@ -105,7 +106,7 @@ class ActividadTarjetaDeCredito : AppCompatActivity() {
     }
 
     // Validador Tarjeta de Crédito
-    public fun validarTarjeta(): Boolean {
+    private fun validarTarjeta(): Boolean {
         var retorno = false
         if (validador.esLongitudMenor(textNombreDeTarjeta.text.toString(), 30)) {
             if (validador.esLongitudIgual(textNumeroTarjeta.text.toString(), 12)) {

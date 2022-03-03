@@ -2,12 +2,8 @@ package com.hexagonal.vaquita.entidades
 
 
 import android.os.Parcelable
-import android.util.Log
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.Serializable
-import org.parceler.Parcel
 
 @Parcelize
 data class Wallet(
@@ -25,11 +21,10 @@ data class Wallet(
 {
     companion object {
         fun DocumentSnapshot.toWallet(): Wallet? {
-            try {
-                return this.toObject(Wallet::class.java)
+            return try {
+                this.toObject(Wallet::class.java)
             } catch (e: Exception) {
-                Log.e(TAG, "Error converting user profile", e)
-                return null
+                null
             }
         }
         private const val TAG = "User"

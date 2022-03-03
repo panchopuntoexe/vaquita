@@ -2,7 +2,6 @@ package com.hexagonal.vaquita.ui.pay
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.hexagonal.vaquita.ActividadCompra
-import com.hexagonal.vaquita.R
 import com.hexagonal.vaquita.adapters.WalletAdapter
 import com.hexagonal.vaquita.databinding.FragmentPayBinding
 import com.hexagonal.vaquita.entidades.Wallet
@@ -37,9 +32,9 @@ class PayFragment : Fragment(), WalletAdapter.OnWalletListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         payViewModel =
-            ViewModelProvider(this).get(PayViewModel::class.java)
+            ViewModelProvider(this)[PayViewModel::class.java]
 
         _binding = FragmentPayBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -57,7 +52,7 @@ class PayFragment : Fragment(), WalletAdapter.OnWalletListener {
         payViewModel.wallets?.observe(viewLifecycleOwner, Observer {
             wallets = it
             binding.recyclerViewPay.adapter =
-                WalletAdapter(this.requireActivity(), it, 10.25, this)
+                WalletAdapter(this.requireActivity(), it, this)
             binding.recyclerViewPay.layoutManager =
                 LinearLayoutManager(this.requireActivity())
             binding.recyclerViewPay.setHasFixedSize(true)
@@ -73,15 +68,13 @@ class PayFragment : Fragment(), WalletAdapter.OnWalletListener {
     }
 
     override fun onWalletClick(position: Int) {
-        val wallet = wallets.get(position)
+        val wallet = wallets[position]
         val intencion = Intent(this.requireActivity(), ActividadCompra::class.java)
 
         try {
             intencion.putExtra("wallet", wallet)
             startActivity(intencion)
-            Log.d("todobien", wallet.toString())
         } catch (e: Exception) {
-            Log.d("ErrorWallet", e.toString())
         }
     }
 }

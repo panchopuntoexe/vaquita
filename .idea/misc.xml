@@ -3,14 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_compra.xml" value="0.36764705882352944" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_compra.xml" value="0.264" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_contactos.xml" value="0.14322916666666666" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_efectivo.xml" value="0.264" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_metodo_de_pago.xml" value="0.4" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_nueva_cartera.xml" value="0.14322916666666666" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_recuperar.xml" value="0.4931506849315068" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_registro.xml" value="0.2341485507246377" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_tarjeta_de_credito.xml" value="0.25" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_agregar_gasto.xml" value="0.264" />
         <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_pay_pal.xml" value="0.2341485507246377" />
         <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/activity_wallets.xml" value="0.1" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/carrusell_card.xml" value="0.536" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/contactos_layout.xml" value="0.4" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_dashboard.xml" value="0.2341485507246377" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_gastos.xml" value="0.2341485507246377" />
         <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_participantes.xml" value="0.21458333333333332" />
-        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_pay.xml" value="0.21458333333333332" />
-        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_settings.xml" value="0.21458333333333332" />
-        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/wallet_card.xml" value="0.20520833333333333" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_pay.xml" value="0.373134328358209" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/fragment_settings.xml" value="0.4" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/gasto_card.xml" value="0.536" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/participantes_card.xml" value="0.4" />
+        <entry key="..\:/Documents/GitHub/vaquita/app/src/main/res/layout/wallet_card.xml" value="0.4" />
         <entry key="..\:/Users/Dave_/OneDrive/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_compra.xml" value="0.4" />
         <entry key="..\:/Users/Dave_/OneDrive/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_contactos.xml" value="0.2703804347826087" />
         <entry key="..\:/Users/Dave_/OneDrive/Documents/GitHub/vaquita/app/src/main/res/layout/activity_actividad_efectivo.xml" value="0.2703804347826087" />
@@ -48,12 +64,11 @@
         <entry key="..\:/Users/juanp/AndroidStudioProjects/vaquita/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/juanp/AndroidStudioProjects/vaquita/app/src/main/res/layout/activity_wallets.xml" value="0.16576086956521738" />
         <entry key="..\:/Users/juanp/AndroidStudioProjects/vaquita/app/src/main/res/layout/contactos_layout.xml" value="0.24509803921568626" />
-        <entry key="..\:/Users/juanp/AndroidStudioProjects/vaquita/app/src/main/res/layout/fragment_dashboard.xml" value="0.1015625" />
         <entry key="..\:/Users/juanp/AndroidStudioProjects/vaquita/app/src/main/res/layout/fragment_home.xml" value="0.1838768115942029" />
         <entry key="..\:/Users/juanp/AndroidStudioProjects/vaquita/app/src/main/res/layout/fragment_settings.xml" value="0.33" />
         <entry key="..\:/Users/juanp/AndroidStudioProjects/vaquita/app/src/main/res/layout/wallet_card.xml" value="0.1" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>

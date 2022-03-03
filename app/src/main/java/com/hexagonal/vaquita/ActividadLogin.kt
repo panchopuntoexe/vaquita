@@ -1,14 +1,12 @@
 package com.hexagonal.vaquita
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -16,16 +14,15 @@ import com.hexagonal.vaquita.datos.FileExternalManager
 import com.hexagonal.vaquita.datos.FileHandler
 
 
-
 class ActividadLogin : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    lateinit var textEmail: EditText
-    lateinit var textClave: EditText
-    lateinit var buttonEntrar: Button
-    lateinit var checkBoxRecordarme: CheckBox
-    lateinit var manejadorArchivo: FileHandler
-    lateinit var botonRecuperar: Button
+    private lateinit var textEmail: EditText
+    private lateinit var textClave: EditText
+    private lateinit var buttonEntrar: Button
+    private lateinit var checkBoxRecordarme: CheckBox
+    private lateinit var manejadorArchivo: FileHandler
+    private lateinit var botonRecuperar: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,22 +39,16 @@ class ActividadLogin : AppCompatActivity() {
         auth = Firebase.auth
         getUserFirebase()
 
-        val email = textEmail.text.toString()
-        textEmail.setText("francisco.garcia@epn.edu.ec")
-        val clave = textClave.text.toString()
-
         // Leyendo Datos de Preferencias
-        LeerDatosDePreferencias()
+        leerDatosDePreferencias()
 
         //Botón Login
-        Authentication()
+        authentication()
 
         // Botón Registro
         val botonRegistro = findViewById<Button>(R.id.botonRegistro)
         botonRegistro.setOnClickListener {
-            //Toast.makeText(this, "Registro exitoso", Toast.LENGTH_LONG).show()
             val intencion = Intent(this, ActividadRegistro::class.java)
-            //intencion.putExtra("Extra",extraerNombreApellido(textViewMail.text.toString()))
             startActivity(intencion)
         }
 
@@ -69,64 +60,21 @@ class ActividadLogin : AppCompatActivity() {
     }
 
     private fun getUserFirebase() {
-        val email: String? = auth.getCurrentUser()?.email
+        val email: String? = auth.currentUser?.email
         if (email != null) {
-            redirectToMain(email)
+            redirectToMain()
         }
     }
 
-    private fun redirectToMain(email: String) {
+    private fun redirectToMain() {
         showHome()
         this.finish()
     }
 
-    // FUNCIONES
-
-    //    fun probarBase() {
-//        val db = Firebase.firestore
-//        val user = hashMapOf(
-//            "Nombre" to "Ada",
-//            "Apeyido" to "Lovelace",
-//        )
-//        val TAG = ""
-//        db.collection("Usuarios")
-//            .add(user)
-//            .addOnSuccessListener { documentReference ->
-//                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-//            }
-//            .addOnFailureListener { e ->
-//                Log.w(TAG, "Error adding document", e)
-//            }
-//    }
-//
-
-
-    // Función Validar Email
-    private fun ValidarDatosRequeridos(): Boolean {
-        val email = textEmail.text.toString()
-        val clave = textClave.text.toString()
-        if (email.isEmpty()) {
-            textEmail.setError("El email es obligatorio")
-            textEmail.requestFocus()
-            return false
-        }
-        if (clave.isEmpty()) {
-            textClave.setError("La clave es obligatoria")
-            textClave.requestFocus()
-            return false
-        }
-        if (clave.length < 3) {
-            textClave.setError("La clave debe tener al menos 3 caracteres")
-            textClave.requestFocus()
-            return false
-        }
-        return true
-    }
-
-    private fun Authentication() {
+    private fun authentication() {
         buttonEntrar.setOnClickListener {
             if (textEmail.text.isNotEmpty() && textClave.text.isNotEmpty()) {
-                GuardarDatosEnPreferencias()
+                guardarDatosEnPreferencias()
                 FirebaseAuth.getInstance()
                     .signInWithEmailAndPassword(
                         textEmail.text.toString(),
@@ -147,7 +95,7 @@ class ActividadLogin : AppCompatActivity() {
 
     private fun showAlert() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Error")
+        builder.setTitle(getString(R.string.error))
         builder.setMessage("Se ha producido un error autenticando al Usuario")
         builder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
@@ -156,7 +104,7 @@ class ActividadLogin : AppCompatActivity() {
 
     private fun showAlertEmpty() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Error")
+        builder.setTitle(getString(R.string.error))
         builder.setMessage("Campos de registro vacíos")
         builder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
@@ -168,23 +116,20 @@ class ActividadLogin : AppCompatActivity() {
         startActivity(homeIntent)
     }
 
-    private fun GuardarDatosEnPreferencias() {
+    private fun guardarDatosEnPreferencias() {
         val email = textEmail.text.toString()
         val clave = textClave.text.toString()
-        val listadoAGrabar: Pair<String, String>
-        if (checkBoxRecordarme.isChecked) {
-            listadoAGrabar = email to clave
+        val listadoAGrabar: Pair<String, String> = if (checkBoxRecordarme.isChecked) {
+            email to clave
         } else {
-            listadoAGrabar = "" to ""
+            "" to ""
         }
-        manejadorArchivo.SaveInformation(listadoAGrabar)
+        manejadorArchivo.saveInformation(listadoAGrabar)
     }
 
-    private fun LeerDatosDePreferencias() {
-        val listadoLeido = manejadorArchivo.ReadInformation()
-        if (listadoLeido.first != null) {
-            checkBoxRecordarme.isChecked = true
-        }
+    private fun leerDatosDePreferencias() {
+        val listadoLeido = manejadorArchivo.readInformation()
+        checkBoxRecordarme.isChecked = true
         textEmail.setText(listadoLeido.first)
         textClave.setText(listadoLeido.second)
     }

@@ -1,10 +1,8 @@
 package com.hexagonal.vaquita
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +13,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.hexagonal.vaquita.adapters.UserAdapter
 import com.hexagonal.vaquita.databinding.ActivityActividadContactosBinding
+import com.hexagonal.vaquita.datos.USUARIOS
+import com.hexagonal.vaquita.datos.WALLETS
 import com.hexagonal.vaquita.entidades.Usuario
 import com.hexagonal.vaquita.entidades.Wallet
 
@@ -38,13 +38,12 @@ class ActividadContactos : AppCompatActivity() {
         setContentView(binding.root)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.setHasFixedSize(true)
-        botonContinuar = findViewById<Button>(R.id.botonContinuarWallet)
+        botonContinuar = findViewById(R.id.botonContinuarWallet)
         barraBusqueda = findViewById(R.id.barraBuscar)
         adapter = UserAdapter(
             this,
             usuarios,
-            intent.extras!!.getString("walletId").toString(),
-            R.layout.contactos_layout
+            intent.extras!!.getString("walletId").toString()
         )
 
         walletId = intent.extras!!.getString("walletId")!!
@@ -52,18 +51,18 @@ class ActividadContactos : AppCompatActivity() {
         getUsuarios()
 
 
-        botonContinuar.setOnClickListener() {
+        botonContinuar.setOnClickListener {
             val intencion = Intent(this, ActividadCompra::class.java)
-            Firebase.firestore.collection("Wallets")
+            Firebase.firestore.collection(WALLETS)
                 .document(walletId).get()
                 .addOnSuccessListener { result ->
                     intencion.putExtra("wallet", result.toObject(Wallet::class.java))
                     val builder = AlertDialog.Builder(this)
                     builder.setMessage(R.string.exitoWallet)
-                        .setPositiveButton(R.string.ok,
-                            DialogInterface.OnClickListener { dialog, id ->
-                                startActivity(intencion)
-                            })
+                        .setPositiveButton(R.string.ok
+                        ) { _, _ ->
+                            startActivity(intencion)
+                        }
                     builder.create()
                     builder.show()
                 }
@@ -77,8 +76,7 @@ class ActividadContactos : AppCompatActivity() {
                 adapter = UserAdapter(
                     this@ActividadContactos,
                     usuarios.filter{ usuario-> usuario.nombre!!.lowercase().contains(p0.toString().lowercase())} as ArrayList<Usuario>,
-                    intent.extras!!.getString("walletId").toString(),
-                    R.layout.contactos_layout
+                    intent.extras!!.getString("walletId").toString()
                 )
                 binding.recyclerView.adapter = adapter
                 return false
@@ -92,21 +90,20 @@ class ActividadContactos : AppCompatActivity() {
         putCreadorComoParticipante()
     }
 
-    fun putCreadorComoParticipante() {
-        var db = Firebase.firestore
-        db.collection("Wallets").document(walletId)
+    private fun putCreadorComoParticipante() {
+        val db = Firebase.firestore
+        db.collection(WALLETS).document(walletId)
             .get().addOnSuccessListener { result ->
-                var userAux = result.toObject(Wallet::class.java)?.users as MutableMap<String, Boolean>
-                userAux.put(intent.extras!!.getString("propietario")!!,true)
-                Log.d("MENSAJE USERAUX",userAux.toString())
-                db.collection("Wallets").document(walletId)
+                val userAux = result.toObject(Wallet::class.java)?.users as MutableMap<String, Boolean>
+                userAux[intent.extras!!.getString("propietario")!!] = true
+                db.collection(WALLETS).document(walletId)
                                                     .update("users", userAux)
             }
     }
 
-    fun getUsuarios() {
-        var db = Firebase.firestore
-        db.collection("Usuarios").get().addOnSuccessListener { result ->
+    private fun getUsuarios() {
+        val db = Firebase.firestore
+        db.collection(USUARIOS).get().addOnSuccessListener { result ->
             for (document in result) {
                 //verifico que no sea el usuario logueado
                 if (!document.toObject(Usuario::class.java).correo.equals(mailDeUsuarioLogueado)) {
