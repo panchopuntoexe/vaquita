@@ -29,7 +29,7 @@ class DashboardFragment : Fragment() {
     private val hasAxesNames = true
     private val hasLabels = true
     private val hasLabelForSelected = false
-    private val walletsPagos:MutableList<Pair<String,Number>> = mutableListOf()
+    private val walletsPagos:MutableList<Pair<String,Double>> = mutableListOf()
 
     private lateinit var dashboardViewModel: DashboardViewModel
     private var _binding: FragmentDashboardBinding? = null
@@ -75,15 +75,15 @@ class DashboardFragment : Fragment() {
                             .addOnSuccessListener { result ->
                             val pagos = result
                                 for (wallet in walletsUsuario){
-                                    var acumPago = 0
+                                    var acumPago = 0.0
                                     if (wallet.pagos!!.isEmpty()){
-                                        walletsPagos.add(Pair(wallet.nombre.toString(),0))
+                                        walletsPagos.add(Pair(wallet.nombre.toString(),0.0))
                                     }else{
                                         for(pago in wallet.pagos!!){
                                             for(element in pagos){
                                                 if(pago.key==element.id){
                                                     if(element.toObject(Pago::class.java).user==user.id){
-                                                        acumPago= (acumPago+element.toObject(Pago::class.java).valor!!).toInt()
+                                                        acumPago= (acumPago+element.toObject(Pago::class.java).valor!!).toDouble()
                                                     }
                                                 }
                                             }

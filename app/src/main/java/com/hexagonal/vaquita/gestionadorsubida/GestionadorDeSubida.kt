@@ -73,7 +73,7 @@ class GestionadorDeSubida {
                             userfb.wallets as MutableMap<String, Boolean>
                         mapaAux[documentReference.id] = true
                         db.collection(USUARIOS).document(wallet.creador!!)
-                            .update(WALLETS, mapaAux)
+                            .update("wallets", mapaAux)
                             .addOnSuccessListener {
                             }
                             .addOnFailureListener { }

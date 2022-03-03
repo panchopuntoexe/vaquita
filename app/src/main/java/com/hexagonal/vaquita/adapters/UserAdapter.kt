@@ -65,7 +65,7 @@ class UserAdapter(context: Context, usuarios: ArrayList<Usuario>, walletId: Stri
                             userAux = document.toObject(Usuario::class.java).wallets as MutableMap<String, Boolean>
                             userAux[walletId] = true
                             db.collection(USUARIOS).document(document.id)
-                                                    .update(WALLETS, userAux)
+                                                    .update("wallets", userAux)
                         }
                 }
             }
