@@ -25,7 +25,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="58dp"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
@@ -45,28 +45,20 @@
 
                 <LinearLayout
                     android:layout_width="661dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:paddingStart="5dp"
-                    android:paddingEnd="5dp">
+                    android:paddingEnd="5dp"
+                    android:textAlignment="center">
 
                     <TextView
                         android:id="@+id/textView10"
-                        android:layout_width="wrap_content"
+                        android:layout_width="330dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/hintNombreDeUsuario" />
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/textView17"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/free" />
-                    </androidx.cardview.widget.CardView>
+                        android:layout_marginTop="16dp"
+                        android:text="@string/hintNombreDeUsuario"
+                        android:textAlignment="inherit" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -97,7 +89,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
@@ -116,17 +108,6 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/button"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_weight="1"
-                        android:width="100dp"
-                        android:text="@string/edit"
-                        app:cornerRadius="20dp"
-                        tools:ignore="DuplicateSpeakableTextCheck" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -136,7 +117,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
@@ -155,16 +136,6 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/ButtonEmail"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_weight="1"
-                        android:width="100dp"
-                        android:text="@string/edit"
-                        app:cornerRadius="20dp" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -173,7 +144,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
@@ -191,16 +162,6 @@
                             android:text="@string/hintNombreDeUsuario"
                             android:textStyle="bold" />
                     </LinearLayout>
-
-                    <Button
-                        android:id="@+id/buttonPassword"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_weight="1"
-                        android:width="100dp"
-                        android:text="@string/change"
-                        app:cornerRadius="20dp" />
 
                 </LinearLayout>
             </LinearLayout>
