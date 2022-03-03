@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">vaquita</string>
+    <string name="app_name">Vaquita</string>
     <string name="tituloApp">Hagamos vaca</string>
     <string name="hintEmailLogin">Correo Electrónico</string>
     <string name="hintEmailRecuperar">Correo Electrónico</string>
