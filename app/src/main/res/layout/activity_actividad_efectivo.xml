@@ -8,6 +8,18 @@
     tools:context=".ActividadEfectivo">
 
     <TextView
+        android:id="@+id/textDolarSign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/dolarSign"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textCantidadAPagarEfectivo" />
+
+    <TextView
         android:id="@+id/textCantidadAPagarEfectivo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,12 +49,12 @@
         android:id="@+id/textCantidadEfectivo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text="@string/cantidad"
         android:textColor="#1E1C1C"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.202"
+        app:layout_constraintHorizontal_bias="0.256"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textCantidadAPagarEfectivo" />
 

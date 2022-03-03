@@ -35,7 +35,7 @@ class ActividadEfectivo : AppCompatActivity() {
         textCantidadEfectivo = findViewById(R.id.textCantidadEfectivo)
         textPagoRealizarse = findViewById(R.id.textPagoRealizarse)
 
-        textCantidadEfectivo.setText("$ " + deuda.toString())
+        textCantidadEfectivo.setText(deuda.toString())
 
         getUser()
 
