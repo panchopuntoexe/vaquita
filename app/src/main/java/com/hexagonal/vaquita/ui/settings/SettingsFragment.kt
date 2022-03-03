@@ -63,6 +63,7 @@ class SettingsFragment : Fragment() {
                     Firebase.auth.signOut()
                     val intencion = Intent(this.activity, ActividadLogin::class.java)
                     startActivity(intencion)
+                    this.activity?.finish()
                 }
                 .setNegativeButton(R.string.cancelar,
                     DialogInterface.OnClickListener { _, _ ->
@@ -71,8 +72,6 @@ class SettingsFragment : Fragment() {
             builder.create()
             builder.show()
         }
-
-
         return root
     }
 
