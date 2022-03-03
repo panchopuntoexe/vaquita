@@ -56,9 +56,10 @@
                         android:id="@+id/textView10"
                         android:layout_width="330dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="13dp"
                         android:text="@string/hintNombreDeUsuario"
-                        android:textAlignment="inherit" />
+                        android:textAlignment="inherit"
+                        android:textSize="26sp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -213,7 +214,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
-                        android:text="@string/upgrade" />
+                        android:text="@string/upgrade"
+                        app:cornerRadius="20dp" />
 
                 </LinearLayout>
 
@@ -243,6 +245,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginRight="20dp"
             android:text="@string/signout"
+            app:cornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
